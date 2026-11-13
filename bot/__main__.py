@@ -24,6 +24,14 @@ def _save(path, obj):
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
+def apply_settings(cfg):
+    """Lựa chọn kênh lưu từ dashboard (data/settings.json) được ưu tiên hơn biến CHANNELS."""
+    saved = _load(cfg.data_dir / "settings.json", {})
+    if isinstance(saved, dict) and isinstance(saved.get("channels"), list):
+        cfg.channels = [str(c).lower() for c in saved["channels"]]
+    return cfg
+
+
 def scan(cfg, dry_run=False, fetch=fetch_klines):
     """Quét 1 lượt. Trả về mã thoát (0 = ổn)."""
     need = max(cfg.bb_period + cfg.squeeze_lookback, 100)
@@ -58,8 +66,10 @@ def scan(cfg, dry_run=False, fetch=fetch_klines):
     ok, errors, configured = notify(cfg, subject(alerts), text)
     for name, err in errors.items():
         print(f"LỖI gửi {name}: {err}", file=sys.stderr)
-    if not configured:
-        print("CẢNH BÁO: chưa kênh nào trong CHANNELS được cấu hình đủ, tín hiệu chỉ được lưu lại.", file=sys.stderr)
+    if not cfg.channels:
+        print("Đang tắt mọi kênh gửi, tín hiệu chỉ được lưu lại.")
+    elif not configured:
+        print("CẢNH BÁO: chưa kênh nào được chọn có đủ token, tín hiệu chỉ được lưu lại.", file=sys.stderr)
     if configured and not ok:
         return 1  # không lưu state để lượt sau gửi lại
     print("Đã gửi qua:", ", ".join(ok) or "(không kênh nào)")
@@ -76,7 +86,7 @@ def main():
     ap.add_argument("--test", action="store_true",
                     help="gửi 1 tin thử qua các kênh trong CHANNELS; kênh bot thiếu chat_id sẽ được nhắn chat_id")
     args = ap.parse_args()
-    cfg = Config()
+    cfg = apply_settings(Config())
 
     if args.test:
         notes = discover_chat_ids(cfg)

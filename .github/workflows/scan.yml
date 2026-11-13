@@ -75,5 +75,7 @@ jobs:
           git add -A
           if ! git diff --cached --quiet; then
             git commit -qm "data: $(date -u +%FT%TZ)"
+            # Dashboard có thể vừa lưu settings.json lên nhánh data
+            if git fetch origin data 2>/dev/null; then git rebase FETCH_HEAD; fi
             git push origin data
           fi

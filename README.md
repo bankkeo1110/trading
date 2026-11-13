@@ -13,7 +13,7 @@ Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín 
 |---|---|
 | `bot/` | Bot Python (không cần cài thư viện) |
 | `.github/workflows/scan.yml` | Lịch chạy 15 phút/lần trên GitHub Actions |
-| `web/` | Dashboard tĩnh (biểu đồ + lịch sử tín hiệu), deploy lên Vercel |
+| `web/` | Dashboard (biểu đồ, lịch sử tín hiệu, chọn kênh gửi), deploy lên Vercel |
 | `tests/` | Test: `python -m unittest discover -s tests` |
 | nhánh `data` | `state.json` (chống spam) và `signals.json` (lịch sử), bot tự tạo |
 
@@ -28,9 +28,16 @@ Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín 
 
 ## Chọn kênh gửi
 
-Biến `CHANNELS` quyết định gửi qua app nào, các kênh cách nhau bởi dấu phẩy: `telegram`, `zalo`, `gmail`.
-Không đặt gì thì **chỉ gửi Telegram**. Ví dụ: `CHANNELS=telegram,zalo` hoặc `CHANNELS=telegram,zalo,gmail`.
-Đặt ở repo > Settings > Secrets and variables > Actions > tab **Variables**.
+Mở dashboard, mục **Kênh gửi cảnh báo**: tick Telegram / Zalo / Gmail rồi bấm **Lưu**. Mặc định chỉ Telegram.
+Lựa chọn được lưu vào `settings.json` trên nhánh `data`, bot áp dụng từ lượt quét kế tiếp.
+
+Để nút Lưu hoạt động, Vercel cần một token GitHub (làm 1 lần):
+1. GitHub > Settings > Developer settings > Fine-grained tokens > Generate new token.
+   Repository access: chỉ repo `trading`. Permissions: **Contents: Read and write**.
+2. Vercel > project `trading` > Settings > Environment Variables: thêm `GITHUB_TOKEN` = token đó, rồi Redeploy.
+
+Nên giữ Vercel Authentication bật cho project, vì ai mở được dashboard cũng đổi được lựa chọn kênh.
+Nếu chưa lưu gì trên dashboard, bot dùng biến `CHANNELS` (Variables của GitHub Actions), không có thì chỉ Telegram.
 
 ## Cài đặt (làm hết trên trình duyệt)
 

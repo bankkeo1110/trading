@@ -4,7 +4,7 @@ import unittest
 from datetime import datetime, timezone
 from pathlib import Path
 
-from bot.__main__ import scan
+from bot.__main__ import apply_settings, scan
 from bot.config import Config
 from bot.indicators import bollinger, rsi
 from bot import notify as notify_mod
@@ -134,6 +134,17 @@ class Channels(unittest.TestCase):
         ok, errors, configured = notify(Config(channels=["telegram"], telegram_token="", telegram_chat_id=""), "s", "t")
         self.assertEqual((ok, configured), ([], []))
         self.assertIn("Telegram", errors)
+
+
+class Settings(unittest.TestCase):
+    def test_dashboard_settings_override_env(self):
+        with tempfile.TemporaryDirectory() as d:
+            cfg = Config(channels=["telegram"], data_dir=Path(d))
+            self.assertEqual(apply_settings(cfg).channels, ["telegram"])
+            (Path(d) / "settings.json").write_text('{"channels": ["Zalo", "gmail"]}', encoding="utf-8")
+            self.assertEqual(apply_settings(cfg).channels, ["zalo", "gmail"])
+            (Path(d) / "settings.json").write_text('{"channels": []}', encoding="utf-8")
+            self.assertEqual(apply_settings(cfg).channels, [])
 
 
 class Scan(unittest.TestCase):

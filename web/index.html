@@ -37,6 +37,13 @@
   .sig.upper { border-left-color:var(--down); } .sig.lower { border-left-color:var(--up); }
   .sig.squeeze { border-left-color:var(--warn); }
   .sig .top { display:flex; justify-content:space-between; gap:8px; }
+  .channels { display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .channels label { display:flex; align-items:center; gap:8px; background:var(--panel); border:1px solid var(--line);
+                    border-radius:8px; padding:9px 12px; cursor:pointer; min-height:44px; }
+  .channels input { width:18px; height:18px; accent-color:var(--accent); }
+  .channels button { background:var(--accent); color:#06101f; border:0; border-radius:8px; padding:0 16px;
+                     min-height:44px; font:inherit; font-weight:600; cursor:pointer; }
+  .channels button:disabled { opacity:.45; cursor:default; }
   .msg { background:var(--panel); border:1px dashed var(--line); border-radius:8px; padding:12px; color:var(--dim); }
   a { color:var(--accent); }
   @media (max-width:520px) { #chart { height:320px; } main { padding:10px; } }
@@ -48,6 +55,15 @@
     <h1>Trading — Bollinger Bands</h1>
     <span class="dim" id="updated">Đang tải…</span>
   </header>
+
+  <h2>Kênh gửi cảnh báo</h2>
+  <div class="channels" id="channels">
+    <label><input type="checkbox" value="telegram"> Telegram</label>
+    <label><input type="checkbox" value="zalo"> Zalo</label>
+    <label><input type="checkbox" value="gmail"> Gmail</label>
+    <button id="saveChannels" disabled>Lưu</button>
+  </div>
+  <p class="dim" id="channelsNote">Đang tải cài đặt…</p>
 
   <h2>Trạng thái hiện tại</h2>
   <div class="grid" id="grid"></div>
@@ -225,6 +241,55 @@ $("signals").addEventListener("click", e => {
     $("chartTitle").scrollIntoView({ behavior: "smooth" });
   }
 });
+
+// ---- Kênh gửi -------------------------------------------------------------
+const boxes = [...document.querySelectorAll("#channels input")];
+const saveBtn = $("saveChannels"), note = $("channelsNote");
+let savedChannels = null, canWrite = false;
+const checked = () => boxes.filter(b => b.checked).map(b => b.value);
+function syncSave() {
+  saveBtn.disabled = !canWrite || savedChannels === null || checked().join() === savedChannels.join();
+}
+function showChannels(data) {
+  savedChannels = boxes.map(b => b.value).filter(v => data.channels.includes(v));
+  canWrite = data.canWrite;
+  boxes.forEach(b => { b.checked = savedChannels.includes(b.value); b.disabled = !canWrite; });
+  syncSave();
+}
+async function loadChannels() {
+  try {
+    const r = await fetch("/api/settings");
+    if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || r.status);
+    const data = await r.json();
+    showChannels(data);
+    note.textContent = data.canWrite
+      ? "Tick app muốn nhận cảnh báo rồi bấm Lưu. Bot áp dụng từ lượt quét kế tiếp (tối đa khoảng 15 phút)."
+      : "Chỉ xem được: chưa có GITHUB_TOKEN trên Vercel nên chưa lưu được lựa chọn.";
+  } catch (e) {
+    note.textContent = "Không tải được cài đặt kênh: " + e.message;
+  }
+}
+boxes.forEach(b => b.addEventListener("change", syncSave));
+saveBtn.addEventListener("click", async () => {
+  saveBtn.disabled = true;
+  note.textContent = "Đang lưu…";
+  try {
+    const r = await fetch("/api/settings", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ channels: checked() }),
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || r.status);
+    showChannels(data);
+    note.textContent = data.channels.length
+      ? "Đã lưu. Bot sẽ gửi qua: " + data.channels.join(", ") + "."
+      : "Đã lưu. Đang tắt mọi kênh, bot chỉ ghi tín hiệu lên dashboard.";
+  } catch (e) {
+    note.textContent = "Lưu không thành công: " + e.message;
+    syncSave();
+  }
+});
+loadChannels();
 
 // ---- Khởi động ------------------------------------------------------------
 buildGrid();
