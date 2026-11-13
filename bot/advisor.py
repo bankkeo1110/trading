@@ -152,7 +152,7 @@ def advise(symbol, tf, candles, cfg):
             -30: "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200)"}.get(
         pts, f"xu hướng lẫn lộn (giá {'trên' if price > e200 else 'dưới'} EMA200, "
              f"EMA20 {'trên' if e20 > e50 else 'dưới'} EMA50)")
-    ema_trend = pts // 30                               # +1 tăng rõ, -1 giảm rõ, 0 lẫn lộn
+    ema_trend = 1 if pts == 30 else -1 if pts == -30 else 0   # tăng rõ / giảm rõ / lẫn lộn
     trend("EMA 20/50/200", pts, note)
 
     # 3. MACD 12/26/9 (tối đa ±20)

@@ -204,6 +204,9 @@ class Advisor(unittest.TestCase):
         up = advise("BTCUSDT", "4h", ohlc(trend()), self.cfg)
         down = advise("BTCUSDT", "4h", ohlc(trend(step=-0.002)), self.cfg)
         self.assertIn(up["rating"], ("buy", "strong_buy"))
+        self.assertEqual((up["ema_trend"], down["ema_trend"]), (1, -1))
+        mixed = advise("BTCUSDT", "4h", ohlc(trend()[:-12] + [trend()[-13] * 0.97 ** i for i in range(1, 13)]), self.cfg)
+        self.assertEqual(mixed["ema_trend"], 0)                       # giá rơi dưới EMA20/50 nhưng còn trên EMA200
         self.assertIn(down["rating"], ("sell", "strong_sell"))
         self.assertTrue(-100 <= down["score"] < 0 < up["score"] <= 100)
         lv = levels(up)
