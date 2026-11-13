@@ -29,6 +29,7 @@
   .cell.total { cursor:default; background:#1d2430; }
   .buy { border-color:var(--up); } .buy b, .pos { color:var(--up); }
   .sell { border-color:var(--down); } .sell b, .neg { color:var(--down); }
+  .watch { border-color:var(--warn); } .watch b, .wat { color:var(--warn); }
   .strong { border-width:2px; }
   .cell.sel { outline:2px solid var(--accent); outline-offset:1px; }
   .cell:focus-visible { outline:2px solid var(--accent); }
@@ -44,7 +45,8 @@
   .levels { display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; }
   .sig { background:var(--panel); border:1px solid var(--line); border-left-width:4px; border-radius:8px;
          padding:8px 10px; margin-bottom:6px; }
-  .sig.buy { border-left-color:var(--up); } .sig.sell { border-left-color:var(--down); }
+  .sig.buy { border-left-color:var(--up); } .sig.sell { border-left-color:var(--down); } .sig.watch { border-left-color:var(--warn); }
+  .hint { margin-top:10px; color:var(--warn); }
   .sig .top { display:flex; justify-content:space-between; gap:8px; }
   .msg { background:var(--panel); border:1px dashed var(--line); border-radius:8px; padding:12px; color:var(--dim); }
   @media (max-width:520px) { main { padding:10px; } .cell b { font-size:12px; } }
@@ -61,7 +63,7 @@
   <h2>Đánh giá hiện tại</h2>
   <div class="grid" id="grid"><div class="msg">Đang tải…</div></div>
   <p class="dim">Điểm từ −100 (bán mạnh) đến +100 (mua mạnh), tính trên nến đã đóng. Từ ±20: nên mua/bán, từ ±50: mạnh.
-    Cột Tổng hợp tính trọng số 1h ×1, 4h ×2, 1d ×3. Chạm một ô để xem chi tiết.</p>
+    Vàng = đang quá bán/quá mua: không đuổi theo, chờ xác nhận đảo chiều. Cột Tổng hợp tính trọng số 1h ×1, 4h ×2, 1d ×3. Chạm một ô để xem chi tiết.</p>
 
   <h2>Chi tiết chỉ báo</h2>
   <div class="panel" id="detail"><span class="dim">Chọn một ô ở bảng trên.</span></div>
@@ -73,13 +75,19 @@
 <script>
 const REPO = new URLSearchParams(location.search).get("repo") || "bankkeo1110/trading";
 const TV = { "15m": "15", "30m": "30", "1h": "60", "2h": "120", "4h": "240", "1d": "D" };
-const LABEL = { strong_buy: "Nên mua (mạnh)", buy: "Nên mua", neutral: "Trung lập", sell: "Nên bán", strong_sell: "Nên bán (mạnh)" };
+const LABEL = { strong_buy: "Nên mua (mạnh)", buy: "Nên mua", watch_buy: "Quá bán — canh mua", neutral: "Trung lập",
+  watch_sell: "Quá mua — canh bán", sell: "Nên bán", strong_sell: "Nên bán (mạnh)" };
+const HINT = {
+  watch_buy: "Đang quá bán: không bán đuổi. Chưa vội mua, chờ nến tăng đóng trên đỉnh nến trước hoặc RSI quay lên. Bot sẽ báo Nên mua khi có xác nhận.",
+  watch_sell: "Đang quá mua: không mua đuổi. Đang giữ thì canh chốt lời, chờ nến giảm đóng dưới đáy nến trước hoặc RSI quay xuống. Bot sẽ báo Nên bán khi có xác nhận.",
+};
+const dirOf = r => r === "buy" || r === "strong_buy" ? 1 : r === "sell" || r === "strong_sell" ? -1 : 0;
 const $ = id => document.getElementById(id);
 const coin = s => s.replace("USDT", "");
 const fmt = p => p >= 1000 ? p.toLocaleString("en-US", { maximumFractionDigits: 1 })
   : p >= 100 ? p.toFixed(2) : p >= 1 ? p.toFixed(3) : p.toFixed(5);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const cls = r => (r.endsWith("buy") ? "buy" : r.endsWith("sell") ? "sell" : "") + (r.startsWith("strong") ? " strong" : "");
+const cls = r => (r.startsWith("watch") ? "watch" : dirOf(r) > 0 ? "buy" : dirOf(r) < 0 ? "sell" : "") + (r.startsWith("strong") ? " strong" : "");
 const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "") + Math.abs(n);
 const data = async name => {
   const r = await fetch(`https://raw.githubusercontent.com/${REPO}/data/${name}?t=${Date.now()}`);
@@ -108,19 +116,19 @@ function renderGrid() {
 }
 
 function renderDetail() {
-  const it = snap.items[sel];
-  const dir = it.rating.endsWith("buy") ? 1 : it.rating.endsWith("sell") ? -1 : 0;
-  const lv = k => fmt(it.price + dir * k * it.atr);
+  const it = snap.items[sel], dir = dirOf(it.rating);
+  const color = it.rating.startsWith("watch") ? "wat" : dir > 0 ? "pos" : dir < 0 ? "neg" : "";
   const closed = new Date(it.candle).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit" });
   $("detail").innerHTML = `
-    <div class="top"><b>${esc(coin(it.symbol))}/USDT · ${esc(it.tf)} — <span class="${dir > 0 ? "pos" : dir < 0 ? "neg" : ""}">${LABEL[it.rating]} (${signed(it.score)})</span></b>
+    <div class="top"><b>${esc(coin(it.symbol))}/USDT · ${esc(it.tf)} — <span class="${color}">${LABEL[it.rating]} (${signed(it.score)})</span></b>
       <a href="https://www.tradingview.com/chart/?symbol=BINANCE:${esc(it.symbol)}&interval=${TV[it.tf] || "60"}" target="_blank" rel="noopener">Mở TradingView</a></div>
     <div class="dim">Giá đóng nến ${fmt(it.price)} · nến mở lúc ${closed} (giờ VN)</div>
     <div class="bar" role="img" aria-label="Điểm ${it.score} trên thang -100 đến 100"><i style="left:${(it.score + 100) / 2}%"></i></div>
     <table>${it.parts.map(p => `<tr><td class="name">${esc(p.name)}</td><td>${esc(p.note)}</td>
       <td class="pts ${p.points > 0 ? "pos" : p.points < 0 ? "neg" : "dim"}">${signed(p.points)}</td></tr>`).join("")}</table>
-    ${dir ? `<div class="levels"><span>Cắt lỗ tham khảo: <b>${lv(-1.5)}</b></span><span>Chốt lời: <b>${lv(1.5)}</b> / <b>${lv(3)}</b></span>
-      <span class="dim">theo ATR ${fmt(it.atr)} (1.5 và 3 lần)</span></div>` : ""}`;
+    ${HINT[it.rating] ? `<div class="hint">${HINT[it.rating]}</div>` : ""}
+    ${dir && it.sl != null ? `<div class="levels"><span>Cắt lỗ tham khảo: <b>${fmt(it.sl)}</b></span><span>Chốt lời: <b>${fmt(it.tp1)}</b> / <b>${fmt(it.tp2)}</b></span>
+      <span class="dim">theo ATR ${fmt(it.atr)}</span></div>` : ""}`;
 }
 
 $("grid").addEventListener("click", e => {
@@ -140,7 +148,7 @@ async function refresh() {
     renderDetail();
   } catch (e) {
     $("grid").innerHTML = `<div class="msg" style="grid-column:1/-1">Chưa có dữ liệu gợi ý từ <b>${esc(REPO)}</b> (nhánh <code>data</code>).
-      Bot cần chạy ít nhất 1 lượt sau khi cập nhật (tối đa khoảng 15 phút).</div>`;
+      Bot cần chạy ít nhất 1 lượt sau khi cập nhật (khoảng 5 phút).</div>`;
   }
   try {
     const hist = await data("advice_signals.json");
@@ -148,7 +156,7 @@ async function refresh() {
       const top = [...a.parts].filter(p => p.points).sort((x, y) => Math.abs(y.points) - Math.abs(x.points)).slice(0, 3);
       return `<div class="sig ${cls(a.rating)}">
         <div class="top"><b>${esc(coin(a.symbol))} ${esc(a.tf)} — ${LABEL[a.rating]} (${signed(a.score)})</b><span class="dim">${esc(a.time)}</span></div>
-        <div class="dim">Giá ${fmt(a.price)} · cắt lỗ ${fmt(a.sl)} · chốt lời ${fmt(a.tp1)} / ${fmt(a.tp2)}</div>
+        <div class="dim">Giá ${fmt(a.price)}${dirOf(a.rating) ? ` · cắt lỗ ${fmt(a.sl)} · chốt lời ${fmt(a.tp1)} / ${fmt(a.tp2)}` : " · chờ xác nhận đảo chiều"}</div>
         <div class="dim">${top.map(p => esc(p.note)).join(" · ")}</div></div>`;
     }).join("") : `<div class="msg">Chưa có gợi ý nào được gửi.</div>`;
   } catch (e) {

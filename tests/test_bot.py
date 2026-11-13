@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from bot.__main__ import apply_settings, scan
-from bot.advisor import advise, decide_advice, format_advice_message, levels, overall
+from bot.advisor import advise, apply_context, decide_advice, format_advice_message, levels, overall, rating_of
 from bot.config import Config
 from bot.indicators import atr_adx, bollinger, ema_series, macd, rsi, rsi_series, stoch_rsi
 from bot import notify as notify_mod
@@ -177,7 +177,7 @@ def ohlc(closes, t0=1_700_000_000_000, step=3_600_000):
     return rows
 
 
-def trend(n=300, step=0.004, wiggle=0.01):
+def trend(n=300, step=0.002, wiggle=0.01):
     """Chuỗi giá đi theo 1 hướng (step > 0 tăng, < 0 giảm) kèm dao động nhỏ."""
     return [100 * (1 + step) ** i * (1 + wiggle * (1 if i % 3 == 0 else -0.5)) for i in range(n)]
 
@@ -202,7 +202,7 @@ class Advisor(unittest.TestCase):
 
     def test_uptrend_is_buy_and_downtrend_is_sell(self):
         up = advise("BTCUSDT", "4h", ohlc(trend()), self.cfg)
-        down = advise("BTCUSDT", "4h", ohlc(trend(step=-0.004)), self.cfg)
+        down = advise("BTCUSDT", "4h", ohlc(trend(step=-0.002)), self.cfg)
         self.assertIn(up["rating"], ("buy", "strong_buy"))
         self.assertIn(down["rating"], ("sell", "strong_sell"))
         self.assertTrue(-100 <= down["score"] < 0 < up["score"] <= 100)
@@ -219,10 +219,68 @@ class Advisor(unittest.TestCase):
         with self.assertRaises(ValueError):
             advise("BTCUSDT", "1h", ohlc(wave(100)), self.cfg)
 
-    def item(self, score, tf="1h"):
-        from bot.advisor import rating_of
-        return {"symbol": "BTCUSDT", "tf": tf, "candle": 1, "price": 100.0, "score": score,
-                "rating": rating_of(score), "parts": [{"name": "MACD", "points": score, "note": "x"}], "atr": 2.0}
+    def item(self, score, tf="1h", zone=0, candle=1, ema_trend=0):
+        return {"symbol": "BTCUSDT", "tf": tf, "candle": candle, "price": 100.0, "score": score, "zone": zone,
+                "rating": rating_of(score, zone), "parts": [{"name": "MACD", "points": score, "note": "x"}],
+                "atr": 2.0, "ema_trend": ema_trend, "swing_low": 95.0, "swing_high": 105.0}
+
+    def crash(self, bounce=False):
+        """Đi ngang rồi rơi mạnh 12 nến liền; bounce=True thêm 1 nến tăng đóng trên đỉnh nến trước."""
+        import math
+        xs = [100 + math.sin(i / 5) for i in range(288)]
+        for _ in range(12):
+            xs.append(xs[-1] * 0.985)
+        rows = ohlc(xs)[:-1]
+        if bounce:
+            last = rows[-1]
+            c = last["h"] * 1.01
+            rows.append({"t": last["t"] + 3_600_000, "o": last["c"], "h": c * 1.002, "l": last["c"] * 0.999,
+                         "c": c, "v": 100.0})
+        return rows + [dict(rows[-1], t=rows[-1]["t"] + 3_600_000)]
+
+    def test_oversold_is_never_sell(self):
+        a = advise("BTCUSDT", "4h", self.crash(), self.cfg)
+        self.assertLess(a["rsi"], 30)
+        self.assertEqual((a["zone"], a["rating"]), (1, "watch_buy"))
+        self.assertIn("chưa có", a["parts"][-1]["note"])
+        text = format_advice_message(decide_advice([a], {})[0], {}, self.cfg)
+        self.assertIn("QUÁ BÁN — CANH MUA", text)
+        self.assertIn("Không bán đuổi", text)
+        self.assertNotIn("cắt lỗ", text)
+
+    def test_oversold_with_confirmation_is_buy(self):
+        a = advise("BTCUSDT", "4h", self.crash(bounce=True), self.cfg)
+        self.assertEqual(a["zone"], 1)
+        self.assertIn(a["rating"], ("buy", "strong_buy"))
+        self.assertIn("nến tăng đóng trên đỉnh nến trước", a["parts"][-1]["note"])
+        lv = levels(a)
+        self.assertLess(lv["sl"], a["swing_low"])                     # cắt lỗ dưới đáy gần nhất
+        self.assertTrue(lv["sl"] < a["price"] < lv["tp1"] < lv["tp2"])
+        self.assertIn("đảo chiều ngược xu hướng", format_advice_message(decide_advice([a], {})[0], {}, self.cfg))
+
+    def test_overbought_is_never_buy(self):
+        self.assertEqual(rating_of(70, -1), "watch_sell")
+        self.assertEqual(rating_of(-30, -1), "sell")
+        self.assertEqual(rating_of(-70, 1), "watch_buy")
+        self.assertEqual(rating_of(30, 1), "buy")
+
+    def test_daily_trend_context(self):
+        items = apply_context([self.item(15, "1h"), self.item(40, "1d", ema_trend=1)])
+        self.assertEqual((items[0]["score"], items[0]["rating"]), (23, "buy"))
+        self.assertEqual(apply_context(items)[0]["score"], 23)        # không cộng 2 lần
+        self.assertEqual(items[1]["score"], 40)
+
+    def test_watch_alert_not_repeated(self):
+        h = 3_600_000
+        alerts, st = decide_advice([self.item(-40, zone=1, candle=h)], {})
+        self.assertEqual([a["rating"] for a in alerts], ["watch_buy"])
+        alerts, st = decide_advice([self.item(-40, zone=1, candle=2 * h)], st)
+        self.assertEqual(alerts, [])
+        alerts, st = decide_advice([self.item(0, candle=3 * h)], st)          # ra khỏi vùng
+        alerts, st = decide_advice([self.item(-5, zone=1, candle=4 * h)], st)  # vào lại sớm: không nhắc
+        self.assertEqual(alerts, [])
+        alerts, st = decide_advice([self.item(30, zone=1, candle=5 * h)], st)  # có xác nhận: báo MUA
+        self.assertEqual([a["rating"] for a in alerts], ["buy"])
 
     def test_alert_only_on_change(self):
         alerts, st = decide_advice([self.item(30)], {})

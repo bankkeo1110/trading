@@ -12,7 +12,7 @@ Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín 
 | Thư mục | Nội dung |
 |---|---|
 | `bot/` | Bot Python (không cần cài thư viện); `bot/advisor.py` là phần gợi ý mua/bán |
-| `.github/workflows/scan.yml` | Lịch chạy 15 phút/lần trên GitHub Actions |
+| `.github/workflows/scan.yml` | Quét 5 phút/lần trên GitHub Actions (mỗi lượt chạy khoảng 5 giờ rồi tự gọi lượt kế tiếp) |
 | `web/` | Dashboard (biểu đồ, lịch sử tín hiệu, chọn kênh gửi) và trang gợi ý mua/bán `signals.html`, deploy lên Vercel |
 | `tests/` | Test: `python -m unittest discover -s tests` |
 | nhánh `data` | `state.json` (chống spam), `signals.json` (lịch sử BB), `advice.json` và `advice_signals.json` (gợi ý mua/bán), bot tự tạo |
@@ -35,17 +35,30 @@ chỉ dùng **nến đã đóng** để tín hiệu không nhấp nháy. Xem ở
 |---|---|---|
 | EMA 20/50/200 | ±30 | Xu hướng: giá so với EMA200, EMA20 so với EMA50, EMA50 so với EMA200 |
 | MACD 12/26/9 | ±20 | Động lượng: MACD so với đường tín hiệu, histogram tăng/giảm, MACD so với 0 |
-| ADX/DI 14 | ±15 | Sức mạnh xu hướng. ADX < 20 là đi ngang: EMA và MACD chỉ tính nửa điểm |
-| RSI 14 | ±15 | Quá bán/quá mua, ngoài ra nghiêng nhẹ theo phía trên/dưới 50 |
+| ADX/DI 14 | ±15 | Sức mạnh xu hướng. ADX < 20 là đi ngang: điểm xu hướng chỉ tính một nửa |
+| RSI 14 | ±15 | Quá bán (≤ 30) cộng điểm mua, quá mua (≥ 70) cộng điểm bán |
 | Stochastic RSI | ±10 | K cắt D từ vùng quá bán/quá mua |
 | Bollinger %B | ±10 | Giá ở/gần BB dưới (mua) hoặc BB trên (bán) |
 | Khối lượng | ±5 | Nến tăng/giảm với khối lượng từ 1.5 lần trung bình 20 nến |
+| Xác nhận đảo chiều | ±50 | Sau quá bán/quá mua: nến đảo chiều, RSI quay đầu, phân kỳ giá và RSI (25 điểm mỗi dấu hiệu) |
+| Khung 1d | ±8 | Khung 1h, 4h được cộng/trừ theo xu hướng EMA của khung ngày |
 
-- Khi xu hướng mạnh (ADX ≥ 30), tín hiệu đảo chiều đi ngược xu hướng (RSI, Stoch RSI, BB) chỉ tính 1/3 điểm.
-- Từ ±20 là **NÊN MUA / NÊN BÁN**, từ ±50 là **mạnh**. Điểm tổng hợp mỗi coin: 1h ×1, 4h ×2, 1d ×3.
-- Bot chỉ nhắn khi một coin + khung chuyển sang MUA hoặc BÁN, hoặc nâng lên mức mạnh. Đã ở MUA/BÁN thì giữ
-  cho tới khi điểm lùi qua ±10 nên không báo đi báo lại.
-- Tin kèm mức tham khảo theo ATR(14): cắt lỗ 1.5 ATR, chốt lời 1.5 và 3 ATR.
+Hai kiểu tín hiệu:
+
+- **Thuận xu hướng**: EMA, MACD, ADX cùng chiều thì từ ±20 là **NÊN MUA / NÊN BÁN**, từ ±50 là **mạnh**.
+- **Đảo chiều**: khi RSI ≤ 30 (hoặc vừa như vậy trong 6 nến gần nhất), bot **không bao giờ gợi ý bán** mà báo
+  **QUÁ BÁN — CANH MUA**, đồng thời điểm xu hướng giảm bị giảm trọng số. Khi có xác nhận giá bật lên
+  (nến tăng đóng trên đỉnh nến trước, RSI quay lên, hoặc phân kỳ tăng) thì báo **NÊN MUA**, cắt lỗ đặt dưới đáy gần nhất.
+  Quá mua (RSI ≥ 70) thì ngược lại: **QUÁ MUA — CANH BÁN**, có xác nhận mới báo **NÊN BÁN**.
+
+Vì sao quá bán chưa báo mua ngay: trong xu hướng giảm mạnh, RSI có thể nằm dưới 30 rất lâu trong khi giá vẫn rơi.
+Chờ thêm một dấu hiệu giá bật lên giúp tránh bắt dao rơi.
+
+- Điểm tổng hợp mỗi coin: 1h ×1, 4h ×2, 1d ×3.
+- Bot nhắn khi một coin + khung chuyển sang MUA, BÁN, CANH MUA, CANH BÁN, hoặc nâng lên mức mạnh. Đã ở MUA/BÁN thì giữ
+  cho tới khi điểm lùi qua ±10; "canh" chỉ nhắc lại sau 6 nến.
+- Tin MUA/BÁN kèm mức tham khảo theo ATR(14): cắt lỗ 1.5 ATR (lệnh đảo chiều: ngoài đáy/đỉnh 10 nến gần nhất 0.5 ATR),
+  chốt lời 1.5 và 3 ATR.
 - Tắt chức năng này: đặt Variable `ADVICE=off`.
 
 Đây là gợi ý từ chỉ báo kỹ thuật, không phải lời khuyên đầu tư.
@@ -96,7 +109,9 @@ Nếu đổi coin/khung, sửa thêm 2 dòng `SYMBOLS`, `TIMEFRAMES` ở đầu 
 
 - Repo cần ở chế độ **public**: GitHub Actions miễn phí không giới hạn và dashboard đọc được `signals.json`.
   Token và mật khẩu nằm trong Secrets nên không lộ.
-- Lịch của GitHub Actions có thể trễ vài phút. GitHub tự tắt lịch nếu repo không có hoạt động trong 60 ngày.
+- Bot quét 5 phút/lần: mỗi lượt chạy của workflow kéo dài khoảng 5 giờ rồi tự gọi lượt kế tiếp, vì lịch của GitHub Actions
+  có thể trễ hàng giờ. Nếu thấy tab Actions không có lượt nào đang chạy, bấm Run workflow để khởi động lại.
+  GitHub tự tắt lịch nếu repo không có hoạt động trong 60 ngày.
 - Nguồn giá: Binance (`data-api.binance.vision`), dự phòng OKX.
 
 ## Chạy trên máy (không bắt buộc)

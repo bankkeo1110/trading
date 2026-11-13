@@ -6,7 +6,7 @@ import sys
 import time
 from pathlib import Path
 
-from .advisor import advice_subject, advise, decide_advice, format_advice_message, levels, overall
+from .advisor import advice_subject, advise, apply_context, decide_advice, format_advice_message, levels, overall
 from .config import Config, load_dotenv
 from .market import fetch_klines
 from .notify import discover_chat_ids, notify
@@ -84,13 +84,13 @@ def _scan_bands(cfg, statuses, dry_run):
 
 def _scan_advice(cfg, items, dry_run):
     """Gợi ý mua/bán: lưu ảnh chụp mới nhất cho trang signals.html và gửi khi có thay đổi."""
-    summary = overall(items)
+    summary = overall(apply_context(items))
     for it in items:
         print(f"{it['symbol']:9} {it['tf']:3} điểm={it['score']:+4d} {it['rating']}")
     state_path = cfg.data_dir / "state.json"
     alerts, new_state = decide_advice(items, _load(state_path, {}))
-    for a in alerts:
-        a.update(levels(a))
+    for it in items + alerts:
+        it.update(levels(it))
     text = format_advice_message(alerts, summary, cfg) if alerts else ""
     if text:
         print("\n" + text + "\n")

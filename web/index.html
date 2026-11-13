@@ -272,7 +272,7 @@ async function loadChannels() {
     const data = await r.json();
     showChannels(data);
     note.textContent = data.canWrite
-      ? "Tick app muốn nhận cảnh báo, nhập mật khẩu rồi bấm Lưu. Bot áp dụng từ lượt quét kế tiếp (tối đa khoảng 15 phút)."
+      ? "Tick app muốn nhận cảnh báo, nhập mật khẩu rồi bấm Lưu. Bot áp dụng từ lượt quét kế tiếp (khoảng 5 phút)."
       : "Chỉ xem được: Vercel chưa có GITHUB_TOKEN và ADMIN_PASSWORD. Vẫn có thể sửa file settings.properties trong repo.";
   } catch (e) {
     note.textContent = "Không tải được cài đặt kênh: " + e.message;

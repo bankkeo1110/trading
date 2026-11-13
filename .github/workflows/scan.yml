@@ -1,8 +1,11 @@
 name: Quét Bollinger Bands
 
+# Mỗi lượt chạy quét liên tục 5 phút/lần trong khoảng 5 giờ rồi tự gọi lượt kế tiếp.
+# Lý do: lịch (schedule) của GitHub hay trễ hàng giờ, không đủ tin cậy để quét 15 phút/lần.
+# Lịch bên dưới chỉ để khởi động lại nếu chuỗi tự gọi bị đứt.
 on:
   schedule:
-    - cron: "3-59/15 * * * *"   # 15 phút/lần (GitHub có thể trễ vài phút)
+    - cron: "17 */3 * * *"
   workflow_dispatch:
     inputs:
       test:
@@ -12,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: scan
@@ -20,7 +24,7 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 345
     env:
       # Kênh gửi: telegram, zalo, gmail (cách nhau bởi dấu phẩy). Bỏ trống = chỉ telegram.
       CHANNELS: ${{ vars.CHANNELS }}
@@ -65,18 +69,30 @@ jobs:
         if: ${{ inputs.test }}
         run: python -m bot --test
 
-      - name: Quét
+      - name: Quét liên tục
         if: ${{ !inputs.test }}
-        run: python -m bot
-
-      - name: Lưu nhánh data
-        if: always()
         run: |
-          cd data
-          git add -A
-          if ! git diff --cached --quiet; then
-            git commit -qm "data: $(date -u +%FT%TZ)"
-            # Dashboard có thể vừa lưu settings.json lên nhánh data
-            if git fetch origin data 2>/dev/null; then git rebase FETCH_HEAD; fi
-            git push origin data
-          fi
+          save_data() {
+            git -C data add -A
+            if ! git -C data diff --cached --quiet; then
+              git -C data commit -qm "data: $(date -u +%FT%TZ)"
+              git -C data push -q origin data || echo "::warning::Chưa lưu được nhánh data, sẽ thử lại ở lượt sau"
+            fi
+          }
+          end=$((SECONDS + 5 * 3600))
+          while [ $SECONDS -lt $end ]; do
+            python -m bot || echo "::warning::Lượt quét có lỗi (xem log ở trên)"
+            save_data
+            sleep 300
+            # Có code hoặc cài đặt mới trên main: dừng để lượt kế tiếp chạy bản mới
+            if git fetch -q origin main && [ "$(git rev-parse FETCH_HEAD)" != "$(git rev-parse HEAD)" ]; then
+              echo "main có thay đổi, chuyển sang lượt chạy mới."
+              break
+            fi
+          done
+
+      - name: Gọi lượt kế tiếp
+        if: ${{ !inputs.test && !cancelled() }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run scan.yml --repo "$GITHUB_REPOSITORY" --ref main
