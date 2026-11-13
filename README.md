@@ -3,6 +3,8 @@
 Bot quét BTC, ETH, SOL, SUI (spot, cặp USDT) trên khung 1h / 4h / 1d. Khi giá gần chạm hoặc chạm/vượt
 BB trên/dưới, bot gửi tin về **Zalo** và **Gmail**, đồng thời lưu lại để xem trên dashboard Vercel.
 
+Dashboard: https://trading-kid215.vercel.app
+
 Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín hiệu vào lệnh chắc chắn.
 
 ## Cấu trúc
