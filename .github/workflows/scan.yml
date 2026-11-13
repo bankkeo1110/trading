@@ -1,0 +1,79 @@
+name: Quét Bollinger Bands
+
+on:
+  schedule:
+    - cron: "3-59/15 * * * *"   # 15 phút/lần (GitHub có thể trễ vài phút)
+  workflow_dispatch:
+    inputs:
+      test:
+        description: "Gửi tin thử tới Zalo + Gmail thay vì quét"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      ZALO_BOT_TOKEN: ${{ secrets.ZALO_BOT_TOKEN }}
+      ZALO_CHAT_ID: ${{ secrets.ZALO_CHAT_ID }}
+      GMAIL_USER: ${{ secrets.GMAIL_USER }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      EMAIL_TO: ${{ secrets.EMAIL_TO }}
+      # Tuỳ chọn, đặt ở Settings > Secrets and variables > Actions > Variables
+      SYMBOLS: ${{ vars.SYMBOLS }}
+      TIMEFRAMES: ${{ vars.TIMEFRAMES }}
+      NEAR: ${{ vars.NEAR }}
+      DASHBOARD_URL: ${{ vars.DASHBOARD_URL }}
+      DATA_DIR: data
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Mở nhánh data (lưu trạng thái + lịch sử tín hiệu)
+        run: |
+          git config user.name "trading-bot"
+          git config user.email "trading-bot@users.noreply.github.com"
+          if git fetch origin data 2>/dev/null; then
+            git worktree add data FETCH_HEAD
+            git -C data checkout -B data
+          else
+            git worktree add --detach data
+            git -C data checkout --orphan data
+            git -C data rm -rfq .
+            mkdir -p data/web
+            # Chặn Vercel deploy mỗi khi nhánh data có commit mới
+            echo '{"git":{"deploymentEnabled":false}}' > data/web/vercel.json
+            echo '[]' > data/signals.json
+          fi
+
+      - name: Lấy chat_id Zalo (chỉ khi chưa có ZALO_CHAT_ID)
+        if: ${{ inputs.test && env.ZALO_CHAT_ID == '' && env.ZALO_BOT_TOKEN != '' }}
+        run: python -m bot --zalo-chat-id
+
+      - name: Gửi tin thử
+        if: ${{ inputs.test && (env.ZALO_CHAT_ID != '' || env.GMAIL_USER != '') }}
+        run: python -m bot --test
+
+      - name: Quét
+        if: ${{ !inputs.test }}
+        run: python -m bot
+
+      - name: Lưu nhánh data
+        if: always()
+        run: |
+          cd data
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -qm "data: $(date -u +%FT%TZ)"
+            git push origin data
+          fi

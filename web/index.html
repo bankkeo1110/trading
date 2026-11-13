@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trading — Bollinger Bands</title>
+<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+  :root { --bg:#0e1116; --panel:#161b22; --line:#262d38; --text:#e6e9ee; --dim:#8b95a5;
+          --up:#2fbf71; --down:#f0554d; --warn:#e3b341; --accent:#5b9dff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:1100px; margin:0 auto; padding:14px; }
+  header { display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  h1 { font-size:18px; margin:0; }
+  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); margin:22px 0 8px; }
+  .dim { color:var(--dim); font-size:12px; }
+  .grid { display:grid; grid-template-columns:auto repeat(3,1fr); gap:6px; align-items:stretch; }
+  .grid .coin { display:flex; align-items:center; font-weight:600; padding-right:6px; }
+  .grid .head { color:var(--dim); font-size:12px; text-align:center; }
+  .cell { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:7px 8px;
+          cursor:pointer; text-align:center; color:inherit; font:inherit; }
+  .cell b { display:block; font-size:13px; }
+  .cell span { font-size:11px; color:var(--dim); }
+  .cell.upper { border-color:var(--down); } .cell.upper b { color:var(--down); }
+  .cell.lower { border-color:var(--up); }  .cell.lower b { color:var(--up); }
+  .cell.touch { background:#1d2430; }
+  .cell.sel { outline:2px solid var(--accent); outline-offset:1px; }
+  .cell:focus-visible, .sig:focus-visible { outline:2px solid var(--accent); }
+  #chartTitle { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+  #chartTitle b { font-size:15px; }
+  #chart { height:400px; background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .sig { display:block; width:100%; text-align:left; background:var(--panel); border:1px solid var(--line);
+         border-left-width:4px; border-radius:8px; padding:8px 10px; margin-bottom:6px; cursor:pointer;
+         color:inherit; font:inherit; }
+  .sig.upper { border-left-color:var(--down); } .sig.lower { border-left-color:var(--up); }
+  .sig.squeeze { border-left-color:var(--warn); }
+  .sig .top { display:flex; justify-content:space-between; gap:8px; }
+  .msg { background:var(--panel); border:1px dashed var(--line); border-radius:8px; padding:12px; color:var(--dim); }
+  a { color:var(--accent); }
+  @media (max-width:520px) { #chart { height:320px; } main { padding:10px; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Trading — Bollinger Bands</h1>
+    <span class="dim" id="updated">Đang tải…</span>
+  </header>
+
+  <h2>Trạng thái hiện tại</h2>
+  <div class="grid" id="grid"></div>
+  <p class="dim">Chạm một ô để xem biểu đồ. Đỏ = gần/chạm BB trên, xanh = gần/chạm BB dưới. %B: 0 = BB dưới, 1 = BB trên.</p>
+
+  <h2>Biểu đồ</h2>
+  <div id="chartTitle"><b id="pair"></b><a id="tv" target="_blank" rel="noopener">Mở TradingView</a></div>
+  <div id="chart"></div>
+
+  <h2>Tín hiệu đã gửi</h2>
+  <div id="signals"><div class="msg">Đang tải…</div></div>
+</main>
+
+<script>
+// ---- Cấu hình -------------------------------------------------------------
+const REPO = new URLSearchParams(location.search).get("repo") || "bankkeo1110/trading";
+const SYMBOLS = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "SUIUSDT"];
+const TIMEFRAMES = ["1h", "4h", "1d"];
+const BB_PERIOD = 20, BB_MULT = 2, NEAR = 0.10;
+const VN_OFFSET = 7 * 3600;                       // hiển thị trục thời gian theo giờ VN
+const TV = { "1h": "60", "4h": "240", "1d": "D" };
+// ---------------------------------------------------------------------------
+
+let sel = { symbol: SYMBOLS[0], tf: TIMEFRAMES[0] };
+let signals = [];
+const $ = id => document.getElementById(id);
+const coin = s => s.replace("USDT", "");
+const fmt = p => p >= 1000 ? p.toLocaleString("en-US", { maximumFractionDigits: 1 })
+  : p >= 100 ? p.toFixed(2) : p >= 1 ? p.toFixed(3) : p.toFixed(5);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+async function klines(symbol, tf, limit) {
+  const r = await fetch(`https://data-api.binance.vision/api/v3/klines?symbol=${symbol}&interval=${tf}&limit=${limit}`);
+  if (!r.ok) throw new Error("Binance " + r.status);
+  return (await r.json()).map(k => ({ t: k[0], open: +k[1], high: +k[2], low: +k[3], close: +k[4] }));
+}
+
+function bbAt(closes, end) {                       // BB của nến có chỉ số end-1
+  const w = closes.slice(end - BB_PERIOD, end);
+  const mid = w.reduce((a, b) => a + b, 0) / BB_PERIOD;
+  const sd = Math.sqrt(w.reduce((a, b) => a + (b - mid) ** 2, 0) / BB_PERIOD);
+  return { mid, upper: mid + BB_MULT * sd, lower: mid - BB_MULT * sd };
+}
+
+function status(rows) {
+  const closes = rows.map(r => r.close), price = closes[closes.length - 1];
+  const b = bbAt(closes, closes.length), width = b.upper - b.lower;
+  const pctb = width ? (price - b.lower) / width : 0.5;
+  let side = "", level = "";
+  if (pctb >= 1) [side, level] = ["upper", "touch"];
+  else if (pctb >= 1 - NEAR) [side, level] = ["upper", "near"];
+  else if (pctb <= 0) [side, level] = ["lower", "touch"];
+  else if (pctb <= NEAR) [side, level] = ["lower", "near"];
+  return { price, pctb, side, level };
+}
+
+// ---- Bảng trạng thái ------------------------------------------------------
+function buildGrid() {
+  let html = `<div></div>` + TIMEFRAMES.map(tf => `<div class="head">${tf}</div>`).join("");
+  for (const s of SYMBOLS) {
+    html += `<div class="coin">${coin(s)}</div>`;
+    for (const tf of TIMEFRAMES)
+      html += `<button class="cell" id="c-${s}-${tf}" data-s="${s}" data-tf="${tf}"><b>…</b><span>&nbsp;</span></button>`;
+  }
+  $("grid").innerHTML = html;
+  $("grid").addEventListener("click", e => {
+    const c = e.target.closest(".cell");
+    if (c) select(c.dataset.s, c.dataset.tf);
+  });
+}
+
+async function refreshGrid() {
+  await Promise.all(SYMBOLS.flatMap(s => TIMEFRAMES.map(async tf => {
+    const el = $(`c-${s}-${tf}`);
+    try {
+      const st = status(await klines(s, tf, 60));
+      const label = !st.side ? "Trong dải"
+        : (st.level === "touch" ? "Chạm " : "Gần ") + (st.side === "upper" ? "BB trên" : "BB dưới");
+      el.className = `cell ${st.side} ${st.level}` + (sel.symbol === s && sel.tf === tf ? " sel" : "");
+      el.innerHTML = `<b>${label}</b><span>${fmt(st.price)} · %B ${st.pctb.toFixed(2)}</span>`;
+    } catch (e) {
+      el.innerHTML = `<b>Lỗi</b><span>${esc(e.message)}</span>`;
+    }
+  })));
+  $("updated").textContent = "Cập nhật " + new Date().toLocaleTimeString("vi-VN");
+}
+
+// ---- Biểu đồ --------------------------------------------------------------
+let chart, candleSeries, lines = {};
+function buildChart() {
+  if (!window.LightweightCharts) {
+    $("chart").innerHTML = `<div class="msg">Không tải được thư viện biểu đồ. Hãy thử tải lại trang.</div>`;
+    return;
+  }
+  chart = LightweightCharts.createChart($("chart"), {
+    autoSize: true,
+    layout: { background: { color: "#161b22" }, textColor: "#8b95a5" },
+    grid: { vertLines: { color: "#1f2630" }, horzLines: { color: "#1f2630" } },
+    timeScale: { timeVisible: true, borderColor: "#262d38" },
+    rightPriceScale: { borderColor: "#262d38" },
+  });
+  candleSeries = chart.addCandlestickSeries({
+    upColor: "#2fbf71", downColor: "#f0554d", wickUpColor: "#2fbf71", wickDownColor: "#f0554d", borderVisible: false,
+  });
+  const line = color => chart.addLineSeries({ color, lineWidth: 1, priceLineVisible: false, lastValueVisible: false });
+  lines = { upper: line("#f0554d"), mid: line("#8b95a5"), lower: line("#2fbf71") };
+}
+
+async function refreshChart(fit) {
+  $("pair").textContent = `${coin(sel.symbol)}/USDT · ${sel.tf} · BB(${BB_PERIOD}, ${BB_MULT})`;
+  $("tv").href = `https://www.tradingview.com/chart/?symbol=BINANCE:${sel.symbol}&interval=${TV[sel.tf]}`;
+  if (!chart) return;
+  let rows;
+  try { rows = await klines(sel.symbol, sel.tf, 300); } catch (e) { return; }
+  const time = r => r.t / 1000 + VN_OFFSET, closes = rows.map(r => r.close);
+  candleSeries.setData(rows.map(r => ({ time: time(r), open: r.open, high: r.high, low: r.low, close: r.close })));
+  const pts = { upper: [], mid: [], lower: [] };
+  for (let i = BB_PERIOD; i <= rows.length; i++) {
+    const b = bbAt(closes, i), t = time(rows[i - 1]);
+    for (const k in pts) pts[k].push({ time: t, value: b[k] });
+  }
+  for (const k in pts) lines[k].setData(pts[k]);
+  const first = rows[0].t;
+  candleSeries.setMarkers(signals
+    .filter(s => s.symbol === sel.symbol && s.tf === sel.tf && s.candle >= first)
+    .sort((a, b) => a.candle - b.candle)
+    .map(s => s.type === "squeeze"
+      ? { time: s.candle / 1000 + VN_OFFSET, position: "aboveBar", color: "#e3b341", shape: "circle", text: "squeeze" }
+      : s.side === "upper"
+        ? { time: s.candle / 1000 + VN_OFFSET, position: "aboveBar", color: "#f0554d", shape: "arrowDown", text: s.level === "touch" ? "chạm" : "gần" }
+        : { time: s.candle / 1000 + VN_OFFSET, position: "belowBar", color: "#2fbf71", shape: "arrowUp", text: s.level === "touch" ? "chạm" : "gần" }));
+  if (fit) chart.timeScale().setVisibleLogicalRange({ from: rows.length - 110, to: rows.length + 4 });
+}
+
+function select(symbol, tf) {
+  sel = { symbol, tf };
+  document.querySelectorAll(".cell.sel").forEach(c => c.classList.remove("sel"));
+  const el = $(`c-${symbol}-${tf}`);
+  if (el) el.classList.add("sel");
+  refreshChart(true);
+}
+
+// ---- Lịch sử tín hiệu -----------------------------------------------------
+function describe(s) {
+  if (s.type === "squeeze") return "BB co hẹp (squeeze)";
+  return (s.level === "touch" ? "Chạm/vượt " : "Gần chạm ") + (s.side === "upper" ? "BB trên" : "BB dưới");
+}
+
+async function refreshSignals() {
+  const box = $("signals");
+  try {
+    const r = await fetch(`https://raw.githubusercontent.com/${REPO}/data/signals.json?t=${Date.now()}`);
+    if (!r.ok) throw new Error(r.status);
+    signals = await r.json();
+  } catch (e) {
+    box.innerHTML = `<div class="msg">Chưa đọc được lịch sử tín hiệu từ <b>${esc(REPO)}</b> (nhánh <code>data</code>).
+      Bot cần chạy ít nhất 1 lần và repo phải ở chế độ public.</div>`;
+    return;
+  }
+  if (!signals.length) { box.innerHTML = `<div class="msg">Chưa có tín hiệu nào được gửi.</div>`; return; }
+  box.innerHTML = signals.slice(-60).reverse().map((s, i) => {
+    const cls = s.type === "squeeze" ? "squeeze" : s.side;
+    const rsi = s.rsi == null ? "—" : Math.round(s.rsi);
+    const conf = s.confluence && s.confluence.length ? ` · ⚡ đồng thuận ${esc(s.confluence.join(", "))}` : "";
+    return `<button class="sig ${cls}" data-s="${esc(s.symbol)}" data-tf="${esc(s.tf)}">
+      <div class="top"><b>${esc(coin(s.symbol))} ${esc(s.tf)} — ${describe(s)}</b><span class="dim">${esc(s.time)}</span></div>
+      <div class="dim">Giá ${fmt(s.price)} · BB ${fmt(s.lower)} – ${fmt(s.upper)} · RSI ${rsi}${conf}</div>
+    </button>`;
+  }).join("");
+}
+$("signals").addEventListener("click", e => {
+  const b = e.target.closest(".sig");
+  if (b && SYMBOLS.includes(b.dataset.s) && TIMEFRAMES.includes(b.dataset.tf)) {
+    select(b.dataset.s, b.dataset.tf);
+    $("chartTitle").scrollIntoView({ behavior: "smooth" });
+  }
+});
+
+// ---- Khởi động ------------------------------------------------------------
+buildGrid();
+buildChart();
+(async () => {
+  await refreshSignals();
+  refreshChart(true);
+  refreshGrid();
+})();
+setInterval(() => { refreshGrid(); refreshChart(false); }, 60_000);
+setInterval(async () => { await refreshSignals(); refreshChart(false); }, 300_000);
+</script>
+</body>
+</html>
