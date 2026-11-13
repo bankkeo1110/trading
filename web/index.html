@@ -16,6 +16,8 @@
   h1 { font-size:18px; margin:0; }
   h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); margin:22px 0 8px; }
   .dim { color:var(--dim); font-size:12px; }
+  nav { display:flex; gap:14px; }
+  nav a[aria-current] { color:var(--text); text-decoration:none; font-weight:600; }
   .grid { display:grid; grid-template-columns:auto repeat(3,1fr); gap:6px; align-items:stretch; }
   .grid .coin { display:flex; align-items:center; font-weight:600; padding-right:6px; }
   .grid .head { color:var(--dim); font-size:12px; text-align:center; }
@@ -55,6 +57,7 @@
 <main>
   <header>
     <h1>Trading — Bollinger Bands</h1>
+    <nav><a href="/" aria-current="page">Bollinger Bands</a><a href="/signals.html">Gợi ý mua/bán</a></nav>
     <span class="dim" id="updated">Đang tải…</span>
   </header>
 

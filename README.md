@@ -11,11 +11,11 @@ Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín 
 
 | Thư mục | Nội dung |
 |---|---|
-| `bot/` | Bot Python (không cần cài thư viện) |
+| `bot/` | Bot Python (không cần cài thư viện); `bot/advisor.py` là phần gợi ý mua/bán |
 | `.github/workflows/scan.yml` | Lịch chạy 15 phút/lần trên GitHub Actions |
-| `web/` | Dashboard (biểu đồ, lịch sử tín hiệu, chọn kênh gửi), deploy lên Vercel |
+| `web/` | Dashboard (biểu đồ, lịch sử tín hiệu, chọn kênh gửi) và trang gợi ý mua/bán `signals.html`, deploy lên Vercel |
 | `tests/` | Test: `python -m unittest discover -s tests` |
-| nhánh `data` | `state.json` (chống spam) và `signals.json` (lịch sử), bot tự tạo |
+| nhánh `data` | `state.json` (chống spam), `signals.json` (lịch sử BB), `advice.json` và `advice_signals.json` (gợi ý mua/bán), bot tự tạo |
 
 ## Logic tín hiệu
 
@@ -25,6 +25,30 @@ Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín 
 - Kèm RSI(14), đánh dấu quá mua/quá bán khi trùng phía band.
 - **Đồng thuận**: nhiều khung cùng ở một phía band thì ghi rõ trong tin.
 - **Squeeze**: báo 1 lần khi dải co về mức hẹp nhất trong 120 nến.
+
+## Gợi ý nên mua / nên bán
+
+Ngoài cảnh báo BB, mỗi lượt quét bot chấm điểm từng coin trên từng khung từ −100 (bán mạnh) đến +100 (mua mạnh),
+chỉ dùng **nến đã đóng** để tín hiệu không nhấp nháy. Xem ở trang `/signals.html` của dashboard.
+
+| Chỉ báo | Điểm tối đa | Ý nghĩa |
+|---|---|---|
+| EMA 20/50/200 | ±30 | Xu hướng: giá so với EMA200, EMA20 so với EMA50, EMA50 so với EMA200 |
+| MACD 12/26/9 | ±20 | Động lượng: MACD so với đường tín hiệu, histogram tăng/giảm, MACD so với 0 |
+| ADX/DI 14 | ±15 | Sức mạnh xu hướng. ADX < 20 là đi ngang: EMA và MACD chỉ tính nửa điểm |
+| RSI 14 | ±15 | Quá bán/quá mua, ngoài ra nghiêng nhẹ theo phía trên/dưới 50 |
+| Stochastic RSI | ±10 | K cắt D từ vùng quá bán/quá mua |
+| Bollinger %B | ±10 | Giá ở/gần BB dưới (mua) hoặc BB trên (bán) |
+| Khối lượng | ±5 | Nến tăng/giảm với khối lượng từ 1.5 lần trung bình 20 nến |
+
+- Khi xu hướng mạnh (ADX ≥ 30), tín hiệu đảo chiều đi ngược xu hướng (RSI, Stoch RSI, BB) chỉ tính 1/3 điểm.
+- Từ ±20 là **NÊN MUA / NÊN BÁN**, từ ±50 là **mạnh**. Điểm tổng hợp mỗi coin: 1h ×1, 4h ×2, 1d ×3.
+- Bot chỉ nhắn khi một coin + khung chuyển sang MUA hoặc BÁN, hoặc nâng lên mức mạnh. Đã ở MUA/BÁN thì giữ
+  cho tới khi điểm lùi qua ±10 nên không báo đi báo lại.
+- Tin kèm mức tham khảo theo ATR(14): cắt lỗ 1.5 ATR, chốt lời 1.5 và 3 ATR.
+- Tắt chức năng này: đặt Variable `ADVICE=off`.
+
+Đây là gợi ý từ chỉ báo kỹ thuật, không phải lời khuyên đầu tư.
 
 ## Chọn kênh gửi
 
@@ -65,7 +89,7 @@ Secrets nằm ở repo > Settings > Secrets and variables > Actions > New reposi
 ## Tuỳ chỉnh
 
 Đặt ở Settings > Secrets and variables > Actions > **Variables**:
-`CHANNELS`, `SYMBOLS` (vd `BTCUSDT,ETHUSDT`), `TIMEFRAMES` (vd `1h,4h,1d`), `NEAR` (vd `0.05`).
+`CHANNELS`, `SYMBOLS` (vd `BTCUSDT,ETHUSDT`), `TIMEFRAMES` (vd `1h,4h,1d`), `NEAR` (vd `0.05`), `ADVICE` (`off` để tắt gợi ý mua/bán).
 Nếu đổi coin/khung, sửa thêm 2 dòng `SYMBOLS`, `TIMEFRAMES` ở đầu phần script trong `web/index.html`.
 
 ## Lưu ý

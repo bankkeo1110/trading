@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trading — Gợi ý mua/bán</title>
+<style>
+  :root { --bg:#0e1116; --panel:#161b22; --line:#262d38; --text:#e6e9ee; --dim:#8b95a5;
+          --up:#2fbf71; --down:#f0554d; --warn:#e3b341; --accent:#5b9dff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  main { max-width:1100px; margin:0 auto; padding:14px; }
+  header { display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  h1 { font-size:18px; margin:0; }
+  h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); margin:22px 0 8px; }
+  nav { display:flex; gap:14px; }
+  nav a[aria-current] { color:var(--text); text-decoration:none; font-weight:600; }
+  .dim { color:var(--dim); font-size:12px; }
+  a { color:var(--accent); }
+  .warnbox { border:1px solid var(--warn); border-radius:8px; padding:9px 12px; margin-top:12px; color:var(--warn); font-size:13px; }
+  .grid { display:grid; grid-template-columns:auto repeat(var(--cols),1fr); gap:6px; align-items:stretch; }
+  .grid .coin { display:flex; align-items:center; font-weight:600; padding-right:6px; }
+  .grid .head { color:var(--dim); font-size:12px; text-align:center; }
+  .cell { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:7px 6px; min-height:44px;
+          cursor:pointer; text-align:center; color:inherit; font:inherit; }
+  .cell b { display:block; font-size:13px; }
+  .cell span { font-size:11px; color:var(--dim); }
+  .cell.total { cursor:default; background:#1d2430; }
+  .buy { border-color:var(--up); } .buy b, .pos { color:var(--up); }
+  .sell { border-color:var(--down); } .sell b, .neg { color:var(--down); }
+  .strong { border-width:2px; }
+  .cell.sel { outline:2px solid var(--accent); outline-offset:1px; }
+  .cell:focus-visible { outline:2px solid var(--accent); }
+  .panel { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px; }
+  .panel .top { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+  .panel .top b { font-size:15px; }
+  .bar { height:8px; border-radius:4px; background:linear-gradient(90deg,var(--down),#3a4350 50%,var(--up)); position:relative; margin:10px 0 14px; }
+  .bar i { position:absolute; top:-4px; width:4px; height:16px; background:var(--text); border-radius:2px; transform:translateX(-2px); }
+  table { width:100%; border-collapse:collapse; }
+  td { padding:6px 4px; border-top:1px solid var(--line); vertical-align:top; }
+  td.pts { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; font-weight:600; }
+  td.name { white-space:nowrap; color:var(--dim); }
+  .levels { display:flex; gap:16px; flex-wrap:wrap; margin-top:10px; }
+  .sig { background:var(--panel); border:1px solid var(--line); border-left-width:4px; border-radius:8px;
+         padding:8px 10px; margin-bottom:6px; }
+  .sig.buy { border-left-color:var(--up); } .sig.sell { border-left-color:var(--down); }
+  .sig .top { display:flex; justify-content:space-between; gap:8px; }
+  .msg { background:var(--panel); border:1px dashed var(--line); border-radius:8px; padding:12px; color:var(--dim); }
+  @media (max-width:520px) { main { padding:10px; } .cell b { font-size:12px; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Trading — Gợi ý mua/bán</h1>
+    <nav><a href="/">Bollinger Bands</a><a href="/signals.html" aria-current="page">Gợi ý mua/bán</a></nav>
+  </header>
+  <div class="warnbox">Chỉ là gợi ý tham khảo từ chỉ báo kỹ thuật, không phải lời khuyên đầu tư. Chỉ báo có thể sai, nhất là khi có tin tức lớn. Tự quyết định và quản lý vốn.</div>
+
+  <h2>Đánh giá hiện tại</h2>
+  <div class="grid" id="grid"><div class="msg">Đang tải…</div></div>
+  <p class="dim">Điểm từ −100 (bán mạnh) đến +100 (mua mạnh), tính trên nến đã đóng. Từ ±20: nên mua/bán, từ ±50: mạnh.
+    Cột Tổng hợp tính trọng số 1h ×1, 4h ×2, 1d ×3. Chạm một ô để xem chi tiết.</p>
+
+  <h2>Chi tiết chỉ báo</h2>
+  <div class="panel" id="detail"><span class="dim">Chọn một ô ở bảng trên.</span></div>
+
+  <h2>Gợi ý đã gửi về Telegram</h2>
+  <div id="history"><div class="msg">Đang tải…</div></div>
+</main>
+
+<script>
+const REPO = new URLSearchParams(location.search).get("repo") || "bankkeo1110/trading";
+const TV = { "15m": "15", "30m": "30", "1h": "60", "2h": "120", "4h": "240", "1d": "D" };
+const LABEL = { strong_buy: "Nên mua (mạnh)", buy: "Nên mua", neutral: "Trung lập", sell: "Nên bán", strong_sell: "Nên bán (mạnh)" };
+const $ = id => document.getElementById(id);
+const coin = s => s.replace("USDT", "");
+const fmt = p => p >= 1000 ? p.toLocaleString("en-US", { maximumFractionDigits: 1 })
+  : p >= 100 ? p.toFixed(2) : p >= 1 ? p.toFixed(3) : p.toFixed(5);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const cls = r => (r.endsWith("buy") ? "buy" : r.endsWith("sell") ? "sell" : "") + (r.startsWith("strong") ? " strong" : "");
+const signed = n => (n > 0 ? "+" : n < 0 ? "−" : "") + Math.abs(n);
+const data = async name => {
+  const r = await fetch(`https://raw.githubusercontent.com/${REPO}/data/${name}?t=${Date.now()}`);
+  if (!r.ok) throw new Error(r.status);
+  return r.json();
+};
+
+let snap = null, sel = null;
+
+function renderGrid() {
+  const symbols = [...new Set(snap.items.map(i => i.symbol))], tfs = [...new Set(snap.items.map(i => i.tf))];
+  $("grid").style.setProperty("--cols", tfs.length + 1);
+  let html = `<div></div>` + tfs.map(tf => `<div class="head">${esc(tf)}</div>`).join("") + `<div class="head">Tổng hợp</div>`;
+  for (const s of symbols) {
+    html += `<div class="coin">${esc(coin(s))}</div>`;
+    for (const tf of tfs) {
+      const i = snap.items.findIndex(x => x.symbol === s && x.tf === tf), it = snap.items[i];
+      html += it
+        ? `<button class="cell ${cls(it.rating)}${sel === i ? " sel" : ""}" data-i="${i}"><b>${LABEL[it.rating]}</b><span>${signed(it.score)}</span></button>`
+        : `<div class="cell total"><b>—</b></div>`;
+    }
+    const o = snap.overall[s];
+    html += `<div class="cell total ${cls(o.rating)}"><b>${LABEL[o.rating]}</b><span>${signed(o.score)}</span></div>`;
+  }
+  $("grid").innerHTML = html;
+}
+
+function renderDetail() {
+  const it = snap.items[sel];
+  const dir = it.rating.endsWith("buy") ? 1 : it.rating.endsWith("sell") ? -1 : 0;
+  const lv = k => fmt(it.price + dir * k * it.atr);
+  const closed = new Date(it.candle).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit" });
+  $("detail").innerHTML = `
+    <div class="top"><b>${esc(coin(it.symbol))}/USDT · ${esc(it.tf)} — <span class="${dir > 0 ? "pos" : dir < 0 ? "neg" : ""}">${LABEL[it.rating]} (${signed(it.score)})</span></b>
+      <a href="https://www.tradingview.com/chart/?symbol=BINANCE:${esc(it.symbol)}&interval=${TV[it.tf] || "60"}" target="_blank" rel="noopener">Mở TradingView</a></div>
+    <div class="dim">Giá đóng nến ${fmt(it.price)} · nến mở lúc ${closed} (giờ VN)</div>
+    <div class="bar" role="img" aria-label="Điểm ${it.score} trên thang -100 đến 100"><i style="left:${(it.score + 100) / 2}%"></i></div>
+    <table>${it.parts.map(p => `<tr><td class="name">${esc(p.name)}</td><td>${esc(p.note)}</td>
+      <td class="pts ${p.points > 0 ? "pos" : p.points < 0 ? "neg" : "dim"}">${signed(p.points)}</td></tr>`).join("")}</table>
+    ${dir ? `<div class="levels"><span>Cắt lỗ tham khảo: <b>${lv(-1.5)}</b></span><span>Chốt lời: <b>${lv(1.5)}</b> / <b>${lv(3)}</b></span>
+      <span class="dim">theo ATR ${fmt(it.atr)} (1.5 và 3 lần)</span></div>` : ""}`;
+}
+
+$("grid").addEventListener("click", e => {
+  const c = e.target.closest("button.cell");
+  if (!c) return;
+  sel = +c.dataset.i;
+  renderGrid();
+  renderDetail();
+});
+
+async function refresh() {
+  try {
+    snap = await data("advice.json");
+    if (sel === null || !snap.items[sel])   // mặc định mở ô có tín hiệu mạnh nhất
+      sel = snap.items.reduce((best, it, i) => Math.abs(it.score) > Math.abs(snap.items[best].score) ? i : best, 0);
+    renderGrid();
+    renderDetail();
+  } catch (e) {
+    $("grid").innerHTML = `<div class="msg" style="grid-column:1/-1">Chưa có dữ liệu gợi ý từ <b>${esc(REPO)}</b> (nhánh <code>data</code>).
+      Bot cần chạy ít nhất 1 lượt sau khi cập nhật (tối đa khoảng 15 phút).</div>`;
+  }
+  try {
+    const hist = await data("advice_signals.json");
+    $("history").innerHTML = hist.length ? hist.slice(-60).reverse().map(a => {
+      const top = [...a.parts].filter(p => p.points).sort((x, y) => Math.abs(y.points) - Math.abs(x.points)).slice(0, 3);
+      return `<div class="sig ${cls(a.rating)}">
+        <div class="top"><b>${esc(coin(a.symbol))} ${esc(a.tf)} — ${LABEL[a.rating]} (${signed(a.score)})</b><span class="dim">${esc(a.time)}</span></div>
+        <div class="dim">Giá ${fmt(a.price)} · cắt lỗ ${fmt(a.sl)} · chốt lời ${fmt(a.tp1)} / ${fmt(a.tp2)}</div>
+        <div class="dim">${top.map(p => esc(p.note)).join(" · ")}</div></div>`;
+    }).join("") : `<div class="msg">Chưa có gợi ý nào được gửi.</div>`;
+  } catch (e) {
+    $("history").innerHTML = `<div class="msg">Chưa có gợi ý nào được gửi.</div>`;
+  }
+}
+refresh();
+setInterval(refresh, 300_000);
+</script>
+</body>
+</html>

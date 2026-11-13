@@ -39,6 +39,8 @@ class Config:
     squeeze_lookback: int = field(default_factory=lambda: _num("SQUEEZE_LOOKBACK", 120, int))
     squeeze_pct: float = field(default_factory=lambda: _num("SQUEEZE_PCT", 0.05))
     squeeze_ratio: float = field(default_factory=lambda: _num("SQUEEZE_RATIO", 0.75))
+    # Gợi ý mua/bán theo nhiều chỉ báo. Đặt ADVICE=off để tắt.
+    advice: bool = field(default_factory=lambda: (os.environ.get("ADVICE") or "on").lower() not in ("off", "0", "false", "no"))
     data_dir: Path = field(default_factory=lambda: Path(os.environ.get("DATA_DIR") or "data"))
     # Kênh gửi, cách nhau bởi dấu phẩy: telegram, zalo, gmail. Mặc định chỉ Telegram.
     channels: list = field(default_factory=lambda: [c.lower() for c in _list("CHANNELS", "telegram")])

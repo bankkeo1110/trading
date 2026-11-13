@@ -36,6 +36,7 @@ jobs:
       TIMEFRAMES: ${{ vars.TIMEFRAMES }}
       NEAR: ${{ vars.NEAR }}
       DASHBOARD_URL: ${{ vars.DASHBOARD_URL }}
+      ADVICE: ${{ vars.ADVICE }}
       DATA_DIR: data
     steps:
       - uses: actions/checkout@v4

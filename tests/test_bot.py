@@ -5,8 +5,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from bot.__main__ import apply_settings, scan
+from bot.advisor import advise, decide_advice, format_advice_message, levels, overall
 from bot.config import Config
-from bot.indicators import bollinger, rsi
+from bot.indicators import atr_adx, bollinger, ema_series, macd, rsi, rsi_series, stoch_rsi
 from bot import notify as notify_mod
 from bot.notify import chunk, notify
 from bot.signals import analyze, decide, format_message, subject
@@ -164,6 +165,111 @@ class Scan(unittest.TestCase):
             sigs = json.loads((Path(d) / "signals.json").read_text(encoding="utf-8"))
             self.assertEqual(len(sigs), 1)
             self.assertEqual(sigs[0]["level"], "touch")
+
+
+def ohlc(closes, t0=1_700_000_000_000, step=3_600_000):
+    """Nến có râu ±0.5% quanh giá đóng, giá mở = giá đóng nến trước; thêm 1 nến đang chạy ở cuối."""
+    rows, prev = [], closes[0]
+    for i, c in enumerate(closes + [closes[-1]]):
+        rows.append({"t": t0 + i * step, "o": prev, "h": max(prev, c) * 1.005, "l": min(prev, c) * 0.995,
+                     "c": c, "v": 100.0})
+        prev = c
+    return rows
+
+
+def trend(n=300, step=0.004, wiggle=0.01):
+    """Chuỗi giá đi theo 1 hướng (step > 0 tăng, < 0 giảm) kèm dao động nhỏ."""
+    return [100 * (1 + step) ** i * (1 + wiggle * (1 if i % 3 == 0 else -0.5)) for i in range(n)]
+
+
+class Advisor(unittest.TestCase):
+    def setUp(self):
+        self.cfg = Config()
+
+    def test_indicator_series(self):
+        xs = [float(i) for i in range(1, 61)]
+        self.assertAlmostEqual(ema_series(xs, 10)[9], 5.5)            # khởi tạo bằng SMA
+        self.assertAlmostEqual(ema_series(xs, 10)[-1], 55.5)          # chuỗi tuyến tính: EMA trễ (n-1)/2
+        self.assertAlmostEqual(rsi_series(wave(101))[-1], rsi(wave(101)))
+        m, sig, hist, prev = macd(xs)
+        self.assertAlmostEqual(m, 7.0)                                # EMA12 - EMA26 = (25-11)/2
+        self.assertAlmostEqual(hist, 0.0, places=6)
+        atr, adx, pdi, mdi = atr_adx(ohlc(trend()))
+        self.assertGreater(adx, 30)
+        self.assertGreater(pdi, mdi)
+        k, d, pk, pd = stoch_rsi(trend())
+        self.assertTrue(0 <= k <= 100 and 0 <= d <= 100)
+
+    def test_uptrend_is_buy_and_downtrend_is_sell(self):
+        up = advise("BTCUSDT", "4h", ohlc(trend()), self.cfg)
+        down = advise("BTCUSDT", "4h", ohlc(trend(step=-0.004)), self.cfg)
+        self.assertIn(up["rating"], ("buy", "strong_buy"))
+        self.assertIn(down["rating"], ("sell", "strong_sell"))
+        self.assertTrue(-100 <= down["score"] < 0 < up["score"] <= 100)
+        lv = levels(up)
+        self.assertTrue(lv["sl"] < up["price"] < lv["tp1"] < lv["tp2"])
+        lv = levels(down)
+        self.assertTrue(lv["sl"] > down["price"] > lv["tp1"] > lv["tp2"])
+
+    def test_uses_closed_candles_only(self):
+        rows = ohlc(trend())
+        a = advise("BTCUSDT", "1h", rows, self.cfg)
+        rows[-1]["c"] = 1                                             # nến đang chạy không ảnh hưởng
+        self.assertEqual(advise("BTCUSDT", "1h", rows, self.cfg)["score"], a["score"])
+        with self.assertRaises(ValueError):
+            advise("BTCUSDT", "1h", ohlc(wave(100)), self.cfg)
+
+    def item(self, score, tf="1h"):
+        from bot.advisor import rating_of
+        return {"symbol": "BTCUSDT", "tf": tf, "candle": 1, "price": 100.0, "score": score,
+                "rating": rating_of(score), "parts": [{"name": "MACD", "points": score, "note": "x"}], "atr": 2.0}
+
+    def test_alert_only_on_change(self):
+        alerts, st = decide_advice([self.item(30)], {})
+        self.assertEqual([a["rating"] for a in alerts], ["buy"])
+        alerts, st = decide_advice([self.item(35)], st)               # vẫn MUA: không báo lại
+        self.assertEqual(alerts, [])
+        alerts, st = decide_advice([self.item(15)], st)               # lùi nhẹ: giữ MUA, không báo
+        self.assertEqual((alerts, st["advice|BTCUSDT|1h"]["rating"]), ([], "buy"))
+        alerts, st = decide_advice([self.item(25)], st)               # quay lại: không báo lại
+        self.assertEqual(alerts, [])
+        alerts, st = decide_advice([self.item(60)], st)               # nâng lên mạnh: báo
+        self.assertEqual([a["rating"] for a in alerts], ["strong_buy"])
+        alerts, st = decide_advice([self.item(0)], st)                # về trung lập: im lặng
+        self.assertEqual(alerts, [])
+        alerts, st = decide_advice([self.item(-30)], st)              # đảo chiều: báo
+        self.assertEqual([a["rating"] for a in alerts], ["sell"])
+
+    def test_overall_weights_higher_timeframes(self):
+        o = overall([self.item(60, "1h"), self.item(-40, "1d")])
+        self.assertEqual(o["BTCUSDT"]["score"], -15)                  # (60*1 - 40*3) / 4
+
+    def test_message(self):
+        alerts, _ = decide_advice([self.item(60)], {})
+        text = format_advice_message(alerts, overall([self.item(60)]), Config(dashboard_url="https://x.vercel.app/"))
+        self.assertIn("BTC 1h — NÊN MUA (mạnh)", text)
+        self.assertIn("cắt lỗ 97.000", text)
+        self.assertIn("không phải lời khuyên đầu tư", text)
+        self.assertIn("https://x.vercel.app/signals.html", text)
+
+    def test_scan_sends_advice_once(self):
+        import json
+        with tempfile.TemporaryDirectory() as d:
+            cfg = Config(symbols=["BTCUSDT"], timeframes=["1h", "4h"], data_dir=Path(d), channels=[],
+                         telegram_token="")
+            fetch = lambda s, tf, n: ohlc(trend())
+            self.assertEqual(scan(cfg, fetch=fetch), 0)
+            self.assertEqual(scan(cfg, fetch=fetch), 0)
+            hist = json.loads((Path(d) / "advice_signals.json").read_text(encoding="utf-8"))
+            self.assertEqual(len(hist), 2)
+            self.assertIn("sl", hist[0])
+            snap = json.loads((Path(d) / "advice.json").read_text(encoding="utf-8"))
+            self.assertEqual(len(snap["items"]), 2)
+            self.assertIn("BTCUSDT", snap["overall"])
+            cfg.advice = False
+            (Path(d) / "advice.json").unlink()
+            self.assertEqual(scan(cfg, fetch=fetch), 0)
+            self.assertFalse((Path(d) / "advice.json").exists())
 
 
 if __name__ == "__main__":
