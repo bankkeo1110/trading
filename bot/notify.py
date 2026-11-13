@@ -1,9 +1,12 @@
-"""Gửi thông báo qua Zalo Bot Platform và Gmail SMTP."""
+"""Gửi thông báo qua Telegram, Zalo Bot Platform và Gmail SMTP."""
 import json
 import smtplib
+import urllib.error
 import urllib.request
 from email.message import EmailMessage
 
+TELEGRAM_API = "https://api.telegram.org"
+TELEGRAM_LIMIT = 4096
 ZALO_API = "https://bot-api.zaloplatforms.com"
 ZALO_LIMIT = 2000
 
@@ -29,23 +32,56 @@ def chunk(text, limit=ZALO_LIMIT):
     return parts
 
 
-def zalo_call(token, method, body=None, timeout=40):
+def bot_call(api, token, method, body=None, timeout=40):
+    """Gọi Bot API kiểu Telegram (Zalo Bot Platform dùng cùng dạng)."""
     req = urllib.request.Request(
-        f"{ZALO_API}/bot{token}/{method}",
+        f"{api}/bot{token}/{method}",
         data=json.dumps(body or {}).encode(),
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        data = json.loads(r.read().decode())
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            data = json.loads(r.read().decode())
+    except urllib.error.HTTPError as e:
+        # Không đưa URL vào lỗi vì URL chứa token.
+        raise RuntimeError(f"{method} lỗi HTTP {e.code}: {e.read().decode(errors='replace')[:200]}") from None
     if not data.get("ok"):
-        raise RuntimeError(f"Zalo {method} lỗi: {data.get('description') or data}")
+        raise RuntimeError(f"{method} lỗi: {data.get('description') or data}")
     return data.get("result")
+
+
+def send_telegram(cfg, text):
+    for part in chunk(text, TELEGRAM_LIMIT):
+        bot_call(TELEGRAM_API, cfg.telegram_token, "sendMessage",
+                 {"chat_id": cfg.telegram_chat_id, "text": part, "disable_web_page_preview": True})
 
 
 def send_zalo(cfg, text):
     for part in chunk(text):
-        zalo_call(cfg.zalo_token, "sendMessage", {"chat_id": cfg.zalo_chat_id, "text": part})
+        bot_call(ZALO_API, cfg.zalo_token, "sendMessage", {"chat_id": cfg.zalo_chat_id, "text": part})
+
+
+def discover_chat_ids(cfg):
+    """Với kênh bot đã có token nhưng thiếu chat_id: đọc tin nhắn mới nhất gửi cho bot
+    rồi nhắn chat_id vào chính cuộc trò chuyện đó (không in ra log công khai)."""
+    notes = []
+    bots = (("telegram", "Telegram", TELEGRAM_API, cfg.telegram_token, cfg.telegram_chat_id, "TELEGRAM_CHAT_ID"),
+            ("zalo", "Zalo", ZALO_API, cfg.zalo_token, cfg.zalo_chat_id, "ZALO_CHAT_ID"))
+    for key, name, api, token, chat_id, secret in bots:
+        if key not in cfg.channels or not token or chat_id:
+            continue
+        try:
+            upd = bot_call(api, token, "getUpdates", {"timeout": 20})
+            items = upd if isinstance(upd, list) else [upd] if upd else []
+            ids = {str(((u or {}).get("message") or {}).get("chat", {}).get("id", "")) for u in items} - {""}
+            for cid in ids:
+                bot_call(api, token, "sendMessage", {"chat_id": cid, "text": f"{secret} của bạn là: {cid}"})
+            notes.append(f"{name}: đã nhắn {secret} vào {name} của bạn, hãy thêm nó vào Secrets." if ids
+                         else f"{name}: chưa thấy tin nhắn nào. Hãy nhắn 1 tin cho bot rồi chạy lại.")
+        except Exception as e:
+            notes.append(f"{name}: lỗi lấy chat_id ({e})")
+    return notes
 
 
 def send_gmail(cfg, subject, text):
@@ -60,17 +96,28 @@ def send_gmail(cfg, subject, text):
 
 
 def notify(cfg, subject, text):
-    """Gửi qua mọi kênh đã cấu hình. Trả về (kênh thành công, {kênh: lỗi})."""
-    ok, errors = [], {}
-    channels = []
-    if cfg.zalo_token and cfg.zalo_chat_id:
-        channels.append(("Zalo", lambda: send_zalo(cfg, text)))
-    if cfg.gmail_user and cfg.gmail_app_password:
-        channels.append(("Gmail", lambda: send_gmail(cfg, subject, text)))
-    for name, fn in channels:
+    """Gửi qua các kênh được chọn trong CHANNELS và đã cấu hình đủ.
+
+    Trả về (kênh gửi được, {kênh: lỗi}, kênh đã cấu hình).
+    """
+    available = {
+        "telegram": ("Telegram", bool(cfg.telegram_token and cfg.telegram_chat_id), lambda: send_telegram(cfg, text)),
+        "zalo": ("Zalo", bool(cfg.zalo_token and cfg.zalo_chat_id), lambda: send_zalo(cfg, text)),
+        "gmail": ("Gmail", bool(cfg.gmail_user and cfg.gmail_app_password), lambda: send_gmail(cfg, subject, text)),
+    }
+    ok, errors, configured = [], {}, []
+    for key in cfg.channels:
+        if key not in available:
+            errors[key] = "kênh không hợp lệ (chỉ nhận telegram, zalo, gmail)"
+            continue
+        name, ready, fn = available[key]
+        if not ready:
+            errors[name] = "đã chọn trong CHANNELS nhưng thiếu token/chat_id/mật khẩu"
+            continue
+        configured.append(name)
         try:
             fn()
             ok.append(name)
         except Exception as e:
             errors[name] = str(e)
-    return ok, errors, [n for n, _ in channels]
+    return ok, errors, configured

@@ -7,7 +7,8 @@ from pathlib import Path
 from bot.__main__ import scan
 from bot.config import Config
 from bot.indicators import bollinger, rsi
-from bot.notify import chunk
+from bot import notify as notify_mod
+from bot.notify import chunk, notify
 from bot.signals import analyze, decide, format_message, subject
 
 
@@ -104,11 +105,42 @@ class Notify(unittest.TestCase):
         self.assertEqual([len(p) for p in chunk("y" * 4500)], [2000, 2000, 500])
 
 
+class Channels(unittest.TestCase):
+    def run_notify(self, **kw):
+        sent = []
+        cfg = Config(telegram_token="t", telegram_chat_id="1", zalo_token="z", zalo_chat_id="2",
+                     gmail_user="a@b.c", gmail_app_password="p", **kw)
+        orig = (notify_mod.send_telegram, notify_mod.send_zalo, notify_mod.send_gmail)
+        notify_mod.send_telegram = lambda c, t: sent.append("telegram")
+        notify_mod.send_zalo = lambda c, t: sent.append("zalo")
+        notify_mod.send_gmail = lambda c, s, t: sent.append("gmail")
+        try:
+            return sent, notify(cfg, "s", "t")
+        finally:
+            notify_mod.send_telegram, notify_mod.send_zalo, notify_mod.send_gmail = orig
+
+    def test_default_is_telegram_only(self):
+        sent, (ok, errors, _) = self.run_notify()
+        self.assertEqual((sent, ok, errors), (["telegram"], ["Telegram"], {}))
+
+    def test_selected_channels(self):
+        sent, (ok, _, _) = self.run_notify(channels=["zalo", "gmail"])
+        self.assertEqual(sent, ["zalo", "gmail"])
+        sent, (ok, errors, _) = self.run_notify(channels=["telegram", "sms"])
+        self.assertEqual(sent, ["telegram"])
+        self.assertIn("sms", errors)
+
+    def test_selected_but_unconfigured(self):
+        ok, errors, configured = notify(Config(channels=["telegram"], telegram_token="", telegram_chat_id=""), "s", "t")
+        self.assertEqual((ok, configured), ([], []))
+        self.assertIn("Telegram", errors)
+
+
 class Scan(unittest.TestCase):
     def test_scan_saves_signals_once(self):
         with tempfile.TemporaryDirectory() as d:
-            cfg = Config(symbols=["BTCUSDT"], timeframes=["1h"], data_dir=Path(d),
-                         zalo_token="", gmail_user="")
+            cfg = Config(symbols=["BTCUSDT"], timeframes=["1h"], data_dir=Path(d), channels=[],
+                         telegram_token="")
             fetch = lambda s, tf, n: candles(wave(last=112))
             self.assertEqual(scan(cfg, fetch=fetch), 0)
             self.assertEqual(scan(cfg, fetch=fetch), 0)

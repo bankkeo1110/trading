@@ -1,7 +1,7 @@
 # Trading — cảnh báo Bollinger Bands
 
 Bot quét BTC, ETH, SOL, SUI (spot, cặp USDT) trên khung 1h / 4h / 1d. Khi giá gần chạm hoặc chạm/vượt
-BB trên/dưới, bot gửi tin về **Zalo** và **Gmail**, đồng thời lưu lại để xem trên dashboard Vercel.
+BB trên/dưới, bot gửi tin về **Telegram** (mặc định), **Zalo** hoặc **Gmail**, đồng thời lưu lại để xem trên dashboard Vercel.
 
 Dashboard: https://trading-kid215.vercel.app
 
@@ -26,24 +26,37 @@ Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín 
 - **Đồng thuận**: nhiều khung cùng ở một phía band thì ghi rõ trong tin.
 - **Squeeze**: báo 1 lần khi dải co về mức hẹp nhất trong 120 nến.
 
+## Chọn kênh gửi
+
+Biến `CHANNELS` quyết định gửi qua app nào, các kênh cách nhau bởi dấu phẩy: `telegram`, `zalo`, `gmail`.
+Không đặt gì thì **chỉ gửi Telegram**. Ví dụ: `CHANNELS=telegram,zalo` hoặc `CHANNELS=telegram,zalo,gmail`.
+Đặt ở repo > Settings > Secrets and variables > Actions > tab **Variables**.
+
 ## Cài đặt (làm hết trên trình duyệt)
 
-1. **Zalo bot**: vào https://bot.zaloplatforms.com, tạo bot, copy token. Mở Zalo nhắn 1 tin bất kỳ cho bot.
-2. **Gmail**: bật xác minh 2 bước, tạo App Password tại https://myaccount.google.com/apppasswords.
-3. **Secrets** (repo > Settings > Secrets and variables > Actions > New repository secret):
-   - `ZALO_BOT_TOKEN`
-   - `GMAIL_USER` (địa chỉ Gmail gửi đi), `GMAIL_APP_PASSWORD`
-   - `EMAIL_TO` (tuỳ chọn, mặc định gửi về chính `GMAIL_USER`)
-4. **Lấy chat_id Zalo**: tab Actions > "Quét Bollinger Bands" > Run workflow > tick "Gửi tin thử".
-   Bot sẽ nhắn `ZALO_CHAT_ID` vào Zalo của bạn. Thêm secret `ZALO_CHAT_ID` với giá trị đó.
-5. Chạy lại workflow với "Gửi tin thử" để nhận tin thử ở cả Zalo và Gmail. Từ đây bot tự chạy theo lịch.
-6. **Dashboard**: Vercel > Add New Project > chọn repo này > Root Directory = `web`.
-   (Tuỳ chọn) thêm Variable `DASHBOARD_URL` trong GitHub để tin nhắn kèm link dashboard.
+Secrets nằm ở repo > Settings > Secrets and variables > Actions > New repository secret.
+
+**Telegram (mặc định)**
+1. Mở Telegram, chat với `@BotFather`, gõ `/newbot`, đặt tên, copy token. Thêm secret `TELEGRAM_BOT_TOKEN`.
+2. Mở bot vừa tạo, bấm Start (hoặc nhắn 1 tin bất kỳ).
+3. Tab Actions > "Quét Bollinger Bands" > Run workflow > tick "Gửi tin thử". Bot nhắn `TELEGRAM_CHAT_ID`
+   vào Telegram của bạn. Thêm secret `TELEGRAM_CHAT_ID` với giá trị đó.
+4. Chạy "Gửi tin thử" lần nữa để nhận tin thử. Từ đây bot tự chạy theo lịch.
+
+**Zalo (tuỳ chọn, cần thêm `zalo` vào `CHANNELS`)**
+1. Vào https://bot.zaloplatforms.com, tạo bot, copy token. Thêm secret `ZALO_BOT_TOKEN`. Nhắn 1 tin cho bot.
+2. Chạy "Gửi tin thử": bot nhắn `ZALO_CHAT_ID` vào Zalo. Thêm secret `ZALO_CHAT_ID`.
+
+**Gmail (tuỳ chọn, cần thêm `gmail` vào `CHANNELS`)**
+1. Bật xác minh 2 bước, tạo App Password tại https://myaccount.google.com/apppasswords.
+2. Thêm secret `GMAIL_USER`, `GMAIL_APP_PASSWORD`, và `EMAIL_TO` nếu muốn gửi tới địa chỉ khác.
+
+**Dashboard**: đã deploy trên Vercel từ thư mục `web`. (Tuỳ chọn) thêm Variable `DASHBOARD_URL` để tin nhắn kèm link.
 
 ## Tuỳ chỉnh
 
 Đặt ở Settings > Secrets and variables > Actions > **Variables**:
-`SYMBOLS` (vd `BTCUSDT,ETHUSDT`), `TIMEFRAMES` (vd `1h,4h,1d`), `NEAR` (vd `0.05`).
+`CHANNELS`, `SYMBOLS` (vd `BTCUSDT,ETHUSDT`), `TIMEFRAMES` (vd `1h,4h,1d`), `NEAR` (vd `0.05`).
 Nếu đổi coin/khung, sửa thêm 2 dòng `SYMBOLS`, `TIMEFRAMES` ở đầu phần script trong `web/index.html`.
 
 ## Lưu ý

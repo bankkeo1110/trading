@@ -1,4 +1,4 @@
-"""Chạy: python -m bot [--loop GIÂY] [--dry-run] [--test] [--zalo-chat-id]"""
+"""Chạy: python -m bot [--loop GIÂY] [--dry-run] [--test]"""
 import argparse
 import json
 import sys
@@ -6,7 +6,7 @@ import time
 
 from .config import Config, load_dotenv
 from .market import fetch_klines
-from .notify import notify, zalo_call
+from .notify import discover_chat_ids, notify
 from .signals import analyze, decide, format_message, subject
 
 MAX_SIGNALS = 500
@@ -59,7 +59,7 @@ def scan(cfg, dry_run=False, fetch=fetch_klines):
     for name, err in errors.items():
         print(f"LỖI gửi {name}: {err}", file=sys.stderr)
     if not configured:
-        print("CẢNH BÁO: chưa cấu hình Zalo hay Gmail, tín hiệu chỉ được lưu lại.", file=sys.stderr)
+        print("CẢNH BÁO: chưa kênh nào trong CHANNELS được cấu hình đủ, tín hiệu chỉ được lưu lại.", file=sys.stderr)
     if configured and not ok:
         return 1  # không lưu state để lượt sau gửi lại
     print("Đã gửi qua:", ", ".join(ok) or "(không kênh nào)")
@@ -73,31 +73,20 @@ def main():
     ap = argparse.ArgumentParser(description="Bot cảnh báo Bollinger Bands")
     ap.add_argument("--loop", type=int, metavar="GIÂY", help="quét lặp lại mỗi N giây")
     ap.add_argument("--dry-run", action="store_true", help="chỉ in ra, không gửi, không lưu")
-    ap.add_argument("--test", action="store_true", help="gửi 1 tin thử tới Zalo và Gmail")
-    ap.add_argument("--zalo-chat-id", action="store_true",
-                    help="in chat_id Zalo (hãy nhắn 1 tin cho bot trước khi chạy)")
+    ap.add_argument("--test", action="store_true",
+                    help="gửi 1 tin thử qua các kênh trong CHANNELS; kênh bot thiếu chat_id sẽ được nhắn chat_id")
     args = ap.parse_args()
     cfg = Config()
 
-    if args.zalo_chat_id:
-        if not cfg.zalo_token:
-            sys.exit("Thiếu ZALO_BOT_TOKEN")
-        upd = zalo_call(cfg.zalo_token, "getUpdates", {"timeout": 30})
-        items = upd if isinstance(upd, list) else [upd] if upd else []
-        ids = {str(((u or {}).get("message") or {}).get("chat", {}).get("id", "")) for u in items} - {""}
-        if ids:
-            # Gửi chat_id vào chính cuộc trò chuyện Zalo để không lộ trong log công khai.
-            for cid in ids:
-                zalo_call(cfg.zalo_token, "sendMessage",
-                          {"chat_id": cid, "text": f"ZALO_CHAT_ID của bạn là: {cid}"})
-            print(f"Đã gửi chat_id vào Zalo ({len(ids)} cuộc trò chuyện). Mở Zalo để xem.")
-        else:
-            print("Chưa thấy tin nhắn nào. Hãy nhắn 1 tin cho bot rồi chạy lại.")
-        return
     if args.test:
+        notes = discover_chat_ids(cfg)
+        for n in notes:
+            print(n)
         ok, errors, configured = notify(cfg, "[Trading] Tin thử", "✅ Bot cảnh báo Bollinger Bands đã kết nối.")
-        print("Kênh đã cấu hình:", configured or "chưa có", "| Gửi được:", ok or "không", "| Lỗi:", errors or "không")
-        sys.exit(0 if configured and not errors else 1)
+        print("Kênh được chọn:", ", ".join(cfg.channels), "| Gửi được:", ", ".join(ok) or "không")
+        for name, err in errors.items():
+            print(f"LỖI {name}: {err}", file=sys.stderr)
+        sys.exit(0 if ok or (notes and not configured) else 1)
     if args.loop:
         while True:
             try:

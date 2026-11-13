@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       test:
-        description: "Gửi tin thử tới Zalo + Gmail thay vì quét"
+        description: "Gửi tin thử (và lấy chat_id) thay vì quét"
         type: boolean
         default: false
 
@@ -22,6 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
+      # Kênh gửi: telegram, zalo, gmail (cách nhau bởi dấu phẩy). Bỏ trống = chỉ telegram.
+      CHANNELS: ${{ vars.CHANNELS }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       ZALO_BOT_TOKEN: ${{ secrets.ZALO_BOT_TOKEN }}
       ZALO_CHAT_ID: ${{ secrets.ZALO_CHAT_ID }}
       GMAIL_USER: ${{ secrets.GMAIL_USER }}
@@ -56,12 +60,8 @@ jobs:
             echo '[]' > data/signals.json
           fi
 
-      - name: Lấy chat_id Zalo (chỉ khi chưa có ZALO_CHAT_ID)
-        if: ${{ inputs.test && env.ZALO_CHAT_ID == '' && env.ZALO_BOT_TOKEN != '' }}
-        run: python -m bot --zalo-chat-id
-
-      - name: Gửi tin thử
-        if: ${{ inputs.test && (env.ZALO_CHAT_ID != '' || env.GMAIL_USER != '') }}
+      - name: Gửi tin thử / lấy chat_id
+        if: ${{ inputs.test }}
         run: python -m bot --test
 
       - name: Quét

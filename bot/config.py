@@ -40,6 +40,10 @@ class Config:
     squeeze_pct: float = field(default_factory=lambda: _num("SQUEEZE_PCT", 0.05))
     squeeze_ratio: float = field(default_factory=lambda: _num("SQUEEZE_RATIO", 0.75))
     data_dir: Path = field(default_factory=lambda: Path(os.environ.get("DATA_DIR") or "data"))
+    # Kênh gửi, cách nhau bởi dấu phẩy: telegram, zalo, gmail. Mặc định chỉ Telegram.
+    channels: list = field(default_factory=lambda: [c.lower() for c in _list("CHANNELS", "telegram")])
+    telegram_token: str = field(default_factory=lambda: os.environ.get("TELEGRAM_BOT_TOKEN", ""))
+    telegram_chat_id: str = field(default_factory=lambda: os.environ.get("TELEGRAM_CHAT_ID", ""))
     zalo_token: str = field(default_factory=lambda: os.environ.get("ZALO_BOT_TOKEN", ""))
     zalo_chat_id: str = field(default_factory=lambda: os.environ.get("ZALO_CHAT_ID", ""))
     gmail_user: str = field(default_factory=lambda: os.environ.get("GMAIL_USER", ""))
