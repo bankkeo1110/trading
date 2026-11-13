@@ -43,8 +43,8 @@
     },
     {
      "name": "Khung 1d",
-     "points": -8,
-     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+     "points": 0,
+     "note": "khung ngày chưa rõ xu hướng"
     }
    ],
    "zone": 0,
@@ -55,8 +55,8 @@
    "adx": 49.611738780543156,
    "swing_low": 67568.0,
    "swing_high": 70214.31,
-   "score": -50,
-   "rating": "strong_sell",
+   "score": -42,
+   "rating": "sell",
    "sl": 69983.37546137699,
    "tp1": 68042.82453862303,
    "tp2": 67072.54907724605
@@ -109,8 +109,8 @@
     },
     {
      "name": "Khung 1d",
-     "points": -8,
-     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+     "points": 0,
+     "note": "khung ngày chưa rõ xu hướng"
     }
    ],
    "zone": 1,
@@ -121,7 +121,7 @@
    "adx": 52.8803651825462,
    "swing_low": 67568.0,
    "swing_high": 74811.45,
-   "score": 0,
+   "score": 8,
    "rating": "watch_buy",
    "sl": 69318.23,
    "tp1": 69318.23,
@@ -176,7 +176,7 @@
    ],
    "zone": 1,
    "in_zone": true,
-   "ema_trend": -1,
+   "ema_trend": 0,
    "atr": 2306.401203457815,
    "rsi": 29.524713677946266,
    "adx": 23.347286113159182,
@@ -231,8 +231,8 @@
     },
     {
      "name": "Khung 1d",
-     "points": -8,
-     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+     "points": 0,
+     "note": "khung ngày chưa rõ xu hướng"
     }
    ],
    "zone": 0,
@@ -243,8 +243,8 @@
    "adx": 39.41137005260754,
    "swing_low": 1895.95,
    "swing_high": 1989.11,
-   "score": -56,
-   "rating": "strong_sell",
+   "score": -48,
+   "rating": "sell",
    "sl": 1984.5553191982642,
    "tp1": 1919.744680801736,
    "tp2": 1887.3393616034716
@@ -297,8 +297,8 @@
     },
     {
      "name": "Khung 1d",
-     "points": -8,
-     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+     "points": 0,
+     "note": "khung ngày chưa rõ xu hướng"
     }
    ],
    "zone": 1,
@@ -309,7 +309,7 @@
    "adx": 56.98916390925226,
    "swing_low": 1895.95,
    "swing_high": 2085.11,
-   "score": 22,
+   "score": 30,
    "rating": "buy",
    "sl": 1876.2202958964467,
    "tp1": 2018.42911231066,
@@ -364,7 +364,7 @@
    ],
    "zone": 1,
    "in_zone": true,
-   "ema_trend": -1,
+   "ema_trend": 0,
    "atr": 96.73268142788717,
    "rsi": 28.11813928247065,
    "adx": 26.503320157485195,
@@ -419,8 +419,8 @@
     },
     {
      "name": "Khung 1d",
-     "points": -8,
-     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+     "points": 0,
+     "note": "khung ngày chưa rõ xu hướng"
     }
    ],
    "zone": 0,
@@ -431,7 +431,7 @@
    "adx": 30.478844323291593,
    "swing_low": 78.03,
    "swing_high": 82.38,
-   "score": -33,
+   "score": -25,
    "rating": "sell",
    "sl": 82.22870227768183,
    "tp1": 79.45129772231817,
@@ -485,8 +485,8 @@
     },
     {
      "name": "Khung 1d",
-     "points": -8,
-     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+     "points": 0,
+     "note": "khung ngày chưa rõ xu hướng"
     }
    ],
    "zone": 1,
@@ -497,7 +497,7 @@
    "adx": 49.1842839609806,
    "swing_low": 77.92,
    "swing_high": 85.16,
-   "score": 0,
+   "score": 8,
    "rating": "watch_buy",
    "sl": 80.67,
    "tp1": 80.67,
@@ -552,7 +552,7 @@
    ],
    "zone": 1,
    "in_zone": true,
-   "ema_trend": -1,
+   "ema_trend": 0,
    "atr": 4.369552099342239,
    "rsi": 22.363731043840502,
    "adx": 38.88070953870825,
@@ -607,8 +607,8 @@
     },
     {
      "name": "Khung 1d",
-     "points": -8,
-     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+     "points": 0,
+     "note": "khung ngày chưa rõ xu hướng"
     }
    ],
    "zone": 0,
@@ -619,7 +619,7 @@
    "adx": 24.62105936053075,
    "swing_low": 0.7655,
    "swing_high": 0.829,
-   "score": -13,
+   "score": -5,
    "rating": "neutral",
    "sl": 0.8209,
    "tp1": 0.8209,
@@ -668,8 +668,8 @@
     },
     {
      "name": "Khung 1d",
-     "points": -8,
-     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+     "points": 0,
+     "note": "khung ngày chưa rõ xu hướng"
     }
    ],
    "zone": 0,
@@ -680,7 +680,7 @@
    "adx": 34.39346988892692,
    "swing_low": 0.7655,
    "swing_high": 0.8407,
-   "score": -65,
+   "score": -57,
    "rating": "strong_sell",
    "sl": 0.8340899879800587,
    "tp1": 0.7709100120199412,
@@ -730,7 +730,7 @@
    ],
    "zone": 0,
    "in_zone": false,
-   "ema_trend": -1,
+   "ema_trend": 0,
    "atr": 0.057852032067083,
    "rsi": 36.07382698066419,
    "adx": 28.16522628043698,
@@ -745,19 +745,19 @@
  ],
  "overall": {
   "BTCUSDT": {
-   "score": -4,
+   "score": 0,
    "rating": "watch_buy"
   },
   "ETHUSDT": {
-   "score": 2,
+   "score": 6,
    "rating": "watch_buy"
   },
   "SOLUSDT": {
-   "score": -6,
+   "score": -2,
    "rating": "watch_buy"
   },
   "SUIUSDT": {
-   "score": -42,
+   "score": -38,
    "rating": "sell"
   }
  }

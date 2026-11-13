@@ -29,14 +29,14 @@
  "SUIUSDT|1d|squeeze": false,
  "ETHUSDT|4h|lower": {
   "candle": 1794571200000,
-  "level": "near"
+  "level": "touch"
  },
  "SUIUSDT|1d|lower": {
   "candle": 1794528000000,
   "level": "near"
  },
  "advice|BTCUSDT|1h": {
-  "rating": "strong_sell",
+  "rating": "sell",
   "candle": 1794578400000
  },
  "advice|BTCUSDT|4h": {
@@ -50,7 +50,7 @@
   "watch_candle": 1794441600000
  },
  "advice|ETHUSDT|1h": {
-  "rating": "strong_sell",
+  "rating": "sell",
   "candle": 1794578400000
  },
  "advice|ETHUSDT|4h": {
@@ -77,7 +77,7 @@
   "watch_candle": 1794441600000
  },
  "advice|SUIUSDT|1h": {
-  "rating": "sell",
+  "rating": "neutral",
   "candle": 1794578400000
  },
  "advice|SUIUSDT|4h": {
