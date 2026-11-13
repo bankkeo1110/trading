@@ -28,16 +28,18 @@ Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín 
 
 ## Chọn kênh gửi
 
-Mở dashboard, mục **Kênh gửi cảnh báo**: tick Telegram / Zalo / Gmail rồi bấm **Lưu**. Mặc định chỉ Telegram.
-Lựa chọn được lưu vào `settings.json` trên nhánh `data`, bot áp dụng từ lượt quét kế tiếp.
+Kênh gửi nằm ở dòng `channels=` trong file `settings.properties` ở gốc repo. Mặc định `channels=telegram`.
+Các giá trị: `telegram`, `zalo`, `gmail`, cách nhau bởi dấu phẩy; để trống là tắt hết. Có 2 cách đổi:
 
-Để nút Lưu hoạt động, Vercel cần một token GitHub (làm 1 lần):
-1. GitHub > Settings > Developer settings > Fine-grained tokens > Generate new token.
-   Repository access: chỉ repo `trading`. Permissions: **Contents: Read and write**.
-2. Vercel > project `trading` > Settings > Environment Variables: thêm `GITHUB_TOKEN` = token đó, rồi Redeploy.
+- **Sửa file** `settings.properties` ngay trên GitHub rồi commit.
+- **Trên dashboard**, mục "Kênh gửi cảnh báo": tick app, nhập mật khẩu, bấm Lưu. Sai mật khẩu thì không lưu.
 
-Nên giữ Vercel Authentication bật cho project, vì ai mở được dashboard cũng đổi được lựa chọn kênh.
-Nếu chưa lưu gì trên dashboard, bot dùng biến `CHANNELS` (Variables của GitHub Actions), không có thì chỉ Telegram.
+Để dashboard lưu được, thêm 2 biến ở Vercel > project `trading` > Settings > Environment Variables, rồi Redeploy:
+1. `GITHUB_TOKEN`: GitHub > Settings > Developer settings > Fine-grained tokens > Generate new token,
+   chỉ chọn repo `trading`, quyền **Contents: Read and write**.
+2. `ADMIN_PASSWORD`: mật khẩu bạn tự đặt (nên dài, khó đoán).
+
+Thiếu một trong hai biến thì dashboard chỉ hiển thị, không cho lưu.
 
 ## Cài đặt (làm hết trên trình duyệt)
 

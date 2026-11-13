@@ -137,14 +137,19 @@ class Channels(unittest.TestCase):
 
 
 class Settings(unittest.TestCase):
-    def test_dashboard_settings_override_env(self):
+    def test_properties_file_overrides_env(self):
         with tempfile.TemporaryDirectory() as d:
-            cfg = Config(channels=["telegram"], data_dir=Path(d))
-            self.assertEqual(apply_settings(cfg).channels, ["telegram"])
-            (Path(d) / "settings.json").write_text('{"channels": ["Zalo", "gmail"]}', encoding="utf-8")
-            self.assertEqual(apply_settings(cfg).channels, ["zalo", "gmail"])
-            (Path(d) / "settings.json").write_text('{"channels": []}', encoding="utf-8")
-            self.assertEqual(apply_settings(cfg).channels, [])
+            f = Path(d) / "settings.properties"
+            cfg = Config(channels=["telegram"])
+            self.assertEqual(apply_settings(cfg, f).channels, ["telegram"])   # không có file
+            f.write_text("# ghi chú\nchannels = Zalo, gmail\n", encoding="utf-8")
+            self.assertEqual(apply_settings(cfg, f).channels, ["zalo", "gmail"])
+            f.write_text("channels=\n", encoding="utf-8")
+            self.assertEqual(apply_settings(cfg, f).channels, [])
+
+    def test_repo_default_is_telegram(self):
+        root = Path(__file__).resolve().parent.parent
+        self.assertEqual(apply_settings(Config(channels=["zalo"]), root / "settings.properties").channels, ["telegram"])
 
 
 class Scan(unittest.TestCase):

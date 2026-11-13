@@ -1,8 +1,10 @@
 """Chạy: python -m bot [--loop GIÂY] [--dry-run] [--test]"""
 import argparse
 import json
+import os
 import sys
 import time
+from pathlib import Path
 
 from .config import Config, load_dotenv
 from .market import fetch_klines
@@ -24,11 +26,20 @@ def _save(path, obj):
     path.write_text(json.dumps(obj, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
-def apply_settings(cfg):
-    """Lựa chọn kênh lưu từ dashboard (data/settings.json) được ưu tiên hơn biến CHANNELS."""
-    saved = _load(cfg.data_dir / "settings.json", {})
-    if isinstance(saved, dict) and isinstance(saved.get("channels"), list):
-        cfg.channels = [str(c).lower() for c in saved["channels"]]
+def apply_settings(cfg, path=None):
+    """Dòng `channels=` trong settings.properties được ưu tiên hơn biến CHANNELS."""
+    path = Path(path or os.environ.get("SETTINGS_FILE") or "settings.properties")
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except FileNotFoundError:
+        return cfg
+    for line in lines:
+        line = line.strip()
+        if line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        if key.strip() == "channels":
+            cfg.channels = [c.strip().lower() for c in value.split(",") if c.strip()]
     return cfg
 
 
