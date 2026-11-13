@@ -410,5 +410,49 @@
    "1d"
   ],
   "type": "band"
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "1h",
+  "candle": 1794607200000,
+  "price": 68310.01,
+  "mid": 68891.1085,
+  "upper": 69592.31239021383,
+  "lower": 68189.90460978617,
+  "pctb": 0.08564227316051899,
+  "rsi": 30.725362727314092,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1794607649,
+  "time": "2026-11-14 05:07",
+  "confluence": [
+   "1h",
+   "4h",
+   "1d"
+  ],
+  "type": "band"
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "1h",
+  "candle": 1794607200000,
+  "price": 78.36,
+  "mid": 79.816,
+  "upper": 81.57941033228231,
+  "lower": 78.0525896677177,
+  "pctb": 0.08716358486014832,
+  "rsi": 33.399197095580746,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1794607649,
+  "time": "2026-11-14 05:07",
+  "confluence": [
+   "1h",
+   "4h",
+   "1d"
+  ],
+  "type": "band"
  }
 ]
