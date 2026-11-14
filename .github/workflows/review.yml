@@ -1,0 +1,68 @@
+name: AI review tín hiệu
+
+# Tối Chủ nhật 20:07 giờ VN: Claude đọc thống kê đúng/sai, gửi báo cáo + đề xuất chỉnh tham số về Telegram.
+# Đề xuất chỉ được áp dụng khi bạn bấm Áp dụng trên dashboard.
+on:
+  schedule:
+    - cron: "7 13 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: review
+  cancel-in-progress: false
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CHANNELS: ${{ vars.CHANNELS }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      ZALO_BOT_TOKEN: ${{ secrets.ZALO_BOT_TOKEN }}
+      ZALO_CHAT_ID: ${{ secrets.ZALO_CHAT_ID }}
+      GMAIL_USER: ${{ secrets.GMAIL_USER }}
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      EMAIL_TO: ${{ secrets.EMAIL_TO }}
+      DASHBOARD_URL: ${{ vars.DASHBOARD_URL }}
+      CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      CLAUDE_MODEL: ${{ vars.CLAUDE_MODEL }}
+      DATA_DIR: data
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Cài Claude CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Mở nhánh data
+        run: |
+          git config user.name "trading-bot"
+          git config user.email "trading-bot@users.noreply.github.com"
+          git fetch origin data
+          git worktree add data FETCH_HEAD
+          git -C data checkout -B data
+
+      - name: AI review
+        run: python -m bot.review
+
+      - name: Lưu báo cáo vào nhánh data
+        if: ${{ always() }}
+        run: |
+          git -C data add ai_review.json
+          git -C data diff --cached --quiet && exit 0
+          git -C data commit -qm "ai review: $(date -u +%FT%TZ)"
+          for i in 1 2 3; do
+            git -C data pull -q --rebase origin data && git -C data push -q origin HEAD:data && exit 0
+            sleep 5
+          done
+          exit 1

@@ -79,8 +79,10 @@ jobs:
             git -C data add -A
             if ! git -C data diff --cached --quiet; then
               git -C data commit -qm "data: $(date -u +%FT%TZ)"
-              git -C data push -q origin data || echo "::warning::Chưa lưu được nhánh data, sẽ thử lại ở lượt sau"
             fi
+            # Workflow review cũng ghi nhánh data: kéo về trước khi đẩy để không bị từ chối
+            git -C data pull -q --rebase origin data || git -C data rebase --abort 2>/dev/null
+            git -C data push -q origin HEAD:data || echo "::warning::Chưa lưu được nhánh data, sẽ thử lại ở lượt sau"
           }
           end=$((SECONDS + 5 * 3600))
           while [ $SECONDS -lt $end ]; do

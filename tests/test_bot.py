@@ -561,5 +561,81 @@ class Stats(unittest.TestCase):
         self.assertEqual(build(sigs), build(sigs))                          # ổn định: không có thời gian
 
 
+class Review(unittest.TestCase):
+    P = None
+
+    def setUp(self):
+        from bot import params
+        self.P = dict(params.DEFAULTS)
+
+    def test_parse(self):
+        from bot.review import parse
+        import json
+        want = {"report": "ok", "changes": []}
+        self.assertEqual(parse(json.dumps({"type": "result", "structured_output": want, "result": ""})), want)
+        self.assertEqual(parse(json.dumps({"result": "Đây:\n```json\n" + json.dumps(want) + "\n```"})), want)
+        self.assertEqual(parse("chữ " + json.dumps(want) + " chữ"), want)
+        with self.assertRaises(ValueError):
+            parse(json.dumps({"is_error": True, "result": "Invalid bearer token"}))
+        with self.assertRaises(ValueError):
+            parse("không có json")
+
+    def test_check(self):
+        from bot.review import check
+        ch = [{"param": "strong", "value": 60, "reason": "a"},          # +20%: nhận
+              {"param": "w_ema", "value": 1.5, "reason": "b"},          # +50%: vượt ±30%
+              {"param": "abc", "value": 1, "reason": "c"},              # tham số lạ
+              {"param": "rsi_low", "value": 36, "reason": "d"},         # ngoài max 35
+              {"param": "w_bb", "value": "x", "reason": "e"}]           # không phải số
+        ok, bad = check(ch, self.P, resolved=40)
+        self.assertEqual([(c["param"], c["old"], c["new"]) for c in ok], [("strong", 50, 60)])
+        self.assertEqual([c["param"] for c in bad], ["w_ema", "abc", "rsi_low", "w_bb"])
+        ok, bad = check(ch[:1], self.P, resolved=29)                   # chưa đủ dữ liệu
+        self.assertEqual((ok, bad[0]["why"].startswith("Chưa đủ")), ([], True))
+        ok, bad = check([{"param": "hold", "value": 12, "reason": ""}, {"param": "weak", "value": 14, "reason": ""}],
+                        {**self.P, "weak": 13}, resolved=40)            # hold 12 < weak 14 vẫn hợp lệ
+        self.assertEqual(len(ok), 2)
+        ok, bad = check([{"param": "hold", "value": 13, "reason": ""}], {**self.P, "weak": 13}, resolved=40)
+        self.assertEqual((ok, len(bad)), ([], 1))                       # cả bộ sai ràng buộc
+        ok, _ = check([{"param": "w_bb", "value": 0.5, "reason": ""}], {**self.P, "w_bb": 0}, resolved=40)
+        self.assertEqual(ok[0]["new"], 0.5)                              # từ 0: cho tới 30% khoảng min-max
+
+    def run_review(self, output=None, error=None):
+        import json
+        from bot import review
+        sent = []
+        orig = (review.call_claude, review.notify)
+        review.call_claude = (lambda prompt: (_ for _ in ()).throw(error)) if error else (lambda prompt: output)
+        review.notify = lambda cfg, subj, text, photos=None: (sent.append(text), (["Telegram"], {}, ["Telegram"]))[1]
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                sigs = [Stats.sig(self, "win") for _ in range(31)]
+                (Path(d) / "advice_signals.json").write_text(json.dumps(sigs), encoding="utf-8")
+                (Path(d) / "ai_review.json").write_text(json.dumps([{"time": "cũ"}] * 12), encoding="utf-8")
+                code = review.run(Config(data_dir=Path(d), dashboard_url="https://x.app"))
+                saved = json.loads((Path(d) / "ai_review.json").read_text(encoding="utf-8"))
+        finally:
+            review.call_claude, review.notify = orig
+        return code, saved, sent
+
+    def test_run_ok(self):
+        import json
+        out = json.dumps({"structured_output": {"report": "Tín hiệu 1h tốt.", "changes": [
+            {"param": "strong", "value": 55, "reason": "ít tín hiệu mạnh sai"}]}})
+        code, saved, sent = self.run_review(out)
+        self.assertEqual((code, len(saved), saved[0]["ok"], saved[1]["time"]), (0, 12, True, "cũ"))
+        self.assertEqual(saved[0]["changes"][0]["new"], 55)
+        self.assertIn("Tín hiệu 1h tốt.", sent[0])
+        self.assertIn("strong: 50 → 55", sent[0])
+        self.assertIn("31 tín hiệu", sent[0])
+        self.assertIn("https://x.app/signals.html#ai", sent[0])
+
+    def test_run_ai_fails_still_reports(self):
+        code, saved, sent = self.run_review(error=RuntimeError("401 Invalid bearer token"))
+        self.assertEqual((code, saved[0]["ok"], saved[0]["changes"]), (1, False, []))
+        self.assertIn("31 tín hiệu", sent[0])
+        self.assertIn("401", sent[0])
+
+
 if __name__ == "__main__":
     unittest.main()
