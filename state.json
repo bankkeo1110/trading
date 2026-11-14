@@ -82,7 +82,7 @@
  },
  "advice|SUIUSDT|1h": {
   "rating": "watch_buy",
-  "candle": 1794686400000,
+  "candle": 1794690000000,
   "watch_candle": 1794664800000
  },
  "advice|SUIUSDT|4h": {
@@ -107,8 +107,8 @@
   "level": "touch"
  },
  "SUIUSDT|1h|lower": {
-  "candle": 1794690000000,
-  "level": "touch"
+  "candle": 1794693600000,
+  "level": "near"
  },
  "ETHUSDT|1h|lower": {
   "candle": 1794690000000,

@@ -591,13 +591,13 @@
   {
    "symbol": "SUIUSDT",
    "tf": "1h",
-   "candle": 1794686400000,
-   "price": 0.6994,
+   "candle": 1794690000000,
+   "price": 0.6921,
    "parts": [
     {
      "name": "ADX/DI",
      "points": -7.5,
-     "note": "ADX 41: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+     "note": "ADX 44: xu hướng giảm mạnh — giảm trọng số vì quá bán"
     },
     {
      "name": "EMA 20/50/200",
@@ -612,12 +612,12 @@
     {
      "name": "RSI",
      "points": 15,
-     "note": "RSI 19: quá bán"
+     "note": "RSI 17: quá bán"
     },
     {
      "name": "Stoch RSI",
      "points": 3,
-     "note": "K 13: vùng quá bán"
+     "note": "K 6: vùng quá bán"
     },
     {
      "name": "Bollinger",
@@ -627,7 +627,7 @@
     {
      "name": "Khối lượng",
      "points": -2.5,
-     "note": "nến giảm với khối lượng gấp 3.4 lần TB20 — giảm trọng số vì quá bán"
+     "note": "nến giảm với khối lượng gấp 3.3 lần TB20 — giảm trọng số vì quá bán"
     },
     {
      "name": "Xác nhận đảo chiều",
@@ -644,16 +644,16 @@
    "zone": 1,
    "in_zone": true,
    "ema_trend": -1,
-   "atr": 0.01359665531266128,
-   "rsi": 18.580066538452,
-   "adx": 41.430297139728275,
-   "swing_low": 0.6927,
+   "atr": 0.014589751362042314,
+   "rsi": 17.282373623643394,
+   "adx": 44.13490980839315,
+   "swing_low": 0.6762,
    "swing_high": 0.7738,
    "score": -7,
    "rating": "watch_buy",
-   "sl": 0.6994,
-   "tp1": 0.6994,
-   "tp2": 0.6994
+   "sl": 0.6921,
+   "tp1": 0.6921,
+   "tp2": 0.6921
   },
   {
    "symbol": "SUIUSDT",
