@@ -33,7 +33,7 @@
  },
  "SUIUSDT|1d|lower": {
   "candle": 1794614400000,
-  "level": "near"
+  "level": "touch"
  },
  "advice|BTCUSDT|1h": {
   "rating": "buy",
@@ -104,7 +104,7 @@
   "level": "near"
  },
  "SUIUSDT|1h|lower": {
-  "candle": 1794632400000,
+  "candle": 1794639600000,
   "level": "near"
  },
  "ETHUSDT|1h|lower": {
