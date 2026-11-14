@@ -1,0 +1,2 @@
+# Chỉ dùng để vẽ ảnh biểu đồ gửi kèm Telegram. Thiếu thì bot vẫn chạy, chỉ gửi tin chữ.
+matplotlib>=3.8

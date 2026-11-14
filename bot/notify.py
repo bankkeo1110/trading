@@ -1,6 +1,7 @@
 """Gửi thông báo qua Telegram, Zalo Bot Platform và Gmail SMTP."""
 import json
 import smtplib
+import uuid
 import urllib.error
 import urllib.request
 from email.message import EmailMessage
@@ -57,6 +58,53 @@ def send_telegram(cfg, text):
                  {"chat_id": cfg.telegram_chat_id, "text": part, "disable_web_page_preview": True})
 
 
+def _multipart(fields, files):
+    """Đóng gói multipart/form-data. files = {tên trường: (tên file, bytes)}."""
+    boundary = uuid.uuid4().hex
+    body = b""
+    for name, value in fields.items():
+        body += (f'--{boundary}\r\nContent-Disposition: form-data; name="{name}"\r\n\r\n{value}\r\n').encode()
+    for name, (filename, data) in files.items():
+        body += (f'--{boundary}\r\nContent-Disposition: form-data; name="{name}"; filename="{filename}"\r\n'
+                 f'Content-Type: image/png\r\n\r\n').encode() + data + b"\r\n"
+    return body + f"--{boundary}--\r\n".encode(), f"multipart/form-data; boundary={boundary}"
+
+
+def send_telegram_photos(cfg, photos, timeout=60):
+    """Gửi ảnh biểu đồ. photos = [(png bytes, chú thích)]; 1 ảnh gửi lẻ, nhiều ảnh gộp thành album (tối đa 10)."""
+    photos = photos[:10]
+    if not photos:
+        return
+    if len(photos) == 1:
+        method = "sendPhoto"
+        fields = {"chat_id": cfg.telegram_chat_id, "caption": photos[0][1][:1024]}
+        files = {"photo": ("chart.png", photos[0][0])}
+    else:
+        method = "sendMediaGroup"
+        media = [{"type": "photo", "media": f"attach://p{i}", "caption": cap[:1024]} for i, (_, cap) in enumerate(photos)]
+        fields = {"chat_id": cfg.telegram_chat_id, "media": json.dumps(media, ensure_ascii=False)}
+        files = {f"p{i}": (f"chart{i}.png", png) for i, (png, _) in enumerate(photos)}
+    body, content_type = _multipart(fields, files)
+    req = urllib.request.Request(f"{TELEGRAM_API}/bot{cfg.telegram_token}/{method}", data=body,
+                                 headers={"Content-Type": content_type}, method="POST")
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            data = json.loads(r.read().decode())
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"{method} lỗi HTTP {e.code}: {e.read().decode(errors='replace')[:200]}") from None
+    if not data.get("ok"):
+        raise RuntimeError(f"{method} lỗi: {data.get('description') or data}")
+
+
+def _telegram(cfg, text, photos):
+    send_telegram(cfg, text)
+    if photos:
+        try:                    # tin chữ đã tới nơi; lỗi ảnh không được làm gửi lại cả tin
+            send_telegram_photos(cfg, photos)
+        except Exception as e:
+            print(f"Không gửi được ảnh biểu đồ qua Telegram: {e}")
+
+
 def send_zalo(cfg, text):
     for part in chunk(text):
         bot_call(ZALO_API, cfg.zalo_token, "sendMessage", {"chat_id": cfg.zalo_chat_id, "text": part})
@@ -95,13 +143,13 @@ def send_gmail(cfg, subject, text):
         s.send_message(msg)
 
 
-def notify(cfg, subject, text):
-    """Gửi qua các kênh được chọn trong CHANNELS và đã cấu hình đủ.
+def notify(cfg, subject, text, photos=None):
+    """Gửi qua các kênh được chọn trong CHANNELS và đã cấu hình đủ. Ảnh biểu đồ (photos) chỉ gửi qua Telegram.
 
     Trả về (kênh gửi được, {kênh: lỗi}, kênh đã cấu hình).
     """
     available = {
-        "telegram": ("Telegram", bool(cfg.telegram_token and cfg.telegram_chat_id), lambda: send_telegram(cfg, text)),
+        "telegram": ("Telegram", bool(cfg.telegram_token and cfg.telegram_chat_id), lambda: _telegram(cfg, text, photos)),
         "zalo": ("Zalo", bool(cfg.zalo_token and cfg.zalo_chat_id), lambda: send_zalo(cfg, text)),
         "gmail": ("Gmail", bool(cfg.gmail_user and cfg.gmail_app_password), lambda: send_gmail(cfg, subject, text)),
     }

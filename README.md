@@ -11,7 +11,7 @@ Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín 
 
 | Thư mục | Nội dung |
 |---|---|
-| `bot/` | Bot Python (không cần cài thư viện); `bot/advisor.py` là phần gợi ý mua/bán |
+| `bot/` | Bot Python; `bot/advisor.py` là phần gợi ý mua/bán, `bot/chart.py` vẽ ảnh biểu đồ (cần `matplotlib`) |
 | `.github/workflows/scan.yml` | Quét 5 phút/lần trên GitHub Actions (mỗi lượt chạy khoảng 5 giờ rồi tự gọi lượt kế tiếp) |
 | `web/` | Dashboard (biểu đồ, lịch sử tín hiệu, chọn kênh gửi) và trang gợi ý mua/bán `signals.html`, deploy lên Vercel |
 | `tests/` | Test: `python -m unittest discover -s tests` |
@@ -62,6 +62,15 @@ Chờ thêm một dấu hiệu giá bật lên giúp tránh bắt dao rơi.
 - Tắt chức năng này: đặt Variable `ADVICE=off`.
 
 Đây là gợi ý từ chỉ báo kỹ thuật, không phải lời khuyên đầu tư.
+
+## Ảnh biểu đồ kèm tín hiệu
+
+Mỗi tín hiệu gửi qua Telegram (cảnh báo BB lẫn gợi ý mua/bán) có kèm ảnh biểu đồ của đúng coin + khung đó:
+nến, Bollinger Bands, EMA 20/50/200, RSI, và các mức cắt lỗ / chốt lời nếu là gợi ý MUA/BÁN. Nhiều tín hiệu cùng lúc
+thì gộp thành 1 album (tối đa 10 ảnh). Ảnh do bot tự vẽ bằng `matplotlib` từ đúng dữ liệu nó dùng để chấm điểm
+(`bot/chart.py`), không phải ảnh chụp trang TradingView. Zalo và Gmail chỉ nhận tin chữ.
+
+Chạy trên máy: `pip install -r requirements.txt`. Thiếu thư viện thì bot vẫn chạy và chỉ gửi tin chữ.
 
 ## Chọn kênh gửi
 

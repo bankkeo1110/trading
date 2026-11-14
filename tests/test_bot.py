@@ -333,5 +333,72 @@ class Advisor(unittest.TestCase):
             self.assertFalse((Path(d) / "advice.json").exists())
 
 
+class Charts(unittest.TestCase):
+    def alert(self):
+        from bot.advisor import advise, decide_advice, levels
+        rows = ohlc(trend())
+        alerts, _ = decide_advice([advise("BTCUSDT", "4h", rows, Config())], {})
+        alerts[0].update(levels(alerts[0]))
+        return rows, alerts
+
+    def test_chart_is_png_one_per_symbol_tf(self):
+        from bot.chart import make_charts
+        rows, alerts = self.alert()
+        charts = make_charts(alerts + alerts, {("BTCUSDT", "4h"): rows}, Config())
+        self.assertEqual(len(charts), 1)
+        png, cap = charts[0]
+        self.assertTrue(png.startswith(b"\x89PNG"))
+        self.assertIn("BTC 4h — NÊN MUA", cap)
+        self.assertEqual(make_charts(alerts, {}, Config()), [])       # không có nến thì không có ảnh
+
+    def test_band_alert_chart(self):
+        from bot.chart import make_charts
+        rows = [{"t": i * 3_600_000, "o": c, "h": c + 1, "l": c - 1, "c": c, "v": 1.0} for i, c in enumerate(wave(160))]
+        rows[-1]["c"] = 110
+        alerts, _ = decide([analyze("ETHUSDT", "1h", rows, Config())], {})
+        charts = make_charts(alerts, {("ETHUSDT", "1h"): rows}, Config())
+        self.assertIn("ETH 1h — Chạm BB trên", charts[0][1])
+
+    def send(self, photos, fail=False):
+        import io, json
+        calls = []
+
+        def fake(req, timeout=0):
+            if fail:
+                raise OSError("mất mạng")
+            calls.append((req.full_url.rsplit("/", 1)[1], req.data, req.headers["Content-type"]))
+            return io.BytesIO(json.dumps({"ok": True, "result": {}}).encode())
+
+        orig = notify_mod.urllib.request.urlopen
+        notify_mod.urllib.request.urlopen = fake
+        try:
+            cfg = Config(channels=["telegram"], telegram_token="t", telegram_chat_id="42")
+            return calls, notify(cfg, "s", "tin chữ", photos)
+        finally:
+            notify_mod.urllib.request.urlopen = orig
+
+    def test_one_photo_and_album(self):
+        calls, (ok, errors, _) = self.send([(b"PNG1", "BTC 4h")])
+        self.assertEqual([c[0] for c in calls], ["sendMessage", "sendPhoto"])
+        self.assertIn(b'name="photo"; filename="chart.png"', calls[1][1])
+        self.assertIn("BTC 4h".encode(), calls[1][1])
+        self.assertTrue(calls[1][2].startswith("multipart/form-data; boundary="))
+        calls, _ = self.send([(b"PNG1", "a"), (b"PNG2", "b")])
+        self.assertEqual([c[0] for c in calls], ["sendMessage", "sendMediaGroup"])
+        self.assertIn(b"attach://p1", calls[1][1])
+        self.assertIn(b"PNG2", calls[1][1])
+        calls, _ = self.send([])
+        self.assertEqual([c[0] for c in calls], ["sendMessage"])
+
+    def test_photo_failure_does_not_fail_message(self):
+        orig = notify_mod.send_telegram_photos
+        notify_mod.send_telegram_photos = lambda cfg, photos: (_ for _ in ()).throw(RuntimeError("ảnh lỗi"))
+        try:
+            calls, (ok, errors, _) = self.send([(b"PNG1", "a")])
+        finally:
+            notify_mod.send_telegram_photos = orig
+        self.assertEqual((ok, errors), (["Telegram"], {}))
+
+
 if __name__ == "__main__":
     unittest.main()

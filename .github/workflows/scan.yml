@@ -48,6 +48,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Cài thư viện vẽ biểu đồ (ảnh gửi kèm tín hiệu Telegram)
+        run: pip install -q -r requirements.txt || echo "::warning::Không cài được matplotlib, bot chỉ gửi tin chữ"
+
       - name: Mở nhánh data (lưu trạng thái + lịch sử tín hiệu)
         run: |
           git config user.name "trading-bot"
