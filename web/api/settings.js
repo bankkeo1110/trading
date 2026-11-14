@@ -84,3 +84,7 @@ async function handler(req, res) {
 module.exports = handler;
 module.exports.parseChannels = parseChannels;
 module.exports.withChannels = withChannels;
+module.exports.read = read;
+module.exports.headers = headers;
+module.exports.passwordOk = passwordOk;
+module.exports.FILE_URL = FILE_URL;

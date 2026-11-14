@@ -47,6 +47,21 @@
          padding:8px 10px; margin-bottom:6px; }
   .sig.buy { border-left-color:var(--up); } .sig.sell { border-left-color:var(--down); } .sig.watch { border-left-color:var(--warn); }
   .hint { margin-top:10px; color:var(--warn); }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:8px; margin-bottom:10px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:10px; }
+  .card b { display:block; font-size:20px; } .card span { color:var(--dim); font-size:12px; }
+  .tables { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:8px; }
+  .tables .panel { padding:8px 10px; } .tables h3 { margin:2px 0 4px; font-size:13px; color:var(--dim); font-weight:600; }
+  th { text-align:left; font-weight:600; color:var(--dim); font-size:12px; padding:4px; }
+  td.num { text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .badge { display:inline-block; font-size:11px; border-radius:4px; padding:1px 6px; margin-left:6px; border:1px solid var(--line); color:var(--dim); }
+  .badge.win, .badge.right { color:var(--up); border-color:var(--up); } .badge.loss, .badge.wrong { color:var(--down); border-color:var(--down); }
+  .report { white-space:pre-wrap; margin:8px 0; }
+  .apply { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .apply input { background:var(--bg); color:var(--text); border:1px solid var(--line); border-radius:6px; padding:7px 9px; font:inherit; }
+  .apply button { background:var(--accent); color:#fff; border:0; border-radius:6px; padding:8px 14px; font:inherit; font-weight:600; cursor:pointer; }
+  .apply button:disabled { opacity:.5; cursor:default; }
+  details summary { cursor:pointer; color:var(--dim); margin-top:8px; }
   .sig .top { display:flex; justify-content:space-between; gap:8px; }
   .msg { background:var(--panel); border:1px dashed var(--line); border-radius:8px; padding:12px; color:var(--dim); }
   @media (max-width:520px) { main { padding:10px; } .cell b { font-size:12px; } }
@@ -67,6 +82,14 @@
 
   <h2>Chi tiết chỉ báo</h2>
   <div class="panel" id="detail"><span class="dim">Chọn một ô ở bảng trên.</span></div>
+
+  <h2>Độ chính xác</h2>
+  <div id="stats"><div class="msg">Đang tải…</div></div>
+  <p class="dim">Đúng = chạm chốt lời 1 trước cắt lỗ trong 24 nến; Sai = chạm cắt lỗ trước (nến chạm cả hai tính Sai);
+    Hết hạn = 24 nến chưa chạm mức nào. Tỉ lệ đúng = Đúng / (Đúng + Sai). Nhóm dưới 10 lệnh chỉ nên coi là tham khảo.</p>
+
+  <h2 id="ai">Báo cáo AI</h2>
+  <div id="review"><div class="msg">Đang tải…</div></div>
 
   <h2>Gợi ý đã gửi về Telegram</h2>
   <div id="history"><div class="msg">Đang tải…</div></div>
@@ -139,6 +162,95 @@ $("grid").addEventListener("click", e => {
   renderDetail();
 });
 
+const OUT = { win: "Đúng", loss: "Sai", expired: "Hết hạn", right: "Đúng hướng", wrong: "Sai hướng", skip: "Không chấm được" };
+const KIND = { trend: "Thuận xu hướng", reversal: "Đảo chiều" };
+const pct = x => x == null ? "—" : `${Math.round(x * 100)}%`;
+const pnl = x => x == null ? "" : ` ${x > 0 ? "+" : ""}${x}%`;
+const badge = a => a.outcome ? `<span class="badge ${a.outcome}">${OUT[a.outcome] || esc(a.outcome)}${pnl(a.pnl_pct)}</span>`
+  : dirOf(a.rating) || a.rating.startsWith("watch") ? `<span class="badge">Đang chờ</span>` : "";
+
+function table(title, groups, name = k => k) {
+  const rows = Object.entries(groups || {});
+  if (!rows.length) return "";
+  return `<div class="panel"><h3>${title}</h3><table><tr><th></th><th class="num">Lệnh</th><th class="num">Đúng</th><th class="num">Tỉ lệ</th><th class="num">TB</th></tr>
+    ${rows.map(([k, g]) => `<tr><td>${esc(name(k))}</td><td class="num">${g.n}</td><td class="num">${g.win}/${g.win + g.loss}</td>
+      <td class="num">${pct(g.win_rate)}</td><td class="num">${g.avg_pnl == null ? "—" : g.avg_pnl + "%"}</td></tr>`).join("")}</table></div>`;
+}
+
+function renderStats(st) {
+  const o = st.overall;
+  if (!st.resolved && !st.watch.n) {
+    $("stats").innerHTML = `<div class="msg">Chưa có tín hiệu nào đủ 24 nến để chấm. Đang chờ ${st.pending} tín hiệu.</div>`;
+    return;
+  }
+  const ind = Object.entries(st.indicators).map(([k, v]) => `<tr><td>${esc(k)}</td>
+    <td class="num">${pct(v.agree.win_rate)} <span class="dim">(${v.agree.n})</span></td>
+    <td class="num">${pct(v.against.win_rate)} <span class="dim">(${v.against.n})</span></td></tr>`).join("");
+  $("stats").innerHTML = `<div class="cards">
+      <div class="card"><b>${pct(o.win_rate)}</b><span>Tỉ lệ đúng (${o.win}/${o.win + o.loss})</span></div>
+      <div class="card"><b>${o.avg_pnl == null ? "—" : (o.avg_pnl > 0 ? "+" : "") + o.avg_pnl + "%"}</b><span>Lãi/lỗ trung bình mỗi lệnh</span></div>
+      <div class="card"><b>${st.resolved}</b><span>Đã chấm (${o.expired} hết hạn)</span></div>
+      <div class="card"><b>${st.pending}</b><span>Đang chờ kết quả</span></div>
+      <div class="card"><b>${pct(st.watch.right_rate)}</b><span>Canh mua/bán đúng hướng (${st.watch.n})</span></div>
+    </div>
+    <div class="tables">
+      ${table("Theo khung", st.by_tf)}${table("Theo coin", st.by_symbol)}
+      ${table("Theo loại tín hiệu", st.by_rating, k => LABEL[k] || k)}${table("Thuận xu hướng / đảo chiều", st.by_kind, k => KIND[k] || k)}
+      ${table("Theo độ lớn điểm", st.by_score, k => "|điểm| " + k)}
+      ${ind ? `<div class="panel"><h3>Tỉ lệ đúng theo chỉ báo</h3><table><tr><th></th><th class="num">Khi đồng thuận</th><th class="num">Khi ngược chiều</th></tr>${ind}</table></div>` : ""}
+    </div>`;
+}
+
+let current = null;   // {params, spec, canWrite} từ /api/params
+
+function renderReview(list) {
+  const r = list[0];
+  if (!r) {
+    $("review").innerHTML = `<div class="msg">Chưa có báo cáo. AI review chạy tối Chủ nhật (20:07 giờ VN), hoặc chạy tay
+      workflow "AI review tín hiệu" trong tab Actions.</div>`;
+    return;
+  }
+  const p = current && current.params, spec = current && current.spec;
+  const applied = c => p && Math.abs(p[c.param] - c.new) < 1e-9;
+  const pending = r.changes.filter(c => !applied(c));
+  const label = k => spec && spec[k] ? `${spec[k].label} <span class="dim">(${k})</span>` : esc(k);
+  $("review").innerHTML = `<div class="panel">
+    <div class="top"><b>Báo cáo ${esc(r.time)}</b><span class="dim">${r.resolved} tín hiệu đã chấm</span></div>
+    <div class="report dim">${esc(r.summary || "")}</div>
+    ${r.ok ? `<div class="report">${esc(r.report)}</div>` : `<div class="hint">Không gọi được AI: ${esc(r.error || "")}</div>`}
+    ${r.changes.length ? `<h3>Đề xuất chỉnh tham số</h3><table><tr><th>Tham số</th><th class="num">Hiện tại</th><th class="num">Đề xuất</th><th>Lý do</th></tr>
+      ${r.changes.map(c => `<tr><td>${label(c.param)}</td><td class="num">${p ? p[c.param] : c.old}</td>
+        <td class="num">${c.new}${applied(c) ? ' <span class="badge win">đã áp dụng</span>' : ""}</td><td>${esc(c.reason)}</td></tr>`).join("")}</table>
+      ${pending.length ? `<div class="apply"><input type="password" id="pw" placeholder="Mật khẩu admin" autocomplete="current-password">
+        <button id="applyBtn" ${current && current.canWrite ? "" : "disabled"}>Áp dụng ${pending.length} đề xuất</button>
+        <span class="dim" id="applyMsg">${current && !current.canWrite ? "Vercel chưa có GITHUB_TOKEN và ADMIN_PASSWORD nên chưa lưu được." : "Bot dùng tham số mới từ lượt quét kế tiếp."}</span></div>` : ""}`
+      : `<p class="dim">Không có đề xuất chỉnh${r.resolved < 30 ? " (cần ít nhất 30 tín hiệu đã chấm)" : ""}.</p>`}
+    ${r.rejected && r.rejected.length ? `<details><summary>${r.rejected.length} đề xuất bị loại tự động</summary><table>
+      ${r.rejected.map(c => `<tr><td>${esc(c.param)} = ${esc(c.value)}</td><td>${esc(c.why)}</td><td class="dim">${esc(c.reason)}</td></tr>`).join("")}</table></details>` : ""}
+    ${p ? `<details><summary>Tham số đang dùng</summary><table>${Object.keys(spec).map(k => `<tr><td>${label(k)}</td><td class="num">${p[k]}</td>
+      <td class="dim num">${spec[k].min}–${spec[k].max}</td></tr>`).join("")}</table></details>` : ""}
+    ${list.length > 1 ? `<details><summary>Báo cáo cũ</summary>${list.slice(1).map(o => `<div class="report"><b>${esc(o.time)}</b>
+      ${esc(o.ok ? o.report : "Không gọi được AI: " + (o.error || ""))}</div>`).join("")}</details>` : ""}
+  </div>`;
+  const btn = $("applyBtn");
+  if (btn) btn.onclick = async () => {
+    btn.disabled = true;
+    $("applyMsg").textContent = "Đang lưu…";
+    try {
+      const res = await fetch("/api/params", { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: $("pw").value, changes: Object.fromEntries(pending.map(c => [c.param, c.new])) }) });
+      const body = await res.json();
+      if (!res.ok) throw new Error(body.error || res.status);
+      current = body;
+      renderReview(list);
+      $("applyMsg") && ($("applyMsg").textContent = "Đã lưu.");
+    } catch (e) {
+      $("applyMsg").textContent = "Lỗi: " + e.message;
+      btn.disabled = false;
+    }
+  };
+}
+
 async function refresh() {
   try {
     snap = await data("advice.json");
@@ -151,11 +263,28 @@ async function refresh() {
       Bot cần chạy ít nhất 1 lượt sau khi cập nhật (khoảng 5 phút).</div>`;
   }
   try {
+    renderStats(await data("stats.json"));
+  } catch (e) {
+    $("stats").innerHTML = `<div class="msg">Chưa có thống kê. Bot tạo sau lượt quét đầu tiên với bản mới.</div>`;
+  }
+  try {
+    current = await (await fetch("/api/params")).json();
+    if (current.error) current = null;
+  } catch (e) {
+    current = null;
+  }
+  if (document.activeElement && document.activeElement.id === "pw") return;   // đang nhập mật khẩu: không vẽ lại
+  try {
+    renderReview(await data("ai_review.json"));
+  } catch (e) {
+    renderReview([]);
+  }
+  try {
     const hist = await data("advice_signals.json");
     $("history").innerHTML = hist.length ? hist.slice(-60).reverse().map(a => {
       const top = [...a.parts].filter(p => p.points).sort((x, y) => Math.abs(y.points) - Math.abs(x.points)).slice(0, 3);
       return `<div class="sig ${cls(a.rating)}">
-        <div class="top"><b>${esc(coin(a.symbol))} ${esc(a.tf)} — ${LABEL[a.rating]} (${signed(a.score)})</b><span class="dim">${esc(a.time)}</span></div>
+        <div class="top"><b>${esc(coin(a.symbol))} ${esc(a.tf)} — ${LABEL[a.rating]} (${signed(a.score)})${badge(a)}</b><span class="dim">${esc(a.time)}</span></div>
         <div class="dim">Giá ${fmt(a.price)}${dirOf(a.rating) ? ` · cắt lỗ ${fmt(a.sl)} · chốt lời ${fmt(a.tp1)} / ${fmt(a.tp2)}` : " · chờ xác nhận đảo chiều"}</div>
         <div class="dim">${top.map(p => esc(p.note)).join(" · ")}</div></div>`;
     }).join("") : `<div class="msg">Chưa có gợi ý nào được gửi.</div>`;
