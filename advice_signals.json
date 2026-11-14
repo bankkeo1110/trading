@@ -3598,7 +3598,10 @@
   "time": "2026-11-15 01:00",
   "sl": 64681.00417872145,
   "tp1": 66858.58746383565,
-  "tp2": 67815.5749276713
+  "tp2": 67815.5749276713,
+  "outcome": "loss",
+  "bars": 3,
+  "pnl_pct": -1.85
  },
  {
   "symbol": "ETHUSDT",
@@ -3668,7 +3671,10 @@
   "time": "2026-11-15 01:00",
   "sl": 1799.2961773116776,
   "tp1": 1879.2614680649667,
-  "tp2": 1915.2429361299335
+  "tp2": 1915.2429361299335,
+  "outcome": "loss",
+  "bars": 3,
+  "pnl_pct": -2.39
  },
  {
   "symbol": "BTCUSDT",
@@ -3808,7 +3814,10 @@
   "time": "2026-11-15 03:05",
   "sl": 64686.318756136956,
   "tp1": 66668.65373158912,
-  "tp2": 67609.69746317825
+  "tp2": 67609.69746317825,
+  "outcome": "loss",
+  "bars": 1,
+  "pnl_pct": -1.58
  },
  {
   "symbol": "ETHUSDT",
@@ -3878,6 +3887,79 @@
   "time": "2026-11-15 03:05",
   "sl": 1799.6138212533972,
   "tp1": 1870.1185362398082,
-  "tp2": 1905.1470724796163
+  "tp2": 1905.1470724796163,
+  "outcome": "loss",
+  "bars": 1,
+  "pnl_pct": -1.93
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "1h",
+  "candle": 1794686400000,
+  "price": 1783.8,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": -7.5,
+    "note": "ADX 45: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -15.0,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200) — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "MACD",
+    "points": -10.0,
+    "note": "MACD dưới đường tín hiệu, động lượng giảm dần — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "RSI",
+    "points": 15,
+    "note": "RSI 22: quá bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 0,
+    "note": "K 22: trung tính"
+   },
+   {
+    "name": "Bollinger",
+    "points": 10,
+    "note": "giá ở BB dưới"
+   },
+   {
+    "name": "Khối lượng",
+    "points": -2.5,
+    "note": "nến giảm với khối lượng gấp 2.4 lần TB20 — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": 0,
+    "note": "chưa có — chờ nến tăng đóng trên đỉnh nến trước, hoặc RSI quay lên"
+   },
+   {
+    "name": "Khung 1d",
+    "points": 0,
+    "note": "khung ngày chưa rõ xu hướng"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 1,
+  "in_zone": true,
+  "ema_trend": -1,
+  "atr": 26.51861767282447,
+  "rsi": 22.468651444596404,
+  "adx": 45.22090630580233,
+  "swing_low": 1772.0,
+  "swing_high": 1912.0,
+  "score": -10,
+  "rating": "watch_buy",
+  "type": "advice",
+  "ts": 1794690168,
+  "time": "2026-11-15 04:02",
+  "sl": 1783.8,
+  "tp1": 1783.8,
+  "tp2": 1783.8
  }
 ]
