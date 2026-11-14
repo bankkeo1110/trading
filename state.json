@@ -98,7 +98,7 @@
   "level": "touch"
  },
  "SOLUSDT|1h|lower": {
-  "candle": 1794610800000,
-  "level": "touch"
+  "candle": 1794614400000,
+  "level": "near"
  }
 }
