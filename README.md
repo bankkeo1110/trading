@@ -14,8 +14,9 @@ Bot chỉ cảnh báo, không đặt lệnh. Chạm band không phải là tín 
 | `bot/` | Bot Python; `bot/advisor.py` là phần gợi ý mua/bán, `bot/chart.py` vẽ ảnh biểu đồ (cần `matplotlib`) |
 | `.github/workflows/scan.yml` | Quét 5 phút/lần trên GitHub Actions (mỗi lượt chạy khoảng 5 giờ rồi tự gọi lượt kế tiếp) |
 | `web/` | Dashboard (biểu đồ, lịch sử tín hiệu, chọn kênh gửi) và trang gợi ý mua/bán `signals.html`, deploy lên Vercel |
+| `.github/workflows/review.yml` | AI review tín hiệu hằng tuần bằng Claude CLI |
 | `tests/` | Test: `python -m unittest discover -s tests` |
-| nhánh `data` | `state.json` (chống spam), `signals.json` (lịch sử BB), `advice.json` và `advice_signals.json` (gợi ý mua/bán), bot tự tạo |
+| nhánh `data` | `state.json` (chống spam), `signals.json` (lịch sử BB), `advice.json` và `advice_signals.json` (gợi ý mua/bán, kèm kết quả), `stats.json`, `ai_review.json`, bot tự tạo |
 
 ## Logic tín hiệu
 
@@ -62,6 +63,30 @@ Chờ thêm một dấu hiệu giá bật lên giúp tránh bắt dao rơi.
 - Tắt chức năng này: đặt Variable `ADVICE=off`.
 
 Đây là gợi ý từ chỉ báo kỹ thuật, không phải lời khuyên đầu tư.
+
+## Chấm đúng/sai, thống kê và AI review
+
+**Chấm đúng/sai** (`bot/evaluate.py`, mỗi lượt quét): với mỗi gợi ý MUA/BÁN đã gửi, bot xem các nến đã đóng sau đó.
+**Đúng** nếu chạm chốt lời 1 trước cắt lỗ trong 24 nến, **Sai** nếu chạm cắt lỗ trước (nến chạm cả hai tính Sai),
+**Hết hạn** nếu 24 nến chưa chạm mức nào. CANH MUA/BÁN chấm theo giá sau 12 nến. Cảnh báo BB không được chấm.
+
+**Thống kê** (`stats.json`, trang `/signals.html` mục "Độ chính xác"): tỉ lệ đúng theo khung, coin, loại tín hiệu,
+thuận xu hướng / đảo chiều, độ lớn điểm, và theo từng chỉ báo (khi đồng thuận với lệnh và khi ngược chiều).
+
+**AI review** (workflow "AI review tín hiệu", tối Chủ nhật 20:07 giờ VN, chạy tay được trong tab Actions):
+Claude CLI đọc thống kê, gửi báo cáo về Telegram và đề xuất chỉnh tham số. Đề xuất chỉ được giữ nếu:
+có ít nhất 30 tín hiệu đã chấm, mỗi tham số đổi tối đa ±30%, nằm trong giới hạn và hợp lệ cả bộ.
+**Không có gì tự áp dụng**: vào `/signals.html#ai`, nhập mật khẩu admin, bấm **Áp dụng**.
+Tham số lưu ở các dòng `advice.*` trong `settings.properties` (giới hạn ở `web/params-spec.json`);
+mỗi tín hiệu ghi `params_id` để so sánh trước/sau khi đổi. Không gọi được AI thì vẫn gửi bản thống kê.
+
+Cài đặt AI (một lần):
+1. Trên máy có trình duyệt và đã cài Claude Code, chạy `claude setup-token`, đăng nhập bằng tài khoản Claude Pro/Max,
+   copy token (bắt đầu bằng `sk-ant-oat01-`). Token có hạn 1 năm.
+2. Thêm secret `CLAUDE_CODE_OAUTH_TOKEN` với token đó.
+3. Tab Actions > "AI review tín hiệu" > Run workflow để thử.
+4. Nếu báo lỗi 401, dùng API key thay thế: tạo key ở https://console.anthropic.com, thêm secret `ANTHROPIC_API_KEY`
+   (trả theo lượt dùng). Tuỳ chọn: Variable `CLAUDE_MODEL` để chọn model.
 
 ## Ảnh biểu đồ kèm tín hiệu
 
