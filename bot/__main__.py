@@ -9,11 +9,13 @@ from pathlib import Path
 from .advisor import advice_subject, advise, apply_context, decide_advice, format_advice_message, levels, overall
 from . import advisor, params
 from .chart import make_charts
+from .evaluate import evaluate
 from .config import Config, load_dotenv
 from .market import fetch_klines
 from .notify import discover_chat_ids, notify
 from .signals import analyze, decide, format_message, subject
 
+MAX_ADVICE = 3000                    # gợi ý mua/bán giữ lâu hơn để thống kê
 MAX_SIGNALS = 500
 
 
@@ -113,14 +115,20 @@ def _scan_advice(cfg, items, candles_by, dry_run):
         return 0
     # Ảnh chụp chỉ đổi khi có nến mới đóng nên nhánh data không bị commit liên tục.
     _save(cfg.data_dir / "advice.json", {"items": items, "overall": summary})
-    if not alerts:
-        _save(state_path, new_state)
-        return 0
-    saved, had_error = _send(cfg, advice_subject(alerts), text, alerts, candles_by)
+    hist_path = cfg.data_dir / "advice_signals.json"
+    hist = _load(hist_path, [])
+    resolved = evaluate(hist, candles_by)
+    had_error = False
+    if alerts:
+        saved, had_error = _send(cfg, advice_subject(alerts), text, alerts, candles_by)
+        if saved:
+            hist = (hist + alerts)[-MAX_ADVICE:]
+    else:
+        saved = True
     if saved:
-        hist_path = cfg.data_dir / "advice_signals.json"
         _save(state_path, new_state)
-        _save(hist_path, (_load(hist_path, []) + alerts)[-MAX_SIGNALS:])
+    if resolved or (alerts and saved) or not hist_path.exists():
+        _save(hist_path, hist)
     return 1 if had_error else 0
 
 

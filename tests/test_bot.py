@@ -452,5 +452,79 @@ class Params(unittest.TestCase):
         self.assertEqual(advisor.PARAMS["hold"], 10)
 
 
+class EvaluateInScan(unittest.TestCase):
+    def test_scan_records_outcomes(self):
+        import json
+        with tempfile.TemporaryDirectory() as d:
+            cfg = Config(symbols=["BTCUSDT"], timeframes=["4h"], data_dir=Path(d), channels=[], telegram_token="")
+            scan(cfg, fetch=lambda s, tf, n: ohlc(trend()))
+            scan(cfg, fetch=lambda s, tf, n: ohlc(trend(n=340)))          # giá tiếp tục tăng → chạm chốt lời
+            hist = json.loads((Path(d) / "advice_signals.json").read_text(encoding="utf-8"))
+        self.assertEqual(hist[0]["outcome"], "win")
+        self.assertIn("params_id", hist[0])
+
+
+class Evaluate(unittest.TestCase):
+    H = 3_600_000
+
+    def rows(self, path, start=100.0):
+        """Nến 1h: 5 nến phẳng trước, nến tín hiệu (t=5h, đóng 100), rồi các nến theo path [(high, low, close)],
+        cuối cùng 1 nến đang chạy."""
+        rows = [{"t": i * self.H, "o": start, "h": start + 0.1, "l": start - 0.1, "c": start, "v": 1.0} for i in range(6)]
+        for h, l, c in path:
+            rows.append({"t": len(rows) * self.H, "o": rows[-1]["c"], "h": h, "l": l, "c": c, "v": 1.0})
+        rows.append({"t": len(rows) * self.H, "o": 0, "h": 1000, "l": 0, "c": 1, "v": 1.0})   # đang chạy: bỏ qua
+        return {("BTCUSDT", "1h"): rows}
+
+    def sig(self, rating="buy", **kw):
+        return {"type": "advice", "symbol": "BTCUSDT", "tf": "1h", "candle": 5 * self.H, "price": 100.0,
+                "rating": rating, "sl": 98.0, "tp1": 102.0, "tp2": 104.0, **kw}
+
+    def run_eval(self, signals, path):
+        from bot.evaluate import evaluate
+        return evaluate(signals, self.rows(path))
+
+    def test_buy_win_loss_same_bar(self):
+        s = [self.sig(), self.sig(), self.sig()]
+        from bot.evaluate import evaluate
+        evaluate(s[:1], self.rows([(101, 99, 100), (102.5, 100, 102)]))
+        evaluate(s[1:2], self.rows([(101, 97.5, 98)]))
+        evaluate(s[2:], self.rows([(103, 97, 100)]))                      # chạm cả 2 trong 1 nến → Sai
+        self.assertEqual([(x["outcome"], x["pnl_pct"], x["bars"]) for x in s],
+                         [("win", 2.0, 2), ("loss", -2.0, 1), ("loss", -2.0, 1)])
+
+    def test_expired_and_pending(self):
+        s = [self.sig()]
+        self.assertEqual(self.run_eval(s, [(101, 99, 100.5)] * 23), 0)
+        self.assertNotIn("outcome", s[0])                                 # mới 23 nến: chờ
+        self.assertEqual(self.run_eval(s, [(101, 99, 100.5)] * 24), 1)
+        self.assertEqual((s[0]["outcome"], s[0]["pnl_pct"], s[0]["bars"]), ("expired", 0.5, 24))
+        self.assertEqual(self.run_eval(s, [(103, 97, 100)] * 30), 0)      # đã có kết quả thì không chấm lại
+        self.assertEqual(s[0]["outcome"], "expired")
+
+    def test_sell_is_mirrored(self):
+        s = [self.sig("strong_sell", sl=102.0, tp1=98.0, tp2=96.0)]
+        self.run_eval(s, [(101, 97.5, 98)])
+        self.assertEqual((s[0]["outcome"], s[0]["pnl_pct"]), ("win", 2.0))
+
+    def test_watch_signals(self):
+        s = [self.sig("watch_buy"), self.sig("watch_sell")]
+        for x in s:
+            del x["sl"], x["tp1"], x["tp2"]
+        self.run_eval(s, [(101, 99, 100)] * 11 + [(104, 100, 103)])
+        self.assertEqual([(x["outcome"], x["pnl_pct"]) for x in s], [("right", 3.0), ("wrong", -3.0)])
+
+    def test_unusable_signals_are_skipped_once(self):
+        old = self.sig(candle=-10 * self.H)                               # trôi khỏi cửa sổ nến
+        no_levels = self.sig()
+        del no_levels["sl"]
+        other = self.sig(symbol="ETHUSDT")                                # không có nến: chờ lượt sau
+        band = {"type": "band", "symbol": "BTCUSDT", "tf": "1h", "candle": 5 * self.H}
+        self.run_eval([old, no_levels, other, band], [(101, 99, 100)])
+        self.assertEqual((old["outcome"], no_levels["outcome"]), ("skip", "skip"))
+        self.assertNotIn("outcome", other)
+        self.assertNotIn("outcome", band)
+
+
 if __name__ == "__main__":
     unittest.main()
