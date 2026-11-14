@@ -28,21 +28,21 @@
  "SUIUSDT|4h|squeeze": false,
  "SUIUSDT|1d|squeeze": false,
  "ETHUSDT|4h|lower": {
-  "candle": 1794672000000,
-  "level": "touch"
+  "candle": 1794686400000,
+  "level": "near"
  },
  "SUIUSDT|1d|lower": {
   "candle": 1794614400000,
   "level": "touch"
  },
  "advice|BTCUSDT|1h": {
-  "rating": "watch_buy",
-  "candle": 1794679200000,
+  "rating": "buy",
+  "candle": 1794682800000,
   "watch_candle": 1794679200000
  },
  "advice|BTCUSDT|4h": {
   "rating": "watch_buy",
-  "candle": 1794657600000,
+  "candle": 1794672000000,
   "watch_candle": 1794657600000
  },
  "advice|BTCUSDT|1d": {
@@ -51,13 +51,13 @@
   "watch_candle": 1794441600000
  },
  "advice|ETHUSDT|1h": {
-  "rating": "watch_buy",
-  "candle": 1794679200000,
+  "rating": "buy",
+  "candle": 1794682800000,
   "watch_candle": 1794664800000
  },
  "advice|ETHUSDT|4h": {
   "rating": "watch_buy",
-  "candle": 1794657600000,
+  "candle": 1794672000000,
   "watch_candle": 1794571200000
  },
  "advice|ETHUSDT|1d": {
@@ -67,12 +67,12 @@
  },
  "advice|SOLUSDT|1h": {
   "rating": "watch_buy",
-  "candle": 1794679200000,
+  "candle": 1794682800000,
   "watch_candle": 1794650400000
  },
  "advice|SOLUSDT|4h": {
   "rating": "watch_buy",
-  "candle": 1794657600000,
+  "candle": 1794672000000,
   "watch_candle": 1794556800000
  },
  "advice|SOLUSDT|1d": {
@@ -82,12 +82,12 @@
  },
  "advice|SUIUSDT|1h": {
   "rating": "watch_buy",
-  "candle": 1794679200000,
+  "candle": 1794682800000,
   "watch_candle": 1794664800000
  },
  "advice|SUIUSDT|4h": {
   "rating": "watch_buy",
-  "candle": 1794657600000,
+  "candle": 1794672000000,
   "watch_candle": 1794657600000
  },
  "advice|SUIUSDT|1d": {
@@ -95,16 +95,16 @@
   "candle": 1794528000000
  },
  "SOLUSDT|4h|lower": {
-  "candle": 1794672000000,
-  "level": "touch"
+  "candle": 1794686400000,
+  "level": "near"
  },
  "BTCUSDT|1h|lower": {
   "candle": 1794682800000,
   "level": "near"
  },
  "SOLUSDT|1h|lower": {
-  "candle": 1794682800000,
-  "level": "touch"
+  "candle": 1794686400000,
+  "level": "near"
  },
  "SUIUSDT|1h|lower": {
   "candle": 1794682800000,
@@ -115,7 +115,7 @@
   "level": "near"
  },
  "SUIUSDT|4h|lower": {
-  "candle": 1794672000000,
+  "candle": 1794686400000,
   "level": "touch"
  }
 }
