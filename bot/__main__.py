@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 
 from .advisor import advice_subject, advise, apply_context, decide_advice, format_advice_message, levels, overall
+from . import advisor, params
 from .chart import make_charts
 from .config import Config, load_dotenv
 from .market import fetch_klines
@@ -29,19 +30,27 @@ def _save(path, obj):
 
 
 def apply_settings(cfg, path=None):
-    """Dòng `channels=` trong settings.properties được ưu tiên hơn biến CHANNELS."""
+    """settings.properties: dòng `channels=` ưu tiên hơn biến CHANNELS; dòng `advice.*` là tham số gợi ý
+    (sai ràng buộc thì bỏ qua cả bộ, dùng mặc định)."""
     path = Path(path or os.environ.get("SETTINGS_FILE") or "settings.properties")
     try:
-        lines = path.read_text(encoding="utf-8").splitlines()
+        text = path.read_text(encoding="utf-8")
     except FileNotFoundError:
-        return cfg
-    for line in lines:
+        text = ""
+    for line in text.splitlines():
         line = line.strip()
         if line.startswith("#") or "=" not in line:
             continue
         key, value = line.split("=", 1)
         if key.strip() == "channels":
             cfg.channels = [c.strip().lower() for c in value.split(",") if c.strip()]
+    p = params.load(text)
+    errors = params.validate(p)
+    if errors:
+        print("CẢNH BÁO: tham số advice.* không hợp lệ, dùng mặc định:", "; ".join(errors), file=sys.stderr)
+        p = dict(params.DEFAULTS)
+    advisor.configure(p)
+    cfg.rsi_low, cfg.rsi_high = p["rsi_low"], p["rsi_high"]
     return cfg
 
 

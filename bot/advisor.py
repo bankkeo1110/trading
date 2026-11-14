@@ -8,13 +8,22 @@ Chỉ dùng nến ĐÃ ĐÓNG để tín hiệu không nhảy qua lại trong l�
 """
 from datetime import datetime, timezone
 
+from . import params as _params
 from .indicators import atr_adx, bollinger, ema_series, macd, rsi_series, stoch_rsi
 from .signals import VN, fmt_price, tv_link
 
 MIN_CANDLES = 210                      # đủ cho EMA200
 TF_WEIGHT = {"15m": 0.5, "30m": 0.5, "1h": 1, "2h": 1.5, "4h": 2, "1d": 3}
 TF_MS = {"15m": 900_000, "30m": 1_800_000, "1h": 3_600_000, "2h": 7_200_000, "4h": 14_400_000, "1d": 86_400_000}
-STRONG, WEAK, HOLD = 50, 20, 10        # ngưỡng mạnh / thường / giữ trạng thái (chống nhấp nháy)
+PARAMS = dict(_params.DEFAULTS)         # ngưỡng, trọng số, hệ số ATR; đổi bằng configure()
+
+
+def configure(p):
+    """Đặt tham số (thiếu key nào thì dùng mặc định). Gọi từ apply_settings."""
+    PARAMS.clear()
+    PARAMS.update({**_params.DEFAULTS, **p})
+
+
 RECENT = 6                             # số nến gần nhất còn tính là "vừa quá bán/quá mua"
 WATCH_GAP = 6                          # không nhắc lại "canh mua/canh bán" trong vòng N nến
 LABEL = {"strong_buy": "NÊN MUA (mạnh)", "buy": "NÊN MUA", "watch_buy": "QUÁ BÁN — CANH MUA",
@@ -30,17 +39,18 @@ def rating_of(score, zone=0):
     Không bao giờ gợi ý BÁN khi đang quá bán (bán đuổi ở đáy) hay MUA khi đang quá mua (mua đuổi ở đỉnh):
     lúc đó chuyển thành "canh mua"/"canh bán" cho tới khi có xác nhận đảo chiều đẩy điểm qua ngưỡng.
     """
-    if zone > 0 and score < WEAK:
+    strong, weak = PARAMS["strong"], PARAMS["weak"]
+    if zone > 0 and score < weak:
         return "watch_buy"
-    if zone < 0 and score > -WEAK:
+    if zone < 0 and score > -weak:
         return "watch_sell"
-    if score >= STRONG:
+    if score >= strong:
         return "strong_buy"
-    if score >= WEAK:
+    if score >= weak:
         return "buy"
-    if score <= -STRONG:
+    if score <= -strong:
         return "strong_sell"
-    if score <= -WEAK:
+    if score <= -weak:
         return "sell"
     return "neutral"
 
@@ -126,7 +136,8 @@ def advise(symbol, tf, candles, cfg):
     parts = []
 
     def add(name, pts, note):
-        parts.append({"name": name, "points": round(pts, 1), "note": note})
+        w = PARAMS[_params.WEIGHT_OF[name]]
+        parts.append({"name": name, "points": round(pts * w, 1), "note": note})
 
     def trend(name, pts, note):
         """Điểm theo xu hướng: đi ngang tính 1/2; ngược với vùng quá bán/quá mua tính 1/2,
@@ -211,6 +222,7 @@ def advise(symbol, tf, candles, cfg):
             add("Xác nhận đảo chiều", 0, f"chưa có — chờ {wait}")
 
     return _finish({"symbol": symbol, "tf": tf, "candle": last["t"], "price": price, "parts": parts,
+                    "params_id": _params.pid(PARAMS),
                     "zone": zone, "in_zone": in_zone, "ema_trend": ema_trend, "atr": atr, "rsi": r, "adx": adx,
                     "swing_low": min(c["l"] for c in closed[-10:]), "swing_high": max(c["h"] for c in closed[-10:])})
 
@@ -226,7 +238,7 @@ def apply_context(items):
         note = {1: "khung ngày đang tăng: ưu tiên mua nhịp điều chỉnh",
                 -1: "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ",
                 0: "khung ngày chưa rõ xu hướng"}[t]
-        it["parts"].append({"name": "Khung 1d", "points": 8 * t, "note": note})
+        it["parts"].append({"name": "Khung 1d", "points": round(8 * t * PARAMS["w_daily"], 1), "note": note})
         _finish(it)
     return items
 
@@ -259,7 +271,7 @@ def decide_advice(items, state, now=None):
         old = state.get(key) or {}
         prev = old.get("rating", "neutral")
         rating = it["rating"]
-        if rating == "neutral" and direction(prev) * it["score"] >= HOLD:
+        if rating == "neutral" and direction(prev) * it["score"] >= PARAMS["hold"]:
             rating = "buy" if direction(prev) > 0 else "sell"      # vẫn giữ hướng cũ
         entry = {"rating": rating, "candle": it["candle"]}
         if "watch_candle" in old:
@@ -280,13 +292,14 @@ def decide_advice(items, state, now=None):
 
 
 def levels(a):
-    """Mức tham khảo. Cắt lỗ 1.5 ATR, chốt lời 1.5 và 3 ATR.
+    """Mức tham khảo theo ATR (hệ số trong PARAMS: sl_atr, tp1_atr, tp2_atr).
     Lệnh đảo chiều (mua sau quá bán / bán sau quá mua): cắt lỗ đặt ngoài đáy/đỉnh 10 nến gần nhất 0.5 ATR."""
-    sign = direction(a["rating"])
-    sl = a["price"] - sign * 1.5 * a["atr"]
+    sign, atr = direction(a["rating"]), a["atr"]
+    sl = a["price"] - sign * PARAMS["sl_atr"] * atr
     if sign and a.get("zone") == sign:
-        sl = a["swing_low"] - 0.5 * a["atr"] if sign > 0 else a["swing_high"] + 0.5 * a["atr"]
-    return {"sl": sl, "tp1": a["price"] + sign * 1.5 * a["atr"], "tp2": a["price"] + sign * 3 * a["atr"]}
+        sl = a["swing_low"] - 0.5 * atr if sign > 0 else a["swing_high"] + 0.5 * atr
+    return {"sl": sl, "tp1": a["price"] + sign * PARAMS["tp1_atr"] * atr,
+            "tp2": a["price"] + sign * PARAMS["tp2_atr"] * atr}
 
 
 def format_advice(a, summary):

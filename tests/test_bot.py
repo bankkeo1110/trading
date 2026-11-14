@@ -400,5 +400,57 @@ class Charts(unittest.TestCase):
         self.assertEqual((ok, errors), (["Telegram"], {}))
 
 
+class Params(unittest.TestCase):
+    def tearDown(self):
+        from bot import advisor
+        advisor.configure({})
+
+    def test_load_and_validate(self):
+        from bot import params
+        p = params.load("# x\nchannels=telegram\nadvice.strong=45\nadvice.w_ema=0.5\nadvice.la=3\nadvice.weak=abc\n")
+        self.assertEqual((p["strong"], p["w_ema"], p["weak"]), (45.0, 0.5, 20))
+        self.assertNotIn("la", p)
+        self.assertEqual(params.validate(p), [])
+        self.assertTrue(params.validate({**p, "hold": 25}))                 # hold phải < weak
+        self.assertTrue(params.validate({**p, "tp1_atr": 3.5, "tp2_atr": 3}))
+        self.assertTrue(params.validate({**p, "strong": 90}))               # ngoài max
+        self.assertEqual(len(params.pid(p)), 8)
+        self.assertNotEqual(params.pid(p), params.pid(params.load("")))
+
+    def test_weights_and_thresholds_change_scores(self):
+        from bot import advisor, params
+        rows = ohlc(trend())
+        base = advise("BTCUSDT", "4h", rows, Config())
+        advisor.configure({"w_ema": 0})
+        no_ema = advise("BTCUSDT", "4h", rows, Config())
+        ema = next(p["points"] for p in base["parts"] if p["name"] == "EMA 20/50/200")
+        self.assertEqual(next(p["points"] for p in no_ema["parts"] if p["name"] == "EMA 20/50/200"), 0)
+        self.assertEqual(no_ema["score"], base["score"] - round(ema))
+        advisor.configure({"strong": base["score"] - 1})
+        self.assertEqual(advise("BTCUSDT", "4h", rows, Config())["rating"], "strong_buy")
+        advisor.configure({})
+        self.assertEqual(advise("BTCUSDT", "4h", rows, Config())["score"], base["score"])
+        a = dict(base, rating="buy", zone=0)
+        advisor.configure({"sl_atr": 2, "tp1_atr": 1, "tp2_atr": 4})
+        lv = levels(a)
+        self.assertAlmostEqual(lv["sl"], a["price"] - 2 * a["atr"])
+        self.assertAlmostEqual(lv["tp2"], a["price"] + 4 * a["atr"])
+
+    def test_settings_file_applies_params(self):
+        from bot import advisor
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "settings.properties"
+            f.write_text("channels=telegram\nadvice.rsi_low=25\nadvice.strong=60\n", encoding="utf-8")
+            cfg = apply_settings(Config(), f)
+        self.assertEqual((cfg.rsi_low, advisor.PARAMS["strong"]), (25, 60))
+        alerts, _ = decide_advice([dict(Advisor.item(self, 70), params_id="x")], {})
+        self.assertEqual(alerts[0]["params_id"], "x")
+        with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "settings.properties"
+            f.write_text("advice.hold=30\n", encoding="utf-8")             # sai ràng buộc: bỏ qua cả bộ
+            apply_settings(Config(), f)
+        self.assertEqual(advisor.PARAMS["hold"], 10)
+
+
 if __name__ == "__main__":
     unittest.main()
