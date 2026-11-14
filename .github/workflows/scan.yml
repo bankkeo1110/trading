@@ -18,7 +18,7 @@ permissions:
   actions: write
 
 concurrency:
-  group: scan
+  group: ${{ inputs.test && 'test' || 'scan' }}   # tin thử không phải xếp hàng sau lượt quét dài
   cancel-in-progress: false
 
 jobs:
