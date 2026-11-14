@@ -7,7 +7,7 @@ import time
 from pathlib import Path
 
 from .advisor import advice_subject, advise, apply_context, decide_advice, format_advice_message, levels, overall
-from . import advisor, params
+from . import advisor, params, stats
 from .chart import make_charts
 from .evaluate import evaluate
 from .config import Config, load_dotenv
@@ -129,6 +129,7 @@ def _scan_advice(cfg, items, candles_by, dry_run):
         _save(state_path, new_state)
     if resolved or (alerts and saved) or not hist_path.exists():
         _save(hist_path, hist)
+    _save(cfg.data_dir / "stats.json", stats.build(hist))
     return 1 if had_error else 0
 
 

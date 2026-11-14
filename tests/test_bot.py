@@ -460,7 +460,9 @@ class EvaluateInScan(unittest.TestCase):
             scan(cfg, fetch=lambda s, tf, n: ohlc(trend()))
             scan(cfg, fetch=lambda s, tf, n: ohlc(trend(n=340)))          # giá tiếp tục tăng → chạm chốt lời
             hist = json.loads((Path(d) / "advice_signals.json").read_text(encoding="utf-8"))
-        self.assertEqual(hist[0]["outcome"], "win")
+            self.assertEqual(hist[0]["outcome"], "win")
+            st = json.loads((Path(d) / "stats.json").read_text(encoding="utf-8"))
+        self.assertEqual(st["overall"]["win"], 1)
         self.assertIn("params_id", hist[0])
 
 
@@ -524,6 +526,39 @@ class Evaluate(unittest.TestCase):
         self.assertEqual((old["outcome"], no_levels["outcome"]), ("skip", "skip"))
         self.assertNotIn("outcome", other)
         self.assertNotIn("outcome", band)
+
+
+class Stats(unittest.TestCase):
+    def sig(self, outcome, rating="buy", score=30, symbol="BTCUSDT", tf="1h", pnl=1.0, zone=0, ema=10, pid="a"):
+        return {"type": "advice", "symbol": symbol, "tf": tf, "rating": rating, "score": score, "zone": zone,
+                "outcome": outcome, "pnl_pct": pnl, "params_id": pid, "time": "t",
+                "parts": [{"name": "EMA 20/50/200", "points": ema, "note": ""}, {"name": "RSI", "points": 0, "note": ""}]}
+
+    def test_build(self):
+        from bot.stats import build
+        sigs = [self.sig("win", pnl=2), self.sig("win", tf="4h", pnl=2, score=55),
+                self.sig("loss", pnl=-2, ema=-10, zone=1), self.sig("expired", pnl=0.5, symbol="ETHUSDT", pid="b"),
+                self.sig("win", rating="sell", score=-40, pnl=2, ema=-10),
+                self.sig("right", rating="watch_buy"), self.sig("wrong", rating="watch_sell"),
+                self.sig("skip"), {**self.sig(None), "outcome": None}, {"type": "band", "symbol": "BTCUSDT"}]
+        st = build(sigs)
+        o = st["overall"]
+        self.assertEqual((o["n"], o["win"], o["loss"], o["expired"], o["win_rate"], o["avg_pnl"]), (5, 3, 1, 1, 0.75, 0.9))
+        self.assertEqual(st["by_symbol"]["ETH"]["n"], 1)
+        self.assertEqual(st["by_tf"]["4h"]["win"], 1)
+        self.assertEqual(st["by_rating"]["sell"]["win_rate"], 1.0)
+        self.assertEqual(st["by_kind"]["reversal"]["loss"], 1)              # zone == hướng lệnh
+        self.assertEqual(st["by_score"]["50-64"]["n"], 1)
+        self.assertEqual(st["by_score"]["35-49"]["n"], 1)                   # |−40|
+        self.assertEqual(st["by_params"]["b"]["n"], 1)
+        ema = st["indicators"]["EMA 20/50/200"]
+        self.assertEqual((ema["agree"]["n"], ema["against"]["n"]), (4, 1))  # bán + EMA −10 là đồng thuận
+        self.assertEqual(st["indicators"]["RSI"]["neutral"]["n"], 5)
+        self.assertEqual((st["watch"]["n"], st["watch"]["right"], st["watch"]["right_rate"]), (2, 1, 0.5))
+        self.assertEqual((st["pending"], st["skipped"], st["resolved"]), (1, 1, 5))
+        self.assertEqual(len(st["recent_losses"]), 1)
+        self.assertIsNone(build([])["overall"]["win_rate"])
+        self.assertEqual(build(sigs), build(sigs))                          # ổn định: không có thời gian
 
 
 if __name__ == "__main__":
