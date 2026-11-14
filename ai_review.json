@@ -1,0 +1,13 @@
+[
+ {
+  "time": "2026-11-14 21:54",
+  "ok": true,
+  "error": "",
+  "report": "Tổng quan: 22 tín hiệu đã có kết quả, 12 đúng, 10 sai, win rate 54,5%, lãi trung bình -0,08%. Chỉ nhỉnh hơn mức hoà vốn (~50%) nên chưa có lợi thế rõ. Mẫu còn nhỏ, mọi nhận xét dưới đây chỉ là dấu hiệu.\n\nTheo nhóm: ETH tốt nhất (4/5 đúng, chỉ 5 lệnh). BTC 57% (7 lệnh). SOL kém (2/6 đúng, lãi trung bình -1,06%). SUI 50% (4 lệnh). Khung 1h đạt 64,7% (17 lệnh, lãi trung bình +0,55%). Khung 4h chỉ 1/5 đúng, lãi trung bình -2,2%. Lệnh thuận xu hướng đạt 64,7% (17 lệnh). Lệnh đảo chiều sau quá bán/quá mua chỉ 1/5 đúng, lãi trung bình -1,33%. Cả 5 lệnh đảo chiều đều là MUA ngược xu hướng EMA giảm. Khoảng điểm 50-64 tốt nhất (9/11 đúng). Điểm 35-49 thua cả 4 lệnh. Điểm 65+ chỉ có 1 lệnh (thua). Điểm không tăng đều theo độ mạnh, nên chưa thể coi điểm cao là đáng tin hơn.\n\nChỉ báo: Stoch RSI cùng chiều đạt 81,8% (11 lệnh) và ngược chiều chỉ 28,6%, nên đang giúp. EMA và RSI cùng chiều đạt khoảng 63-65%, ngược chiều chỉ 20-33%, cũng đang giúp. MACD cùng chiều lại chỉ 33,3% (9 lệnh), thấp hơn lúc trung lập hay ngược chiều, có thể đang gây nhiễu. Bollinger cùng chiều 25% (4 lệnh). Các con số này đều từ mẫu quá nhỏ.\n\nLệnh thua gần đây: nhóm BÁN (ngày 13/11) cùng vào một thời điểm, EMA, ADX và MACD đều giảm nhưng giá bật lại. Nhóm này thực chất là một sự kiện thị trường chứ không phải nhiều lỗi độc lập. Nhóm MUA đảo chiều (14/11) vào lệnh khi EMA và ADX vẫn giảm, nên bắt dao rơi và bị cắt lỗ.\n\nLời khuyên: ưu tiên tín hiệu thuận xu hướng trên 1h, điểm khoảng 50 trở lên. Thận trọng với MUA đảo chiều ngược EMA, và với khung 4h. Không nên vào nhiều coin cùng lúc khi cùng một tín hiệu vì chúng tương quan cao. Chưa chỉnh tham số vì mới có 22 lệnh (cần 30).",
+  "changes": [],
+  "rejected": [],
+  "resolved": 22,
+  "params_id": "7817b218",
+  "summary": "Đã chấm 22 tín hiệu: 12 đúng, 10 sai, 0 hết hạn (tỉ lệ đúng 55%, lãi/lỗ TB -0.08%).\nTheo khung: 1h 65% (17), 4h 20% (5)\nTheo coin: BTC 57% (7), ETH 80% (5), SOL 33% (6), SUI 50% (4)\nĐang chờ kết quả: 27."
+ }
+]
