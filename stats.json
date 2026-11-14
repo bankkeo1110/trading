@@ -1,0 +1,558 @@
+{
+ "resolved": 22,
+ "pending": 27,
+ "skipped": 0,
+ "overall": {
+  "n": 22,
+  "win": 12,
+  "loss": 10,
+  "expired": 0,
+  "win_rate": 0.545,
+  "avg_pnl": -0.08
+ },
+ "by_symbol": {
+  "BTC": {
+   "n": 7,
+   "win": 4,
+   "loss": 3,
+   "expired": 0,
+   "win_rate": 0.571,
+   "avg_pnl": 0.21
+  },
+  "ETH": {
+   "n": 5,
+   "win": 4,
+   "loss": 1,
+   "expired": 0,
+   "win_rate": 0.8,
+   "avg_pnl": 1.0
+  },
+  "SOL": {
+   "n": 6,
+   "win": 2,
+   "loss": 4,
+   "expired": 0,
+   "win_rate": 0.333,
+   "avg_pnl": -1.06
+  },
+  "SUI": {
+   "n": 4,
+   "win": 2,
+   "loss": 2,
+   "expired": 0,
+   "win_rate": 0.5,
+   "avg_pnl": -0.44
+  }
+ },
+ "by_tf": {
+  "1h": {
+   "n": 17,
+   "win": 11,
+   "loss": 6,
+   "expired": 0,
+   "win_rate": 0.647,
+   "avg_pnl": 0.55
+  },
+  "4h": {
+   "n": 5,
+   "win": 1,
+   "loss": 4,
+   "expired": 0,
+   "win_rate": 0.2,
+   "avg_pnl": -2.2
+  }
+ },
+ "by_rating": {
+  "buy": {
+   "n": 5,
+   "win": 1,
+   "loss": 4,
+   "expired": 0,
+   "win_rate": 0.2,
+   "avg_pnl": -1.33
+  },
+  "sell": {
+   "n": 5,
+   "win": 2,
+   "loss": 3,
+   "expired": 0,
+   "win_rate": 0.4,
+   "avg_pnl": -0.23
+  },
+  "strong_sell": {
+   "n": 12,
+   "win": 9,
+   "loss": 3,
+   "expired": 0,
+   "win_rate": 0.75,
+   "avg_pnl": 0.51
+  }
+ },
+ "by_kind": {
+  "reversal": {
+   "n": 5,
+   "win": 1,
+   "loss": 4,
+   "expired": 0,
+   "win_rate": 0.2,
+   "avg_pnl": -1.33
+  },
+  "trend": {
+   "n": 17,
+   "win": 11,
+   "loss": 6,
+   "expired": 0,
+   "win_rate": 0.647,
+   "avg_pnl": 0.29
+  }
+ },
+ "by_score": {
+  "20-34": {
+   "n": 6,
+   "win": 3,
+   "loss": 3,
+   "expired": 0,
+   "win_rate": 0.5,
+   "avg_pnl": -0.12
+  },
+  "35-49": {
+   "n": 4,
+   "win": 0,
+   "loss": 4,
+   "expired": 0,
+   "win_rate": 0.0,
+   "avg_pnl": -1.78
+  },
+  "50-64": {
+   "n": 11,
+   "win": 9,
+   "loss": 2,
+   "expired": 0,
+   "win_rate": 0.818,
+   "avg_pnl": 0.92
+  },
+  "65+": {
+   "n": 1,
+   "win": 0,
+   "loss": 1,
+   "expired": 0,
+   "win_rate": 0.0,
+   "avg_pnl": -3.96
+  }
+ },
+ "by_params": {
+  "cũ": {
+   "n": 22,
+   "win": 12,
+   "loss": 10,
+   "expired": 0,
+   "win_rate": 0.545,
+   "avg_pnl": -0.08
+  }
+ },
+ "indicators": {
+  "ADX/DI": {
+   "agree": {
+    "n": 15,
+    "win": 9,
+    "loss": 6,
+    "expired": 0,
+    "win_rate": 0.6,
+    "avg_pnl": 0.04
+   },
+   "against": {
+    "n": 6,
+    "win": 2,
+    "loss": 4,
+    "expired": 0,
+    "win_rate": 0.333,
+    "avg_pnl": -0.74
+   },
+   "neutral": {
+    "n": 1,
+    "win": 1,
+    "loss": 0,
+    "expired": 0,
+    "win_rate": 1.0,
+    "avg_pnl": 2.18
+   }
+  },
+  "Bollinger": {
+   "agree": {
+    "n": 4,
+    "win": 1,
+    "loss": 3,
+    "expired": 0,
+    "win_rate": 0.25,
+    "avg_pnl": -0.63
+   },
+   "against": {
+    "n": 7,
+    "win": 3,
+    "loss": 4,
+    "expired": 0,
+    "win_rate": 0.429,
+    "avg_pnl": -0.74
+   },
+   "neutral": {
+    "n": 11,
+    "win": 8,
+    "loss": 3,
+    "expired": 0,
+    "win_rate": 0.727,
+    "avg_pnl": 0.55
+   }
+  },
+  "EMA 20/50/200": {
+   "agree": {
+    "n": 17,
+    "win": 11,
+    "loss": 6,
+    "expired": 0,
+    "win_rate": 0.647,
+    "avg_pnl": 0.29
+   },
+   "against": {
+    "n": 5,
+    "win": 1,
+    "loss": 4,
+    "expired": 0,
+    "win_rate": 0.2,
+    "avg_pnl": -1.33
+   },
+   "neutral": {
+    "n": 0,
+    "win": 0,
+    "loss": 0,
+    "expired": 0,
+    "win_rate": null,
+    "avg_pnl": null
+   }
+  },
+  "Khung 1d": {
+   "agree": {
+    "n": 2,
+    "win": 2,
+    "loss": 0,
+    "expired": 0,
+    "win_rate": 1.0,
+    "avg_pnl": 1.53
+   },
+   "against": {
+    "n": 0,
+    "win": 0,
+    "loss": 0,
+    "expired": 0,
+    "win_rate": null,
+    "avg_pnl": null
+   },
+   "neutral": {
+    "n": 13,
+    "win": 9,
+    "loss": 4,
+    "expired": 0,
+    "win_rate": 0.692,
+    "avg_pnl": 0.58
+   }
+  },
+  "Khối lượng": {
+   "agree": {
+    "n": 7,
+    "win": 5,
+    "loss": 2,
+    "expired": 0,
+    "win_rate": 0.714,
+    "avg_pnl": 0.34
+   },
+   "against": {
+    "n": 3,
+    "win": 1,
+    "loss": 2,
+    "expired": 0,
+    "win_rate": 0.333,
+    "avg_pnl": -0.66
+   },
+   "neutral": {
+    "n": 12,
+    "win": 6,
+    "loss": 6,
+    "expired": 0,
+    "win_rate": 0.5,
+    "avg_pnl": -0.17
+   }
+  },
+  "MACD": {
+   "agree": {
+    "n": 9,
+    "win": 3,
+    "loss": 6,
+    "expired": 0,
+    "win_rate": 0.333,
+    "avg_pnl": -0.93
+   },
+   "against": {
+    "n": 7,
+    "win": 4,
+    "loss": 3,
+    "expired": 0,
+    "win_rate": 0.571,
+    "avg_pnl": 0.03
+   },
+   "neutral": {
+    "n": 6,
+    "win": 5,
+    "loss": 1,
+    "expired": 0,
+    "win_rate": 0.833,
+    "avg_pnl": 1.08
+   }
+  },
+  "RSI": {
+   "agree": {
+    "n": 16,
+    "win": 10,
+    "loss": 6,
+    "expired": 0,
+    "win_rate": 0.625,
+    "avg_pnl": 0.29
+   },
+   "against": {
+    "n": 6,
+    "win": 2,
+    "loss": 4,
+    "expired": 0,
+    "win_rate": 0.333,
+    "avg_pnl": -1.05
+   },
+   "neutral": {
+    "n": 0,
+    "win": 0,
+    "loss": 0,
+    "expired": 0,
+    "win_rate": null,
+    "avg_pnl": null
+   }
+  },
+  "Stoch RSI": {
+   "agree": {
+    "n": 11,
+    "win": 9,
+    "loss": 2,
+    "expired": 0,
+    "win_rate": 0.818,
+    "avg_pnl": 1.16
+   },
+   "against": {
+    "n": 7,
+    "win": 2,
+    "loss": 5,
+    "expired": 0,
+    "win_rate": 0.286,
+    "avg_pnl": -0.88
+   },
+   "neutral": {
+    "n": 4,
+    "win": 1,
+    "loss": 3,
+    "expired": 0,
+    "win_rate": 0.25,
+    "avg_pnl": -2.05
+   }
+  },
+  "Xác nhận đảo chiều": {
+   "agree": {
+    "n": 5,
+    "win": 1,
+    "loss": 4,
+    "expired": 0,
+    "win_rate": 0.2,
+    "avg_pnl": -1.33
+   },
+   "against": {
+    "n": 0,
+    "win": 0,
+    "loss": 0,
+    "expired": 0,
+    "win_rate": null,
+    "avg_pnl": null
+   },
+   "neutral": {
+    "n": 0,
+    "win": 0,
+    "loss": 0,
+    "expired": 0,
+    "win_rate": null,
+    "avg_pnl": null
+   }
+  }
+ },
+ "watch": {
+  "n": 0,
+  "right": 0,
+  "wrong": 0,
+  "right_rate": null
+ },
+ "recent_losses": [
+  {
+   "time": "2026-11-13 14:24",
+   "symbol": "BTCUSDT",
+   "tf": "1h",
+   "rating": "sell",
+   "score": -45,
+   "pnl_pct": -1.5,
+   "parts": [
+    "ADX/DI -15",
+    "EMA 20/50/200 -30",
+    "MACD -10",
+    "RSI +5",
+    "Stoch RSI +3.3",
+    "Bollinger +1.7"
+   ]
+  },
+  {
+   "time": "2026-11-13 14:24",
+   "symbol": "ETHUSDT",
+   "tf": "1h",
+   "rating": "sell",
+   "score": -45,
+   "pnl_pct": -1.86,
+   "parts": [
+    "ADX/DI -15",
+    "EMA 20/50/200 -30",
+    "MACD -10",
+    "RSI +5",
+    "Stoch RSI +3.3",
+    "Bollinger +1.7"
+   ]
+  },
+  {
+   "time": "2026-11-13 14:24",
+   "symbol": "SOLUSDT",
+   "tf": "1h",
+   "rating": "strong_sell",
+   "score": -54,
+   "pnl_pct": -1.88,
+   "parts": [
+    "ADX/DI -15",
+    "EMA 20/50/200 -30",
+    "MACD -10",
+    "RSI -2.3",
+    "Stoch RSI +3.3"
+   ]
+  },
+  {
+   "time": "2026-11-13 14:24",
+   "symbol": "SOLUSDT",
+   "tf": "4h",
+   "rating": "strong_sell",
+   "score": -61,
+   "pnl_pct": -3.27,
+   "parts": [
+    "ADX/DI -15",
+    "EMA 20/50/200 -30",
+    "MACD -20",
+    "RSI +5",
+    "Stoch RSI +1",
+    "Bollinger +3.3",
+    "Khối lượng -5"
+   ]
+  },
+  {
+   "time": "2026-11-13 14:24",
+   "symbol": "SUIUSDT",
+   "tf": "1h",
+   "rating": "sell",
+   "score": -48,
+   "pnl_pct": -2.16,
+   "parts": [
+    "ADX/DI -15",
+    "EMA 20/50/200 -30",
+    "MACD -10",
+    "RSI -1.1",
+    "Stoch RSI +3.3",
+    "Khối lượng +5"
+   ]
+  },
+  {
+   "time": "2026-11-13 14:24",
+   "symbol": "SUIUSDT",
+   "tf": "4h",
+   "rating": "strong_sell",
+   "score": -71,
+   "pnl_pct": -3.96,
+   "parts": [
+    "ADX/DI -15",
+    "EMA 20/50/200 -30",
+    "MACD -20",
+    "RSI -4.6",
+    "Bollinger +3.3",
+    "Khối lượng -5"
+   ]
+  },
+  {
+   "time": "2026-11-14 03:02",
+   "symbol": "SOLUSDT",
+   "tf": "4h",
+   "rating": "buy",
+   "score": 28,
+   "pnl_pct": -4.11,
+   "parts": [
+    "ADX/DI -5",
+    "EMA 20/50/200 -10",
+    "MACD -3.3",
+    "RSI -3.6",
+    "Xác nhận đảo chiều +50"
+   ]
+  },
+  {
+   "time": "2026-11-14 07:02",
+   "symbol": "BTCUSDT",
+   "tf": "4h",
+   "rating": "buy",
+   "score": 27,
+   "pnl_pct": -1.94,
+   "parts": [
+    "ADX/DI -5",
+    "EMA 20/50/200 -10",
+    "MACD -3.3",
+    "RSI +15",
+    "Bollinger +5",
+    "Xác nhận đảo chiều +25"
+   ]
+  },
+  {
+   "time": "2026-11-14 09:02",
+   "symbol": "SOLUSDT",
+   "tf": "1h",
+   "rating": "buy",
+   "score": 33,
+   "pnl_pct": -0.77,
+   "parts": [
+    "ADX/DI -3.3",
+    "EMA 20/50/200 -10",
+    "MACD -6.7",
+    "RSI +15",
+    "Stoch RSI +3",
+    "Bollinger +10",
+    "Xác nhận đảo chiều +25"
+   ]
+  },
+  {
+   "time": "2026-11-14 10:04",
+   "symbol": "BTCUSDT",
+   "tf": "1h",
+   "rating": "buy",
+   "score": 36,
+   "pnl_pct": -1.58,
+   "parts": [
+    "ADX/DI -5",
+    "EMA 20/50/200 -10",
+    "RSI +15",
+    "Stoch RSI +3",
+    "Bollinger +10",
+    "Khối lượng -1.7",
+    "Xác nhận đảo chiều +25"
+   ]
+  }
+ ]
+}
