@@ -1,14 +1,14 @@
 {
- "resolved": 41,
- "pending": 14,
+ "resolved": 43,
+ "pending": 15,
  "skipped": 0,
  "overall": {
-  "n": 41,
-  "win": 20,
+  "n": 43,
+  "win": 22,
   "loss": 21,
   "expired": 0,
-  "win_rate": 0.488,
-  "avg_pnl": -0.18
+  "win_rate": 0.512,
+  "avg_pnl": 0.27
  },
  "by_symbol": {
   "BTC": {
@@ -28,23 +28,31 @@
    "avg_pnl": -0.03
   },
   "SOL": {
-   "n": 8,
-   "win": 2,
+   "n": 9,
+   "win": 3,
    "loss": 6,
    "expired": 0,
-   "win_rate": 0.25,
-   "avg_pnl": -1.33
+   "win_rate": 0.333,
+   "avg_pnl": -0.29
   },
   "SUI": {
-   "n": 9,
-   "win": 7,
+   "n": 10,
+   "win": 8,
    "loss": 2,
    "expired": 0,
-   "win_rate": 0.778,
-   "avg_pnl": 1.23
+   "win_rate": 0.8,
+   "avg_pnl": 2.18
   }
  },
  "by_tf": {
+  "1d": {
+   "n": 2,
+   "win": 2,
+   "loss": 0,
+   "expired": 0,
+   "win_rate": 1.0,
+   "avg_pnl": 9.39
+  },
   "1h": {
    "n": 31,
    "win": 17,
@@ -72,12 +80,12 @@
    "avg_pnl": -1.97
   },
   "sell": {
-   "n": 6,
-   "win": 3,
+   "n": 8,
+   "win": 5,
    "loss": 3,
    "expired": 0,
-   "win_rate": 0.5,
-   "avg_pnl": 0.07
+   "win_rate": 0.625,
+   "avg_pnl": 2.4
   },
   "strong_buy": {
    "n": 1,
@@ -106,12 +114,12 @@
    "avg_pnl": -1.95
   },
   "trend": {
-   "n": 25,
-   "win": 19,
+   "n": 27,
+   "win": 21,
    "loss": 6,
    "expired": 0,
-   "win_rate": 0.76,
-   "avg_pnl": 0.95
+   "win_rate": 0.778,
+   "avg_pnl": 1.58
   }
  },
  "by_score": {
@@ -124,12 +132,12 @@
    "avg_pnl": -1.28
   },
   "35-49": {
-   "n": 9,
-   "win": 1,
+   "n": 11,
+   "win": 3,
    "loss": 8,
    "expired": 0,
-   "win_rate": 0.111,
-   "avg_pnl": -1.53
+   "win_rate": 0.273,
+   "avg_pnl": 0.46
   },
   "50-64": {
    "n": 19,
@@ -158,23 +166,23 @@
    "avg_pnl": -1.94
   },
   "cũ": {
-   "n": 37,
-   "win": 20,
+   "n": 39,
+   "win": 22,
    "loss": 17,
    "expired": 0,
-   "win_rate": 0.541,
-   "avg_pnl": 0.01
+   "win_rate": 0.564,
+   "avg_pnl": 0.49
   }
  },
  "indicators": {
   "ADX/DI": {
    "agree": {
-    "n": 23,
-    "win": 17,
+    "n": 25,
+    "win": 19,
     "loss": 6,
     "expired": 0,
-    "win_rate": 0.739,
-    "avg_pnl": 0.85
+    "win_rate": 0.76,
+    "avg_pnl": 1.53
    },
    "against": {
     "n": 17,
@@ -203,12 +211,12 @@
     "avg_pnl": -1.78
    },
    "against": {
-    "n": 12,
-    "win": 8,
+    "n": 14,
+    "win": 10,
     "loss": 4,
     "expired": 0,
-    "win_rate": 0.667,
-    "avg_pnl": 0.72
+    "win_rate": 0.714,
+    "avg_pnl": 1.96
    },
    "neutral": {
     "n": 16,
@@ -221,12 +229,12 @@
   },
   "EMA 20/50/200": {
    "agree": {
-    "n": 25,
-    "win": 19,
+    "n": 27,
+    "win": 21,
     "loss": 6,
     "expired": 0,
-    "win_rate": 0.76,
-    "avg_pnl": 0.95
+    "win_rate": 0.778,
+    "avg_pnl": 1.58
    },
    "against": {
     "n": 16,
@@ -289,22 +297,22 @@
     "avg_pnl": -0.66
    },
    "neutral": {
-    "n": 28,
-    "win": 11,
+    "n": 30,
+    "win": 13,
     "loss": 17,
     "expired": 0,
-    "win_rate": 0.393,
-    "avg_pnl": -0.53
+    "win_rate": 0.433,
+    "avg_pnl": 0.13
    }
   },
   "MACD": {
    "agree": {
-    "n": 16,
-    "win": 9,
+    "n": 18,
+    "win": 11,
     "loss": 7,
     "expired": 0,
-    "win_rate": 0.562,
-    "avg_pnl": 0.35
+    "win_rate": 0.611,
+    "avg_pnl": 1.35
    },
    "against": {
     "n": 18,
@@ -325,20 +333,20 @@
   },
   "RSI": {
    "agree": {
-    "n": 27,
-    "win": 17,
+    "n": 28,
+    "win": 18,
     "loss": 10,
     "expired": 0,
-    "win_rate": 0.63,
-    "avg_pnl": 0.36
+    "win_rate": 0.643,
+    "avg_pnl": 0.74
    },
    "against": {
-    "n": 14,
-    "win": 3,
+    "n": 15,
+    "win": 4,
     "loss": 11,
     "expired": 0,
-    "win_rate": 0.214,
-    "avg_pnl": -1.23
+    "win_rate": 0.267,
+    "avg_pnl": -0.61
    },
    "neutral": {
     "n": 0,
@@ -359,12 +367,12 @@
     "avg_pnl": 0.09
    },
    "against": {
-    "n": 9,
-    "win": 4,
+    "n": 11,
+    "win": 6,
     "loss": 5,
     "expired": 0,
-    "win_rate": 0.444,
-    "avg_pnl": -0.19
+    "win_rate": 0.545,
+    "avg_pnl": 1.56
    },
    "neutral": {
     "n": 15,
