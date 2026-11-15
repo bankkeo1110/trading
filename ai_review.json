@@ -1,5 +1,29 @@
 [
  {
+  "time": "2026-11-16 02:21",
+  "ok": true,
+  "error": "",
+  "report": "Tổng quan: 51 lệnh đã chấm, 25 đúng / 26 sai, win rate 49% (gần mức hoà vốn 50%), PnL trung bình +0,14%. Còn 20 lệnh chờ.\n\nNhóm tốt: lệnh thuận xu hướng (trend) 22/32 đúng = 69%, PnL +1,09%. Khoảng điểm 50-64 đúng 74% (n=23). Strong_sell 74% (n=23). SUI 77% (n=13). Khung 1h ~51% (n=39).\n\nNhóm kém: lệnh đảo chiều (reversal) chỉ 3/19 đúng = 16%, PnL -1,46%. Rating buy 17% (n=18), phần lớn là reversal. Điểm 20-34 và 35-49 chỉ đúng khoảng 29-31% (n≈13-14). BTC 31% và SOL 33% (n≈12-13). Khung 4h 30% nhưng n=10, chỉ là dấu hiệu. Khung 1d (n=2) và điểm 65+ (n=1) quá ít, không kết luận.\n\nChỉ báo: EMA cùng chiều đúng 69%, ngược chiều chỉ 16% (n=19). ADX/DI cùng chiều 67%, ngược chiều 20% (n=20). MACD cùng chiều 61%, ngược chiều 32%. Đây là các chỉ báo đang giúp. Bollinger \"cùng chiều\" chỉ 24% (n=17) còn \"ngược chiều\" 71% (n=14), nhưng có khả năng bị lẫn với lệnh đảo chiều nên chưa đổi trọng số. Xác nhận đảo chiều luôn nằm trong các lệnh thua nhiều (3/19).\n\nVì sao thua gần đây: hầu hết là lệnh MUA đảo chiều bắt đáy khi EMA (-10) và ADX/DI (-5) vẫn báo giảm. Điểm +25/+50 từ xác nhận đảo chiều đẩy tổng lên 30-42 dù xu hướng còn xấu, nên giá tiếp tục giảm và chạm cắt lỗ. Loạt strong_sell lúc 15:02 ngày 15/11 thua đồng thời trên 4 coin, đó là một sự kiện tương quan (giá bật lại), không phải 4 mẫu độc lập.\n\nLời khuyên: ưu tiên tín hiệu thuận xu hướng điểm từ 50 trở lên, nhất là khi EMA, ADX/DI và MACD cùng chiều. Với lệnh đảo chiều thì chờ thêm, đừng vào khi EMA và ADX còn ngược. CANH MUA/BÁN chỉ đúng 27% (n=15), coi là cảnh báo chứ không phải lệnh. Mẫu còn nhỏ nên hãy theo dõi thêm.",
+  "changes": [
+   {
+    "param": "w_confirm",
+    "old": 1,
+    "new": 0.7,
+    "reason": "Lệnh reversal chỉ đúng 3/19 (16%), PnL TB -1,46%; chỉ báo 'Xác nhận đảo chiều' cùng chiều đúng 3/19, còn trend đúng 22/32 (69%). Giảm trọng số để lệnh bắt đáy/đỉnh ngược EMA khó đạt ngưỡng hơn."
+   },
+   {
+    "param": "weak",
+    "old": 20,
+    "new": 26.0,
+    "reason": "Điểm 20-34 đúng 4/13 (31%) và 35-49 đúng 4/14 (29%), trong khi 50-64 đúng 17/23 (74%). Nâng ngưỡng weak để lọc bớt tín hiệu điểm thấp; vẫn thấp hơn strong=50."
+   }
+  ],
+  "rejected": [],
+  "resolved": 51,
+  "params_id": "7817b218",
+  "summary": "Đã chấm 51 tín hiệu: 25 đúng, 26 sai, 0 hết hạn (tỉ lệ đúng 49%, lãi/lỗ TB 0.14%).\nTheo khung: 1d 100% (2), 1h 51% (39), 4h 30% (10)\nTheo coin: BTC 31% (13), ETH 54% (13), SOL 33% (12), SUI 77% (13)\nCanh mua/bán: 4/15 đi đúng hướng sau 12 nến.\nĐang chờ kết quả: 20."
+ },
+ {
   "time": "2026-11-14 21:54",
   "ok": true,
   "error": "",
