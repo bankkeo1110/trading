@@ -81,8 +81,8 @@
   "watch_candle": 1794441600000
  },
  "advice|SUIUSDT|1h": {
-  "rating": "watch_buy",
-  "candle": 1794700800000,
+  "rating": "buy",
+  "candle": 1794704400000,
   "watch_candle": 1794700800000
  },
  "advice|SUIUSDT|4h": {
