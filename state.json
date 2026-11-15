@@ -96,8 +96,8 @@
   "watch_candle": 1794614400000
  },
  "SOLUSDT|4h|lower": {
-  "candle": 1794700800000,
-  "level": "touch"
+  "candle": 1794715200000,
+  "level": "near"
  },
  "BTCUSDT|1h|lower": {
   "candle": 1794708000000,
