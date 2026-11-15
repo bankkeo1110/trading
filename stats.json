@@ -1,6 +1,6 @@
 {
  "resolved": 46,
- "pending": 21,
+ "pending": 20,
  "skipped": 0,
  "overall": {
   "n": 46,
@@ -411,9 +411,9 @@
   }
  },
  "watch": {
-  "n": 6,
+  "n": 7,
   "right": 0,
-  "wrong": 6,
+  "wrong": 7,
   "right_rate": 0.0
  },
  "recent_losses": [
