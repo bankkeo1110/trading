@@ -67,12 +67,12 @@
  },
  "advice|SOLUSDT|1h": {
   "rating": "sell",
-  "candle": 1794852000000,
+  "candle": 1794855600000,
   "watch_candle": 1794700800000
  },
  "advice|SOLUSDT|4h": {
   "rating": "sell",
-  "candle": 1794830400000,
+  "candle": 1794844800000,
   "watch_candle": 1794744000000
  },
  "advice|SOLUSDT|1d": {
@@ -82,12 +82,12 @@
  },
  "advice|SUIUSDT|1h": {
   "rating": "sell",
-  "candle": 1794852000000,
+  "candle": 1794855600000,
   "watch_candle": 1794700800000
  },
  "advice|SUIUSDT|4h": {
-  "rating": "strong_sell",
-  "candle": 1794830400000,
+  "rating": "sell",
+  "candle": 1794844800000,
   "watch_candle": 1794744000000
  },
  "advice|SUIUSDT|1d": {
