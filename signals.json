@@ -4863,5 +4863,23 @@
   "time": "2026-11-17 02:03",
   "confluence": [],
   "type": "squeeze"
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "1h",
+  "candle": 1794862800000,
+  "price": 65389.26,
+  "mid": 64776.301,
+  "upper": 65483.79550007474,
+  "lower": 64068.80649992526,
+  "pctb": 0.9331899399467062,
+  "rsi": 56.7793415139974,
+  "side": "upper",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1794866020,
+  "time": "2026-11-17 04:53",
+  "confluence": [],
+  "type": "band"
  }
 ]
