@@ -6331,5 +6331,23 @@
    "4h"
   ],
   "type": "band"
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "4h",
+  "candle": 1794945600000,
+  "price": 0.7318,
+  "mid": 0.72366,
+  "upper": 0.7391646315660837,
+  "lower": 0.7081553684339162,
+  "pctb": 0.7625022066892009,
+  "rsi": 45.43191937373474,
+  "side": null,
+  "level": null,
+  "squeeze": true,
+  "ts": 1794955800,
+  "time": "2026-11-18 05:50",
+  "confluence": [],
+  "type": "squeeze"
  }
 ]
