@@ -4971,5 +4971,23 @@
   "time": "2026-11-17 07:03",
   "confluence": [],
   "type": "band"
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "1d",
+  "candle": 1794873600000,
+  "price": 1812.77,
+  "mid": 2112.9555,
+  "upper": 2485.7990504323498,
+  "lower": 1740.1119495676505,
+  "pctb": 0.09743771931698314,
+  "rsi": 25.239413929680552,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1794875076,
+  "time": "2026-11-17 07:24",
+  "confluence": [],
+  "type": "band"
  }
 ]
