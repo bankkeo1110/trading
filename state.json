@@ -1,5 +1,5 @@
 {
- "BTCUSDT|1h|squeeze": true,
+ "BTCUSDT|1h|squeeze": false,
  "BTCUSDT|4h|lower": {
   "candle": 1794715200000,
   "level": "near"
@@ -10,7 +10,7 @@
   "level": "near"
  },
  "BTCUSDT|1d|squeeze": false,
- "ETHUSDT|1h|squeeze": true,
+ "ETHUSDT|1h|squeeze": false,
  "ETHUSDT|4h|squeeze": false,
  "ETHUSDT|1d|lower": {
   "candle": 1794873600000,
