@@ -1,8 +1,8 @@
 {
  "BTCUSDT|1h|squeeze": false,
  "BTCUSDT|4h|lower": {
-  "candle": 1794916800000,
-  "level": "touch"
+  "candle": 1794931200000,
+  "level": "near"
  },
  "BTCUSDT|4h|squeeze": false,
  "BTCUSDT|1d|lower": {
