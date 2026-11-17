@@ -5064,5 +5064,23 @@
   "time": "2026-11-17 10:32",
   "confluence": [],
   "type": "band"
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "1h",
+  "candle": 1794884400000,
+  "price": 0.7291,
+  "mid": 0.720375,
+  "upper": 0.7289362791100396,
+  "lower": 0.7118137208899604,
+  "pctb": 1.0095617073019163,
+  "rsi": 55.57897637126309,
+  "side": "upper",
+  "level": "touch",
+  "squeeze": true,
+  "ts": 1794886643,
+  "time": "2026-11-17 10:37",
+  "confluence": [],
+  "type": "band"
  }
 ]
