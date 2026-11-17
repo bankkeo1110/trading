@@ -6837,5 +6837,70 @@
   "sl": 1887.7778430634312,
   "tp1": 1756.8021569365687,
   "tp2": 1691.3143138731375
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "1h",
+  "candle": 1794916800000,
+  "price": 1823.48,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": 0,
+    "note": "ADX 17: thị trường đi ngang, tín hiệu xu hướng kém tin cậy"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -15.0,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200)"
+   },
+   {
+    "name": "MACD",
+    "points": -5.0,
+    "note": "MACD dưới đường tín hiệu, động lượng tăng dần"
+   },
+   {
+    "name": "RSI",
+    "points": 0.3,
+    "note": "RSI 51: nghiêng mua"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 0,
+    "note": "K 49: trung tính"
+   },
+   {
+    "name": "Bollinger",
+    "points": 0,
+    "note": "giá trong dải (%B 0.53)"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 0,
+    "note": "khối lượng bình thường (1.1 lần TB20)"
+   },
+   {
+    "name": "Khung 1d",
+    "points": 0,
+    "note": "khung ngày chưa rõ xu hướng"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 0,
+  "in_zone": false,
+  "ema_trend": -1,
+  "atr": 18.376446510100347,
+  "rsi": 51.11766311330188,
+  "adx": 16.598715883414304,
+  "swing_low": 1785.81,
+  "swing_high": 1843.49,
+  "score": -20,
+  "rating": "sell",
+  "type": "advice",
+  "ts": 1794920544,
+  "time": "2026-11-17 20:02",
+  "sl": 1851.0446697651505,
+  "tp1": 1795.9153302348495,
+  "tp2": 1768.350660469699
  }
 ]
