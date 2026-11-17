@@ -5727,5 +5727,41 @@
   "time": "2026-11-17 20:07",
   "confluence": [],
   "type": "band"
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "1h",
+  "candle": 1794924000000,
+  "price": 73.82,
+  "mid": 72.4745,
+  "upper": 74.05542978971238,
+  "lower": 70.89357021028763,
+  "pctb": 0.925540719377798,
+  "rsi": 63.60982973214813,
+  "side": "upper",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1794924289,
+  "time": "2026-11-17 21:04",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "1h",
+  "candle": 1794924000000,
+  "price": 0.7417,
+  "mid": 0.725695,
+  "upper": 0.740892299102143,
+  "lower": 0.7104977008978569,
+  "pctb": 1.0265738304032945,
+  "rsi": 62.617862531998455,
+  "side": "upper",
+  "level": "touch",
+  "squeeze": false,
+  "ts": 1794924289,
+  "time": "2026-11-17 21:04",
+  "confluence": [],
+  "type": "band"
  }
 ]
