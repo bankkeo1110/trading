@@ -6514,5 +6514,26 @@
    "4h"
   ],
   "type": "band"
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "1h",
+  "candle": 1794963600000,
+  "price": 74.78,
+  "mid": 73.2755,
+  "upper": 75.11176223617434,
+  "lower": 71.43923776382564,
+  "pctb": 0.9096637098888631,
+  "rsi": 64.75949257731409,
+  "side": "upper",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1794963658,
+  "time": "2026-11-18 08:00",
+  "confluence": [
+   "1h",
+   "4h"
+  ],
+  "type": "band"
  }
 ]
