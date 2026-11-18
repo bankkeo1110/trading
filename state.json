@@ -82,12 +82,12 @@
  },
  "advice|SUIUSDT|1h": {
   "rating": "sell",
-  "candle": 1795024800000,
+  "candle": 1795028400000,
   "watch_candle": 1794700800000
  },
  "advice|SUIUSDT|4h": {
-  "rating": "sell",
-  "candle": 1795003200000,
+  "rating": "strong_sell",
+  "candle": 1795017600000,
   "watch_candle": 1794744000000
  },
  "advice|SUIUSDT|1d": {
