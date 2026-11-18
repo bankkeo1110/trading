@@ -37,62 +37,62 @@
  },
  "advice|BTCUSDT|1h": {
   "rating": "neutral",
-  "candle": 1794952800000,
+  "candle": 1794956400000,
   "watch_candle": 1794711600000
  },
  "advice|BTCUSDT|4h": {
   "rating": "sell",
-  "candle": 1794931200000,
+  "candle": 1794945600000,
   "watch_candle": 1794744000000
  },
  "advice|BTCUSDT|1d": {
   "rating": "watch_buy",
-  "candle": 1794787200000,
+  "candle": 1794873600000,
   "watch_candle": 1794441600000
  },
  "advice|ETHUSDT|1h": {
   "rating": "sell",
-  "candle": 1794952800000,
+  "candle": 1794956400000,
   "watch_candle": 1794715200000
  },
  "advice|ETHUSDT|4h": {
   "rating": "sell",
-  "candle": 1794931200000,
+  "candle": 1794945600000,
   "watch_candle": 1794744000000
  },
  "advice|ETHUSDT|1d": {
   "rating": "watch_buy",
-  "candle": 1794787200000,
+  "candle": 1794873600000,
   "watch_candle": 1794441600000
  },
  "advice|SOLUSDT|1h": {
   "rating": "neutral",
-  "candle": 1794952800000,
+  "candle": 1794956400000,
   "watch_candle": 1794700800000
  },
  "advice|SOLUSDT|4h": {
-  "rating": "strong_sell",
-  "candle": 1794931200000,
+  "rating": "sell",
+  "candle": 1794945600000,
   "watch_candle": 1794744000000
  },
  "advice|SOLUSDT|1d": {
-  "rating": "watch_buy",
-  "candle": 1794787200000,
+  "rating": "buy",
+  "candle": 1794873600000,
   "watch_candle": 1794441600000
  },
  "advice|SUIUSDT|1h": {
   "rating": "sell",
-  "candle": 1794952800000,
+  "candle": 1794956400000,
   "watch_candle": 1794700800000
  },
  "advice|SUIUSDT|4h": {
   "rating": "strong_sell",
-  "candle": 1794931200000,
+  "candle": 1794945600000,
   "watch_candle": 1794744000000
  },
  "advice|SUIUSDT|1d": {
-  "rating": "watch_buy",
-  "candle": 1794787200000,
+  "rating": "buy",
+  "candle": 1794873600000,
   "watch_candle": 1794614400000
  },
  "SOLUSDT|4h|lower": {
@@ -120,7 +120,7 @@
   "level": "near"
  },
  "SOLUSDT|1h|upper": {
-  "candle": 1794956400000,
+  "candle": 1794960000000,
   "level": "touch"
  },
  "SUIUSDT|1h|upper": {
@@ -136,7 +136,7 @@
   "level": "near"
  },
  "SOLUSDT|4h|upper": {
-  "candle": 1794945600000,
+  "candle": 1794960000000,
   "level": "touch"
  },
  "SUIUSDT|4h|upper": {
