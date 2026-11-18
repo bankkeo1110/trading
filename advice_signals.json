@@ -7795,5 +7795,145 @@
   "outcome": "win",
   "bars": 2,
   "pnl_pct": 1.61
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "1h",
+  "candle": 1795017600000,
+  "price": 62760.01,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": 0,
+    "note": "ADX 17: thị trường đi ngang, tín hiệu xu hướng kém tin cậy"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -7.5,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200) — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "MACD",
+    "points": -5.0,
+    "note": "MACD dưới đường tín hiệu, động lượng giảm dần — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "RSI",
+    "points": 15,
+    "note": "RSI 27: quá bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 3,
+    "note": "K 0: vùng quá bán"
+   },
+   {
+    "name": "Bollinger",
+    "points": 10,
+    "note": "giá ở BB dưới"
+   },
+   {
+    "name": "Khối lượng",
+    "points": -1.2,
+    "note": "nến giảm với khối lượng gấp 3.2 lần TB20 — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": 0,
+    "note": "chưa có — chờ nến tăng đóng trên đỉnh nến trước, hoặc RSI quay lên"
+   },
+   {
+    "name": "Khung 1d",
+    "points": 0,
+    "note": "khung ngày chưa rõ xu hướng"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 1,
+  "in_zone": true,
+  "ema_trend": -1,
+  "atr": 532.0796924550153,
+  "rsi": 26.907128262141455,
+  "adx": 17.446595930418294,
+  "swing_low": 62279.36,
+  "swing_high": 64952.92,
+  "score": 14,
+  "rating": "watch_buy",
+  "type": "advice",
+  "ts": 1795021389,
+  "time": "2026-11-19 00:03",
+  "sl": 62760.01,
+  "tp1": 62760.01,
+  "tp2": 62760.01
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "1h",
+  "candle": 1795017600000,
+  "price": 1749.3,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": -5.0,
+    "note": "ADX 22: xu hướng giảm vừa — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -15.0,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200) — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "MACD",
+    "points": -10.0,
+    "note": "MACD dưới đường tín hiệu, động lượng giảm dần — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "RSI",
+    "points": 15,
+    "note": "RSI 27: quá bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 3,
+    "note": "K 0: vùng quá bán"
+   },
+   {
+    "name": "Bollinger",
+    "points": 10,
+    "note": "giá ở BB dưới"
+   },
+   {
+    "name": "Khối lượng",
+    "points": -2.5,
+    "note": "nến giảm với khối lượng gấp 3.1 lần TB20 — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": 0,
+    "note": "chưa có — chờ nến tăng đóng trên đỉnh nến trước, hoặc RSI quay lên"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 1,
+  "in_zone": true,
+  "ema_trend": -1,
+  "atr": 19.195792688795482,
+  "rsi": 26.519466186558688,
+  "adx": 21.604747047747303,
+  "swing_low": 1732.83,
+  "swing_high": 1819.65,
+  "score": -12,
+  "rating": "watch_buy",
+  "type": "advice",
+  "ts": 1795021389,
+  "time": "2026-11-19 00:03",
+  "sl": 1749.3,
+  "tp1": 1749.3,
+  "tp2": 1749.3
  }
 ]
