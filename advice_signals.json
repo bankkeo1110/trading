@@ -8793,6 +8793,269 @@
   "time": "2026-11-19 22:04",
   "sl": 0.7371676435625896,
   "tp1": 0.7142323564374105,
-  "tp2": 0.7027647128748208
+  "tp2": 0.7027647128748208,
+  "outcome": "win",
+  "bars": 1,
+  "pnl_pct": 1.58
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "4h",
+  "candle": 1795089600000,
+  "price": 1781.89,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": -15,
+    "note": "ADX 42: xu hướng giảm mạnh"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -30,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200)"
+   },
+   {
+    "name": "MACD",
+    "points": 0,
+    "note": "MACD trên đường tín hiệu, động lượng giảm dần"
+   },
+   {
+    "name": "RSI",
+    "points": -2.2,
+    "note": "RSI 41: nghiêng bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": -10,
+    "note": "K 87 cắt xuống D từ vùng quá mua"
+   },
+   {
+    "name": "Bollinger",
+    "points": 0,
+    "note": "giá trong dải (%B 0.24)"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 0,
+    "note": "khối lượng bình thường (1.4 lần TB20)"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 0,
+  "in_zone": false,
+  "ema_trend": -1,
+  "atr": 38.991101281501315,
+  "rsi": 41.1916064921226,
+  "adx": 41.803760289025554,
+  "swing_low": 1732.83,
+  "swing_high": 1826.58,
+  "score": -65,
+  "rating": "strong_sell",
+  "type": "advice",
+  "ts": 1795104157,
+  "time": "2026-11-19 23:02",
+  "sl": 1840.376651922252,
+  "tp1": 1723.4033480777482,
+  "tp2": 1664.916696155496
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "1h",
+  "candle": 1795100400000,
+  "price": 73.57,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": 0,
+    "note": "ADX 16: thị trường đi ngang, tín hiệu xu hướng kém tin cậy"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -5.0,
+    "note": "xu hướng lẫn lộn (giá dưới EMA200, EMA20 trên EMA50)"
+   },
+   {
+    "name": "MACD",
+    "points": -5.0,
+    "note": "MACD dưới đường tín hiệu (vừa cắt xuống), động lượng giảm dần"
+   },
+   {
+    "name": "RSI",
+    "points": -1.7,
+    "note": "RSI 43: nghiêng bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": -10,
+    "note": "K 56 cắt xuống D từ vùng quá mua"
+   },
+   {
+    "name": "Bollinger",
+    "points": 0,
+    "note": "giá trong dải (%B 0.31)"
+   },
+   {
+    "name": "Khối lượng",
+    "points": -2.5,
+    "note": "nến giảm với khối lượng gấp 2.7 lần TB20"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 0,
+  "in_zone": false,
+  "ema_trend": 0,
+  "atr": 0.8280539078631192,
+  "rsi": 43.39090820380377,
+  "adx": 15.858372642552126,
+  "swing_low": 73.51,
+  "swing_high": 75.65,
+  "score": -32,
+  "rating": "sell",
+  "type": "advice",
+  "ts": 1795104157,
+  "time": "2026-11-19 23:02",
+  "sl": 74.81208086179467,
+  "tp1": 72.32791913820532,
+  "tp2": 71.08583827641064
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "4h",
+  "candle": 1795089600000,
+  "price": 73.57,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": -10,
+    "note": "ADX 23: xu hướng giảm vừa"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -30,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200)"
+   },
+   {
+    "name": "MACD",
+    "points": 0,
+    "note": "MACD trên đường tín hiệu, động lượng giảm dần"
+   },
+   {
+    "name": "RSI",
+    "points": -0.8,
+    "note": "RSI 47: nghiêng bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": -10,
+    "note": "K 77 cắt xuống D từ vùng quá mua"
+   },
+   {
+    "name": "Bollinger",
+    "points": 0,
+    "note": "giá trong dải (%B 0.54)"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 0,
+    "note": "khối lượng bình thường (1.2 lần TB20)"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 0,
+  "in_zone": false,
+  "ema_trend": -1,
+  "atr": 1.7462718504054517,
+  "rsi": 46.62794159295555,
+  "adx": 22.878005613013844,
+  "swing_low": 72.22,
+  "swing_high": 75.66,
+  "score": -59,
+  "rating": "strong_sell",
+  "type": "advice",
+  "ts": 1795104157,
+  "time": "2026-11-19 23:02",
+  "sl": 76.18940777560817,
+  "tp1": 70.95059222439181,
+  "tp2": 68.33118444878363
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "4h",
+  "candle": 1795089600000,
+  "price": 0.7144,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": -10,
+    "note": "ADX 29: xu hướng giảm vừa"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -30,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200)"
+   },
+   {
+    "name": "MACD",
+    "points": 0,
+    "note": "MACD trên đường tín hiệu, động lượng giảm dần"
+   },
+   {
+    "name": "RSI",
+    "points": -2.1,
+    "note": "RSI 42: nghiêng bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": -10,
+    "note": "K 69 cắt xuống D từ vùng quá mua"
+   },
+   {
+    "name": "Bollinger",
+    "points": 5,
+    "note": "giá gần BB dưới"
+   },
+   {
+    "name": "Khối lượng",
+    "points": -5,
+    "note": "nến giảm với khối lượng gấp 1.6 lần TB20"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 0,
+  "in_zone": false,
+  "ema_trend": -1,
+  "atr": 0.018592517614265423,
+  "rsi": 41.508156878319795,
+  "adx": 28.84718943063225,
+  "swing_low": 0.703,
+  "swing_high": 0.7392,
+  "score": -60,
+  "rating": "strong_sell",
+  "type": "advice",
+  "ts": 1795104157,
+  "time": "2026-11-19 23:02",
+  "sl": 0.7422887764213981,
+  "tp1": 0.686511223578602,
+  "tp2": 0.6586224471572037
  }
 ]
