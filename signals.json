@@ -8453,5 +8453,108 @@
    "4h"
   ],
   "type": "band"
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "4h",
+  "candle": 1795118400000,
+  "price": 61812.42,
+  "mid": 63912.466,
+  "upper": 65840.58986840058,
+  "lower": 61984.34213159943,
+  "pctb": -0.044582750729091514,
+  "rsi": 31.40680726553275,
+  "side": "lower",
+  "level": "touch",
+  "squeeze": false,
+  "ts": 1795120306,
+  "time": "2026-11-20 03:31",
+  "confluence": [
+   "1h",
+   "4h",
+   "1d"
+  ],
+  "type": "band"
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "1h",
+  "candle": 1795118400000,
+  "price": 1754.74,
+  "mid": 1790.9720000000002,
+  "upper": 1824.8080267170956,
+  "lower": 1757.1359732829048,
+  "pctb": -0.035405653609061144,
+  "rsi": 35.49589664653732,
+  "side": "lower",
+  "level": "touch",
+  "squeeze": false,
+  "ts": 1795120306,
+  "time": "2026-11-20 03:31",
+  "confluence": [
+   "1h",
+   "4h"
+  ],
+  "type": "band"
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "1h",
+  "candle": 1795118400000,
+  "price": 72.68,
+  "mid": 74.233,
+  "upper": 75.65776805129818,
+  "lower": 72.80823194870183,
+  "pctb": -0.045000991068330755,
+  "rsi": 38.375377113136445,
+  "side": "lower",
+  "level": "touch",
+  "squeeze": false,
+  "ts": 1795120306,
+  "time": "2026-11-20 03:31",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "1h",
+  "candle": 1795118400000,
+  "price": 0.7066,
+  "mid": 0.722715,
+  "upper": 0.737943299314106,
+  "lower": 0.707486700685894,
+  "pctb": -0.02911358214087229,
+  "rsi": 35.75480632352499,
+  "side": "lower",
+  "level": "touch",
+  "squeeze": false,
+  "ts": 1795120306,
+  "time": "2026-11-20 03:31",
+  "confluence": [
+   "1h",
+   "4h"
+  ],
+  "type": "band"
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "4h",
+  "candle": 1795118400000,
+  "price": 0.7067,
+  "mid": 0.7239099999999999,
+  "upper": 0.7403116950343553,
+  "lower": 0.7075083049656445,
+  "pctb": -0.024640897296024904,
+  "rsi": 38.76484088890131,
+  "side": "lower",
+  "level": "touch",
+  "squeeze": false,
+  "ts": 1795120306,
+  "time": "2026-11-20 03:31",
+  "confluence": [
+   "1h",
+   "4h"
+  ],
+  "type": "band"
  }
 ]
