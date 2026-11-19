@@ -1,23 +1,23 @@
 {
- "resolved": 83,
- "pending": 21,
+ "resolved": 86,
+ "pending": 18,
  "skipped": 0,
  "overall": {
-  "n": 83,
+  "n": 86,
   "win": 41,
   "loss": 36,
-  "expired": 6,
+  "expired": 9,
   "win_rate": 0.532,
-  "avg_pnl": 0.27
+  "avg_pnl": 0.28
  },
  "by_symbol": {
   "BTC": {
-   "n": 24,
+   "n": 25,
    "win": 11,
    "loss": 11,
-   "expired": 2,
+   "expired": 3,
    "win_rate": 0.5,
-   "avg_pnl": 0.02
+   "avg_pnl": -0.06
   },
   "ETH": {
    "n": 27,
@@ -28,20 +28,20 @@
    "avg_pnl": 0.3
   },
   "SOL": {
-   "n": 17,
+   "n": 18,
    "win": 5,
    "loss": 11,
-   "expired": 1,
+   "expired": 2,
    "win_rate": 0.312,
-   "avg_pnl": -0.81
+   "avg_pnl": -0.57
   },
   "SUI": {
-   "n": 15,
+   "n": 16,
    "win": 11,
    "loss": 3,
-   "expired": 1,
+   "expired": 2,
    "win_rate": 0.786,
-   "avg_pnl": 1.85
+   "avg_pnl": 1.76
   }
  },
  "by_tf": {
@@ -62,22 +62,22 @@
    "avg_pnl": 0.09
   },
   "4h": {
-   "n": 20,
+   "n": 23,
    "win": 9,
    "loss": 9,
-   "expired": 2,
+   "expired": 5,
    "win_rate": 0.5,
-   "avg_pnl": -0.08
+   "avg_pnl": 0.01
   }
  },
  "by_rating": {
   "buy": {
-   "n": 27,
+   "n": 30,
    "win": 6,
    "loss": 15,
-   "expired": 6,
+   "expired": 9,
    "win_rate": 0.286,
-   "avg_pnl": -0.76
+   "avg_pnl": -0.63
   },
   "sell": {
    "n": 22,
@@ -106,12 +106,12 @@
  },
  "by_kind": {
   "reversal": {
-   "n": 28,
+   "n": 31,
    "win": 6,
    "loss": 16,
-   "expired": 6,
+   "expired": 9,
    "win_rate": 0.273,
-   "avg_pnl": -0.79
+   "avg_pnl": -0.66
   },
   "trend": {
    "n": 55,
@@ -124,12 +124,12 @@
  },
  "by_score": {
   "20-34": {
-   "n": 24,
+   "n": 27,
    "win": 10,
    "loss": 13,
-   "expired": 1,
+   "expired": 4,
    "win_rate": 0.435,
-   "avg_pnl": -0.38
+   "avg_pnl": -0.27
   },
   "35-49": {
    "n": 25,
@@ -158,12 +158,12 @@
  },
  "by_params": {
   "7817b218": {
-   "n": 44,
+   "n": 47,
    "win": 19,
    "loss": 19,
-   "expired": 6,
+   "expired": 9,
    "win_rate": 0.5,
-   "avg_pnl": 0.08
+   "avg_pnl": 0.11
   },
   "cũ": {
    "n": 39,
@@ -185,12 +185,12 @@
     "avg_pnl": 0.91
    },
    "against": {
-    "n": 28,
+    "n": 31,
     "win": 6,
     "loss": 16,
-    "expired": 6,
+    "expired": 9,
     "win_rate": 0.273,
-    "avg_pnl": -0.76
+    "avg_pnl": -0.63
    },
    "neutral": {
     "n": 11,
@@ -203,12 +203,12 @@
   },
   "Bollinger": {
    "agree": {
-    "n": 20,
+    "n": 21,
     "win": 5,
     "loss": 13,
-    "expired": 2,
+    "expired": 3,
     "win_rate": 0.278,
-    "avg_pnl": -0.83
+    "avg_pnl": -0.77
    },
    "against": {
     "n": 18,
@@ -219,12 +219,12 @@
     "avg_pnl": 1.13
    },
    "neutral": {
-    "n": 45,
+    "n": 47,
     "win": 26,
     "loss": 15,
-    "expired": 4,
+    "expired": 6,
     "win_rate": 0.634,
-    "avg_pnl": 0.42
+    "avg_pnl": 0.43
    }
   },
   "EMA 20/50/200": {
@@ -237,12 +237,12 @@
     "avg_pnl": 0.81
    },
    "against": {
-    "n": 28,
+    "n": 31,
     "win": 6,
     "loss": 16,
-    "expired": 6,
+    "expired": 9,
     "win_rate": 0.273,
-    "avg_pnl": -0.79
+    "avg_pnl": -0.66
    },
    "neutral": {
     "n": 0,
@@ -271,12 +271,12 @@
     "avg_pnl": -1.33
    },
    "neutral": {
-    "n": 64,
+    "n": 67,
     "win": 31,
     "loss": 27,
-    "expired": 6,
+    "expired": 9,
     "win_rate": 0.534,
-    "avg_pnl": 0.11
+    "avg_pnl": 0.13
    }
   },
   "Khối lượng": {
@@ -297,12 +297,12 @@
     "avg_pnl": 0.35
    },
    "neutral": {
-    "n": 60,
+    "n": 63,
     "win": 30,
     "loss": 29,
-    "expired": 1,
+    "expired": 4,
     "win_rate": 0.508,
-    "avg_pnl": 0.28
+    "avg_pnl": 0.29
    }
   },
   "MACD": {
@@ -315,12 +315,12 @@
     "avg_pnl": 0.57
    },
    "against": {
-    "n": 36,
+    "n": 39,
     "win": 15,
     "loss": 16,
-    "expired": 5,
+    "expired": 8,
     "win_rate": 0.484,
-    "avg_pnl": -0.21
+    "avg_pnl": -0.15
    },
    "neutral": {
     "n": 19,
@@ -341,12 +341,12 @@
     "avg_pnl": 0.34
    },
    "against": {
-    "n": 28,
+    "n": 31,
     "win": 11,
     "loss": 11,
-    "expired": 6,
+    "expired": 9,
     "win_rate": 0.5,
-    "avg_pnl": 0.14
+    "avg_pnl": 0.18
    },
    "neutral": {
     "n": 0,
@@ -375,22 +375,22 @@
     "avg_pnl": 1.19
    },
    "neutral": {
-    "n": 28,
+    "n": 31,
     "win": 11,
     "loss": 14,
-    "expired": 3,
+    "expired": 6,
     "win_rate": 0.44,
-    "avg_pnl": 0.01
+    "avg_pnl": 0.07
    }
   },
   "Xác nhận đảo chiều": {
    "agree": {
-    "n": 28,
+    "n": 31,
     "win": 6,
     "loss": 16,
-    "expired": 6,
+    "expired": 9,
     "win_rate": 0.273,
-    "avg_pnl": -0.79
+    "avg_pnl": -0.66
    },
    "against": {
     "n": 0,
