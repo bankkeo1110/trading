@@ -1,47 +1,47 @@
 {
- "resolved": 104,
- "pending": 22,
+ "resolved": 119,
+ "pending": 15,
  "skipped": 0,
  "overall": {
-  "n": 104,
-  "win": 54,
-  "loss": 38,
+  "n": 119,
+  "win": 66,
+  "loss": 41,
   "expired": 12,
-  "win_rate": 0.587,
-  "avg_pnl": 0.44
+  "win_rate": 0.617,
+  "avg_pnl": 0.62
  },
  "by_symbol": {
   "BTC": {
-   "n": 29,
-   "win": 13,
-   "loss": 12,
+   "n": 35,
+   "win": 16,
+   "loss": 15,
    "expired": 4,
-   "win_rate": 0.52,
-   "avg_pnl": -0.21
+   "win_rate": 0.516,
+   "avg_pnl": -0.17
   },
   "ETH": {
-   "n": 31,
-   "win": 17,
+   "n": 36,
+   "win": 22,
    "loss": 11,
    "expired": 3,
-   "win_rate": 0.607,
-   "avg_pnl": 0.34
+   "win_rate": 0.667,
+   "avg_pnl": 0.64
   },
   "SOL": {
-   "n": 22,
-   "win": 8,
+   "n": 24,
+   "win": 10,
    "loss": 11,
    "expired": 3,
-   "win_rate": 0.421,
-   "avg_pnl": -0.2
+   "win_rate": 0.476,
+   "avg_pnl": 0.11
   },
   "SUI": {
-   "n": 22,
-   "win": 16,
+   "n": 24,
+   "win": 18,
    "loss": 4,
    "expired": 2,
-   "win_rate": 0.8,
-   "avg_pnl": 2.07
+   "win_rate": 0.818,
+   "avg_pnl": 2.26
   }
  },
  "by_tf": {
@@ -54,30 +54,30 @@
    "avg_pnl": 9.39
   },
   "1h": {
-   "n": 71,
-   "win": 38,
-   "loss": 29,
+   "n": 79,
+   "win": 43,
+   "loss": 32,
    "expired": 4,
-   "win_rate": 0.567,
-   "avg_pnl": 0.2
+   "win_rate": 0.573,
+   "avg_pnl": 0.22
   },
   "4h": {
-   "n": 31,
-   "win": 14,
+   "n": 38,
+   "win": 21,
    "loss": 9,
    "expired": 8,
-   "win_rate": 0.609,
-   "avg_pnl": 0.4
+   "win_rate": 0.7,
+   "avg_pnl": 1.0
   }
  },
  "by_rating": {
   "buy": {
-   "n": 34,
+   "n": 37,
    "win": 6,
-   "loss": 16,
+   "loss": 19,
    "expired": 12,
-   "win_rate": 0.273,
-   "avg_pnl": -0.88
+   "win_rate": 0.24,
+   "avg_pnl": -0.96
   },
   "sell": {
    "n": 26,
@@ -96,74 +96,74 @@
    "avg_pnl": -1.64
   },
   "strong_sell": {
-   "n": 43,
-   "win": 31,
+   "n": 55,
+   "win": 43,
    "loss": 12,
    "expired": 0,
-   "win_rate": 0.721,
-   "avg_pnl": 1.14
+   "win_rate": 0.782,
+   "avg_pnl": 1.51
   }
  },
  "by_kind": {
   "reversal": {
-   "n": 35,
+   "n": 38,
    "win": 6,
-   "loss": 17,
+   "loss": 20,
    "expired": 12,
-   "win_rate": 0.261,
-   "avg_pnl": -0.9
+   "win_rate": 0.231,
+   "avg_pnl": -0.97
   },
   "trend": {
-   "n": 69,
-   "win": 48,
+   "n": 81,
+   "win": 60,
    "loss": 21,
    "expired": 0,
-   "win_rate": 0.696,
-   "avg_pnl": 1.11
+   "win_rate": 0.741,
+   "avg_pnl": 1.37
   }
  },
  "by_score": {
   "20-34": {
-   "n": 32,
+   "n": 33,
    "win": 14,
-   "loss": 13,
+   "loss": 14,
    "expired": 5,
-   "win_rate": 0.519,
-   "avg_pnl": -0.01
+   "win_rate": 0.5,
+   "avg_pnl": -0.06
   },
   "35-49": {
-   "n": 28,
+   "n": 30,
    "win": 9,
-   "loss": 12,
+   "loss": 14,
    "expired": 7,
-   "win_rate": 0.429,
-   "avg_pnl": -0.05
+   "win_rate": 0.391,
+   "avg_pnl": -0.18
   },
   "50-64": {
-   "n": 39,
-   "win": 28,
+   "n": 49,
+   "win": 38,
    "loss": 11,
    "expired": 0,
-   "win_rate": 0.718,
-   "avg_pnl": 1.03
+   "win_rate": 0.776,
+   "avg_pnl": 1.4
   },
   "65+": {
-   "n": 5,
-   "win": 3,
+   "n": 7,
+   "win": 5,
    "loss": 2,
    "expired": 0,
-   "win_rate": 0.6,
-   "avg_pnl": 1.39
+   "win_rate": 0.714,
+   "avg_pnl": 1.77
   }
  },
  "by_params": {
   "7817b218": {
-   "n": 65,
-   "win": 32,
-   "loss": 21,
+   "n": 80,
+   "win": 44,
+   "loss": 24,
    "expired": 12,
-   "win_rate": 0.604,
-   "avg_pnl": 0.4
+   "win_rate": 0.647,
+   "avg_pnl": 0.68
   },
   "cũ": {
    "n": 39,
@@ -177,20 +177,20 @@
  "indicators": {
   "ADX/DI": {
    "agree": {
-    "n": 55,
-    "win": 38,
+    "n": 67,
+    "win": 50,
     "loss": 17,
     "expired": 0,
-    "win_rate": 0.691,
-    "avg_pnl": 1.22
+    "win_rate": 0.746,
+    "avg_pnl": 1.51
    },
    "against": {
-    "n": 35,
+    "n": 38,
     "win": 6,
-    "loss": 17,
+    "loss": 20,
     "expired": 12,
-    "win_rate": 0.261,
-    "avg_pnl": -0.88
+    "win_rate": 0.231,
+    "avg_pnl": -0.95
    },
    "neutral": {
     "n": 14,
@@ -203,46 +203,46 @@
   },
   "Bollinger": {
    "agree": {
-    "n": 21,
+    "n": 22,
     "win": 5,
-    "loss": 13,
+    "loss": 14,
     "expired": 3,
-    "win_rate": 0.278,
-    "avg_pnl": -0.77
+    "win_rate": 0.263,
+    "avg_pnl": -0.82
    },
    "against": {
-    "n": 23,
-    "win": 14,
+    "n": 28,
+    "win": 19,
     "loss": 9,
     "expired": 0,
-    "win_rate": 0.609,
-    "avg_pnl": 1.18
+    "win_rate": 0.679,
+    "avg_pnl": 1.59
    },
    "neutral": {
-    "n": 60,
-    "win": 35,
-    "loss": 16,
+    "n": 69,
+    "win": 42,
+    "loss": 18,
     "expired": 9,
-    "win_rate": 0.686,
-    "avg_pnl": 0.57
+    "win_rate": 0.7,
+    "avg_pnl": 0.69
    }
   },
   "EMA 20/50/200": {
    "agree": {
-    "n": 69,
-    "win": 48,
+    "n": 81,
+    "win": 60,
     "loss": 21,
     "expired": 0,
-    "win_rate": 0.696,
-    "avg_pnl": 1.11
+    "win_rate": 0.741,
+    "avg_pnl": 1.37
    },
    "against": {
-    "n": 35,
+    "n": 38,
     "win": 6,
-    "loss": 17,
+    "loss": 20,
     "expired": 12,
-    "win_rate": 0.261,
-    "avg_pnl": -0.9
+    "win_rate": 0.231,
+    "avg_pnl": -0.97
    },
    "neutral": {
     "n": 0,
@@ -255,12 +255,12 @@
   },
   "Khung 1d": {
    "agree": {
-    "n": 19,
-    "win": 16,
+    "n": 28,
+    "win": 25,
     "loss": 3,
     "expired": 0,
-    "win_rate": 0.842,
-    "avg_pnl": 2.0
+    "win_rate": 0.893,
+    "avg_pnl": 2.36
    },
    "against": {
     "n": 2,
@@ -271,22 +271,22 @@
     "avg_pnl": -1.33
    },
    "neutral": {
-    "n": 73,
-    "win": 33,
-    "loss": 28,
+    "n": 79,
+    "win": 36,
+    "loss": 31,
     "expired": 12,
-    "win_rate": 0.541,
+    "win_rate": 0.537,
     "avg_pnl": 0.01
    }
   },
   "Khối lượng": {
    "agree": {
-    "n": 23,
-    "win": 12,
-    "loss": 6,
+    "n": 27,
+    "win": 15,
+    "loss": 7,
     "expired": 5,
-    "win_rate": 0.667,
-    "avg_pnl": 0.43
+    "win_rate": 0.682,
+    "avg_pnl": 0.64
    },
    "against": {
     "n": 4,
@@ -297,56 +297,56 @@
     "avg_pnl": 0.35
    },
    "neutral": {
-    "n": 77,
-    "win": 40,
-    "loss": 30,
+    "n": 88,
+    "win": 49,
+    "loss": 32,
     "expired": 7,
-    "win_rate": 0.571,
-    "avg_pnl": 0.44
+    "win_rate": 0.605,
+    "avg_pnl": 0.63
    }
   },
   "MACD": {
    "agree": {
-    "n": 39,
-    "win": 20,
+    "n": 44,
+    "win": 25,
     "loss": 16,
     "expired": 3,
-    "win_rate": 0.556,
-    "avg_pnl": 0.44
+    "win_rate": 0.61,
+    "avg_pnl": 0.7
    },
    "against": {
-    "n": 42,
-    "win": 17,
-    "loss": 16,
+    "n": 47,
+    "win": 19,
+    "loss": 19,
     "expired": 9,
-    "win_rate": 0.515,
-    "avg_pnl": -0.05
+    "win_rate": 0.5,
+    "avg_pnl": -0.02
    },
    "neutral": {
-    "n": 23,
-    "win": 17,
+    "n": 28,
+    "win": 22,
     "loss": 6,
     "expired": 0,
-    "win_rate": 0.739,
-    "avg_pnl": 1.32
+    "win_rate": 0.786,
+    "avg_pnl": 1.58
    }
   },
   "RSI": {
    "agree": {
-    "n": 67,
-    "win": 41,
+    "n": 79,
+    "win": 53,
     "loss": 26,
     "expired": 0,
-    "win_rate": 0.612,
-    "avg_pnl": 0.72
+    "win_rate": 0.671,
+    "avg_pnl": 1.04
    },
    "against": {
-    "n": 36,
+    "n": 39,
     "win": 12,
-    "loss": 12,
+    "loss": 15,
     "expired": 12,
-    "win_rate": 0.5,
-    "avg_pnl": -0.12
+    "win_rate": 0.444,
+    "avg_pnl": -0.25
    },
    "neutral": {
     "n": 1,
@@ -359,38 +359,38 @@
   },
   "Stoch RSI": {
    "agree": {
-    "n": 47,
-    "win": 29,
-    "loss": 16,
+    "n": 52,
+    "win": 33,
+    "loss": 17,
     "expired": 2,
-    "win_rate": 0.644,
-    "avg_pnl": 0.47
+    "win_rate": 0.66,
+    "avg_pnl": 0.61
    },
    "against": {
-    "n": 20,
-    "win": 9,
+    "n": 23,
+    "win": 12,
     "loss": 7,
     "expired": 4,
-    "win_rate": 0.562,
-    "avg_pnl": 0.45
+    "win_rate": 0.632,
+    "avg_pnl": 0.83
    },
    "neutral": {
-    "n": 37,
-    "win": 16,
-    "loss": 15,
+    "n": 44,
+    "win": 21,
+    "loss": 17,
     "expired": 6,
-    "win_rate": 0.516,
-    "avg_pnl": 0.39
+    "win_rate": 0.553,
+    "avg_pnl": 0.52
    }
   },
   "Xác nhận đảo chiều": {
    "agree": {
-    "n": 35,
+    "n": 38,
     "win": 6,
-    "loss": 17,
+    "loss": 20,
     "expired": 12,
-    "win_rate": 0.261,
-    "avg_pnl": -0.9
+    "win_rate": 0.231,
+    "avg_pnl": -0.97
    },
    "against": {
     "n": 0,
@@ -417,49 +417,6 @@
   "right_rate": 0.4
  },
  "recent_losses": [
-  {
-   "time": "2026-11-15 15:02",
-   "symbol": "ETHUSDT",
-   "tf": "1h",
-   "rating": "strong_sell",
-   "score": -51,
-   "pnl_pct": -2.49,
-   "parts": [
-    "ADX/DI -15",
-    "EMA 20/50/200 -30",
-    "RSI -2.6",
-    "Stoch RSI -3"
-   ]
-  },
-  {
-   "time": "2026-11-15 15:02",
-   "symbol": "SOLUSDT",
-   "tf": "1h",
-   "rating": "strong_sell",
-   "score": -51,
-   "pnl_pct": -2.78,
-   "parts": [
-    "ADX/DI -15",
-    "EMA 20/50/200 -30",
-    "RSI -3.3",
-    "Stoch RSI -3"
-   ]
-  },
-  {
-   "time": "2026-11-15 15:02",
-   "symbol": "SUIUSDT",
-   "tf": "1h",
-   "rating": "sell",
-   "score": -40,
-   "pnl_pct": -3.03,
-   "parts": [
-    "ADX/DI -15",
-    "EMA 20/50/200 -30",
-    "MACD +10",
-    "RSI -2.2",
-    "Stoch RSI -3"
-   ]
-  },
   {
    "time": "2026-11-16 15:03",
    "symbol": "SOLUSDT",
@@ -639,6 +596,54 @@
     "Bollinger +10",
     "Khối lượng -5",
     "Khung 1d -8"
+   ]
+  },
+  {
+   "time": "2026-11-20 06:03",
+   "symbol": "BTCUSDT",
+   "tf": "1h",
+   "rating": "buy",
+   "score": 46,
+   "pnl_pct": -1.7,
+   "parts": [
+    "ADX/DI -3.3",
+    "EMA 20/50/200 -10",
+    "MACD -3.3",
+    "RSI -2.9",
+    "Stoch RSI +10",
+    "Bollinger +5",
+    "Xác nhận đảo chiều +50"
+   ]
+  },
+  {
+   "time": "2026-11-20 08:03",
+   "symbol": "BTCUSDT",
+   "tf": "1h",
+   "rating": "buy",
+   "score": 29,
+   "pnl_pct": -1.64,
+   "parts": [
+    "ADX/DI -5",
+    "EMA 20/50/200 -10",
+    "MACD -3.3",
+    "RSI -2.7",
+    "Xác nhận đảo chiều +50"
+   ]
+  },
+  {
+   "time": "2026-11-20 10:03",
+   "symbol": "BTCUSDT",
+   "tf": "1h",
+   "rating": "buy",
+   "score": 35,
+   "pnl_pct": -2.11,
+   "parts": [
+    "ADX/DI -5",
+    "EMA 20/50/200 -10",
+    "MACD -3.3",
+    "RSI -1.5",
+    "Khối lượng +5",
+    "Xác nhận đảo chiều +50"
    ]
   }
  ]
