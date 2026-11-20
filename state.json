@@ -20,7 +20,7 @@
  "SOLUSDT|1h|squeeze": false,
  "SOLUSDT|4h|squeeze": false,
  "SOLUSDT|1d|lower": {
-  "candle": 1794873600000,
+  "candle": 1795132800000,
   "level": "near"
  },
  "SOLUSDT|1d|squeeze": false,
