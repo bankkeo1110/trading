@@ -13,7 +13,7 @@
  "ETHUSDT|1h|squeeze": false,
  "ETHUSDT|4h|squeeze": false,
  "ETHUSDT|1d|lower": {
-  "candle": 1794960000000,
+  "candle": 1795132800000,
   "level": "near"
  },
  "ETHUSDT|1d|squeeze": false,
