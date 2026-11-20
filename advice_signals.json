@@ -11251,5 +11251,75 @@
   "sl": 0.625445329496803,
   "tp1": 0.6690640115095913,
   "tp2": 0.6878280230191826
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "1h",
+  "candle": 1795212000000,
+  "price": 1622.84,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": -7.5,
+    "note": "ADX 47: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -15.0,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200) — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "MACD",
+    "points": -5.0,
+    "note": "MACD dưới đường tín hiệu, động lượng tăng dần — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "RSI",
+    "points": 15,
+    "note": "RSI 28: quá bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 3,
+    "note": "K 18: vùng quá bán"
+   },
+   {
+    "name": "Bollinger",
+    "points": 5,
+    "note": "giá gần BB dưới"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 0,
+    "note": "khối lượng bình thường (0.6 lần TB20)"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": 0,
+    "note": "chưa có — chờ nến tăng đóng trên đỉnh nến trước, hoặc RSI quay lên"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 1,
+  "in_zone": true,
+  "ema_trend": -1,
+  "atr": 28.222702200126836,
+  "rsi": 28.03384725445251,
+  "adx": 47.46514938514985,
+  "swing_low": 1581.47,
+  "swing_high": 1759.63,
+  "score": -12,
+  "rating": "watch_buy",
+  "type": "advice",
+  "ts": 1795215826,
+  "time": "2026-11-21 06:03",
+  "sl": 1622.84,
+  "tp1": 1622.84,
+  "tp2": 1622.84
  }
 ]
