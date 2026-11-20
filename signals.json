@@ -9289,5 +9289,44 @@
   "time": "2026-11-20 11:05",
   "confluence": [],
   "type": "band"
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "4h",
+  "candle": 1795147200000,
+  "price": 1732.91,
+  "mid": 1790.434,
+  "upper": 1846.92706024637,
+  "lower": 1733.94093975363,
+  "pctb": -0.009124481388809625,
+  "rsi": 33.2104218243724,
+  "side": "lower",
+  "level": "touch",
+  "squeeze": false,
+  "ts": 1795147865,
+  "time": "2026-11-20 11:11",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "1h",
+  "candle": 1795147200000,
+  "price": 0.6958,
+  "mid": 0.7147,
+  "upper": 0.7373194606478581,
+  "lower": 0.6920805393521419,
+  "pctb": 0.08221815510464676,
+  "rsi": 34.608054769216366,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795147865,
+  "time": "2026-11-20 11:11",
+  "confluence": [
+   "1h",
+   "4h"
+  ],
+  "type": "band"
  }
 ]

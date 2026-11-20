@@ -29,7 +29,7 @@
  "SUIUSDT|1d|squeeze": false,
  "ETHUSDT|4h|lower": {
   "candle": 1795147200000,
-  "level": "near"
+  "level": "touch"
  },
  "SUIUSDT|1d|lower": {
   "candle": 1795046400000,
@@ -108,7 +108,7 @@
   "level": "near"
  },
  "SUIUSDT|1h|lower": {
-  "candle": 1795143600000,
+  "candle": 1795147200000,
   "level": "near"
  },
  "ETHUSDT|1h|lower": {
