@@ -3,13 +3,13 @@
   {
    "symbol": "BTCUSDT",
    "tf": "1h",
-   "candle": 1795197600000,
-   "price": 58418.01,
+   "candle": 1795201200000,
+   "price": 58558.66,
    "parts": [
     {
      "name": "ADX/DI",
      "points": -7.5,
-     "note": "ADX 47: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+     "note": "ADX 49: xu hướng giảm mạnh — giảm trọng số vì quá bán"
     },
     {
      "name": "EMA 20/50/200",
@@ -24,12 +24,12 @@
     {
      "name": "RSI",
      "points": 15,
-     "note": "RSI 23: quá bán"
+     "note": "RSI 25: quá bán"
     },
     {
      "name": "Stoch RSI",
-     "points": 3,
-     "note": "K 2: vùng quá bán"
+     "points": 10,
+     "note": "K 3 cắt lên D từ vùng quá bán"
     },
     {
      "name": "Bollinger",
@@ -38,8 +38,8 @@
     },
     {
      "name": "Khối lượng",
-     "points": -2.5,
-     "note": "nến giảm với khối lượng gấp 2.1 lần TB20 — giảm trọng số vì quá bán"
+     "points": 5,
+     "note": "nến tăng với khối lượng gấp 2.4 lần TB20"
     },
     {
      "name": "Xác nhận đảo chiều",
@@ -56,27 +56,27 @@
    "zone": 1,
    "in_zone": true,
    "ema_trend": -1,
-   "atr": 816.370904562953,
-   "rsi": 22.58700016422887,
-   "adx": 47.09595548381388,
-   "swing_low": 58055.0,
+   "atr": 838.5615542510571,
+   "rsi": 24.5204719867463,
+   "adx": 48.84323934526825,
+   "swing_low": 57778.35,
    "swing_high": 62341.94,
-   "score": -7,
+   "score": 8,
    "rating": "watch_buy",
-   "sl": 58418.01,
-   "tp1": 58418.01,
-   "tp2": 58418.01
+   "sl": 58558.66,
+   "tp1": 58558.66,
+   "tp2": 58558.66
   },
   {
    "symbol": "BTCUSDT",
    "tf": "4h",
-   "candle": 1795176000000,
-   "price": 59475.47,
+   "candle": 1795190400000,
+   "price": 58558.66,
    "parts": [
     {
      "name": "ADX/DI",
      "points": -7.5,
-     "note": "ADX 50: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+     "note": "ADX 51: xu hướng giảm mạnh — giảm trọng số vì quá bán"
     },
     {
      "name": "EMA 20/50/200",
@@ -91,12 +91,12 @@
     {
      "name": "RSI",
      "points": 15,
-     "note": "RSI 23: quá bán"
+     "note": "RSI 21: quá bán"
     },
     {
      "name": "Stoch RSI",
      "points": 3,
-     "note": "K 2: vùng quá bán"
+     "note": "K 0: vùng quá bán"
     },
     {
      "name": "Bollinger",
@@ -106,7 +106,7 @@
     {
      "name": "Khối lượng",
      "points": -2.5,
-     "note": "nến giảm với khối lượng gấp 2.3 lần TB20 — giảm trọng số vì quá bán"
+     "note": "nến giảm với khối lượng gấp 3.3 lần TB20 — giảm trọng số vì quá bán"
     },
     {
      "name": "Xác nhận đảo chiều",
@@ -123,16 +123,16 @@
    "zone": 1,
    "in_zone": true,
    "ema_trend": -1,
-   "atr": 1198.8738904964362,
-   "rsi": 22.969424905198508,
-   "adx": 49.52718502327442,
-   "swing_low": 59388.0,
+   "atr": 1273.7321840120942,
+   "rsi": 20.508137627423395,
+   "adx": 50.925852701345434,
+   "swing_low": 57778.35,
    "swing_high": 64080.8,
    "score": -7,
    "rating": "watch_buy",
-   "sl": 59475.47,
-   "tp1": 59475.47,
-   "tp2": 59475.47
+   "sl": 58558.66,
+   "tp1": 58558.66,
+   "tp2": 58558.66
   },
   {
    "symbol": "BTCUSDT",
@@ -199,13 +199,80 @@
   {
    "symbol": "ETHUSDT",
    "tf": "1h",
-   "candle": 1795197600000,
-   "price": 1616.67,
+   "candle": 1795201200000,
+   "price": 1607.97,
    "parts": [
     {
      "name": "ADX/DI",
      "points": -7.5,
-     "note": "ADX 41: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+     "note": "ADX 44: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+    },
+    {
+     "name": "EMA 20/50/200",
+     "points": -15.0,
+     "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200) — giảm trọng số vì quá bán"
+    },
+    {
+     "name": "MACD",
+     "points": -10.0,
+     "note": "MACD dưới đường tín hiệu, động lượng giảm dần — giảm trọng số vì quá bán"
+    },
+    {
+     "name": "RSI",
+     "points": 15,
+     "note": "RSI 20: quá bán"
+    },
+    {
+     "name": "Stoch RSI",
+     "points": 3,
+     "note": "K 0: vùng quá bán"
+    },
+    {
+     "name": "Bollinger",
+     "points": 10,
+     "note": "giá ở BB dưới"
+    },
+    {
+     "name": "Khối lượng",
+     "points": -2.5,
+     "note": "nến giảm với khối lượng gấp 2.4 lần TB20 — giảm trọng số vì quá bán"
+    },
+    {
+     "name": "Xác nhận đảo chiều",
+     "points": 0,
+     "note": "chưa có — chờ nến tăng đóng trên đỉnh nến trước, hoặc RSI quay lên"
+    },
+    {
+     "name": "Khung 1d",
+     "points": -8,
+     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+    }
+   ],
+   "params_id": "7817b218",
+   "zone": 1,
+   "in_zone": true,
+   "ema_trend": -1,
+   "atr": 28.593047259491016,
+   "rsi": 20.206796768546184,
+   "adx": 43.6940463388152,
+   "swing_low": 1581.47,
+   "swing_high": 1763.33,
+   "score": -15,
+   "rating": "watch_buy",
+   "sl": 1607.97,
+   "tp1": 1607.97,
+   "tp2": 1607.97
+  },
+  {
+   "symbol": "ETHUSDT",
+   "tf": "4h",
+   "candle": 1795190400000,
+   "price": 1607.97,
+   "parts": [
+    {
+     "name": "ADX/DI",
+     "points": -7.5,
+     "note": "ADX 47: xu hướng giảm mạnh — giảm trọng số vì quá bán"
     },
     {
      "name": "EMA 20/50/200",
@@ -225,7 +292,7 @@
     {
      "name": "Stoch RSI",
      "points": 3,
-     "note": "K 0: vùng quá bán"
+     "note": "K 8: vùng quá bán"
     },
     {
      "name": "Bollinger",
@@ -235,7 +302,7 @@
     {
      "name": "Khối lượng",
      "points": -2.5,
-     "note": "nến giảm với khối lượng gấp 1.6 lần TB20 — giảm trọng số vì quá bán"
+     "note": "nến giảm với khối lượng gấp 3.7 lần TB20 — giảm trọng số vì quá bán"
     },
     {
      "name": "Xác nhận đảo chiều",
@@ -252,83 +319,16 @@
    "zone": 1,
    "in_zone": true,
    "ema_trend": -1,
-   "atr": 27.921743201617026,
-   "rsi": 21.12921048808333,
-   "adx": 41.410515313847796,
-   "swing_low": 1610.0,
-   "swing_high": 1763.33,
-   "score": -15,
-   "rating": "watch_buy",
-   "sl": 1616.67,
-   "tp1": 1616.67,
-   "tp2": 1616.67
-  },
-  {
-   "symbol": "ETHUSDT",
-   "tf": "4h",
-   "candle": 1795176000000,
-   "price": 1655.57,
-   "parts": [
-    {
-     "name": "ADX/DI",
-     "points": -7.5,
-     "note": "ADX 45: xu hướng giảm mạnh — giảm trọng số vì quá bán"
-    },
-    {
-     "name": "EMA 20/50/200",
-     "points": -15.0,
-     "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200) — giảm trọng số vì quá bán"
-    },
-    {
-     "name": "MACD",
-     "points": -10.0,
-     "note": "MACD dưới đường tín hiệu (vừa cắt xuống), động lượng giảm dần — giảm trọng số vì quá bán"
-    },
-    {
-     "name": "RSI",
-     "points": 15,
-     "note": "RSI 25: quá bán"
-    },
-    {
-     "name": "Stoch RSI",
-     "points": 3,
-     "note": "K 17: vùng quá bán"
-    },
-    {
-     "name": "Bollinger",
-     "points": 10,
-     "note": "giá ở BB dưới"
-    },
-    {
-     "name": "Khối lượng",
-     "points": -2.5,
-     "note": "nến giảm với khối lượng gấp 3.1 lần TB20 — giảm trọng số vì quá bán"
-    },
-    {
-     "name": "Xác nhận đảo chiều",
-     "points": 0,
-     "note": "chưa có — chờ nến tăng đóng trên đỉnh nến trước, hoặc RSI quay lên"
-    },
-    {
-     "name": "Khung 1d",
-     "points": -8,
-     "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
-    }
-   ],
-   "params_id": "7817b218",
-   "zone": 1,
-   "in_zone": true,
-   "ema_trend": -1,
-   "atr": 43.00892777454793,
-   "rsi": 24.658062664633277,
-   "adx": 44.939408594488576,
-   "swing_low": 1650.0,
+   "atr": 45.67829007601863,
+   "rsi": 20.927170806486984,
+   "adx": 46.82891866312381,
+   "swing_low": 1581.47,
    "swing_high": 1817.57,
    "score": -15,
    "rating": "watch_buy",
-   "sl": 1655.57,
-   "tp1": 1655.57,
-   "tp2": 1655.57
+   "sl": 1607.97,
+   "tp1": 1607.97,
+   "tp2": 1607.97
   },
   {
    "symbol": "ETHUSDT",
@@ -395,13 +395,13 @@
   {
    "symbol": "SOLUSDT",
    "tf": "1h",
-   "candle": 1795197600000,
-   "price": 68.88,
+   "candle": 1795201200000,
+   "price": 68.22,
    "parts": [
     {
      "name": "ADX/DI",
      "points": -7.5,
-     "note": "ADX 46: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+     "note": "ADX 48: xu hướng giảm mạnh — giảm trọng số vì quá bán"
     },
     {
      "name": "EMA 20/50/200",
@@ -415,13 +415,13 @@
     },
     {
      "name": "RSI",
-     "points": -4.6,
-     "note": "RSI 32: nghiêng bán"
+     "points": 15,
+     "note": "RSI 29: quá bán"
     },
     {
      "name": "Stoch RSI",
      "points": 0,
-     "note": "K 39: trung tính"
+     "note": "K 31: trung tính"
     },
     {
      "name": "Bollinger",
@@ -430,8 +430,8 @@
     },
     {
      "name": "Khối lượng",
-     "points": 0,
-     "note": "khối lượng bình thường (1.1 lần TB20)"
+     "points": -2.5,
+     "note": "nến giảm với khối lượng gấp 1.9 lần TB20 — giảm trọng số vì quá bán"
     },
     {
      "name": "Xác nhận đảo chiều",
@@ -446,29 +446,29 @@
    ],
    "params_id": "7817b218",
    "zone": 1,
-   "in_zone": false,
+   "in_zone": true,
    "ema_trend": -1,
-   "atr": 1.1163988349807954,
-   "rsi": 31.631248186966616,
-   "adx": 46.24722999736553,
-   "swing_low": 67.8,
+   "atr": 1.1409417753686275,
+   "rsi": 29.142111545693467,
+   "adx": 48.388580276065774,
+   "swing_low": 67.46,
    "swing_high": 72.75,
-   "score": -35,
+   "score": -18,
    "rating": "watch_buy",
-   "sl": 68.88,
-   "tp1": 68.88,
-   "tp2": 68.88
+   "sl": 68.22,
+   "tp1": 68.22,
+   "tp2": 68.22
   },
   {
    "symbol": "SOLUSDT",
    "tf": "4h",
-   "candle": 1795176000000,
-   "price": 68.36,
+   "candle": 1795190400000,
+   "price": 68.22,
    "parts": [
     {
      "name": "ADX/DI",
      "points": -5.0,
-     "note": "ADX 25: xu hướng giảm vừa — giảm trọng số vì quá bán"
+     "note": "ADX 27: xu hướng giảm vừa — giảm trọng số vì quá bán"
     },
     {
      "name": "EMA 20/50/200",
@@ -498,7 +498,7 @@
     {
      "name": "Khối lượng",
      "points": -2.5,
-     "note": "nến giảm với khối lượng gấp 2.7 lần TB20 — giảm trọng số vì quá bán"
+     "note": "nến giảm với khối lượng gấp 2.4 lần TB20 — giảm trọng số vì quá bán"
     },
     {
      "name": "Xác nhận đảo chiều",
@@ -515,16 +515,16 @@
    "zone": 1,
    "in_zone": true,
    "ema_trend": -1,
-   "atr": 1.8343587472581133,
-   "rsi": 27.227225470106447,
-   "adx": 25.353897411896476,
-   "swing_low": 67.91,
+   "atr": 1.868333122382776,
+   "rsi": 26.887044687181856,
+   "adx": 27.441988619891443,
+   "swing_low": 67.46,
    "swing_high": 75.65,
    "score": -12,
    "rating": "watch_buy",
-   "sl": 68.36,
-   "tp1": 68.36,
-   "tp2": 68.36
+   "sl": 68.22,
+   "tp1": 68.22,
+   "tp2": 68.22
   },
   {
    "symbol": "SOLUSDT",
@@ -591,13 +591,13 @@
   {
    "symbol": "SUIUSDT",
    "tf": "1h",
-   "candle": 1795197600000,
-   "price": 0.6508,
+   "candle": 1795201200000,
+   "price": 0.6413,
    "parts": [
     {
      "name": "ADX/DI",
      "points": -7.5,
-     "note": "ADX 53: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+     "note": "ADX 54: xu hướng giảm mạnh — giảm trọng số vì quá bán"
     },
     {
      "name": "EMA 20/50/200",
@@ -612,12 +612,12 @@
     {
      "name": "RSI",
      "points": 15,
-     "note": "RSI 20: quá bán"
+     "note": "RSI 18: quá bán"
     },
     {
      "name": "Stoch RSI",
      "points": 3,
-     "note": "K 9: vùng quá bán"
+     "note": "K 5: vùng quá bán"
     },
     {
      "name": "Bollinger",
@@ -626,8 +626,8 @@
     },
     {
      "name": "Khối lượng",
-     "points": 0,
-     "note": "khối lượng bình thường (0.9 lần TB20)"
+     "points": -2.5,
+     "note": "nến giảm với khối lượng gấp 1.9 lần TB20 — giảm trọng số vì quá bán"
     },
     {
      "name": "Xác nhận đảo chiều",
@@ -644,27 +644,27 @@
    "zone": 1,
    "in_zone": true,
    "ema_trend": -1,
-   "atr": 0.011774206517508259,
-   "rsi": 20.16030954209866,
-   "adx": 53.016960639018336,
-   "swing_low": 0.6445,
+   "atr": 0.011954620337957623,
+   "rsi": 17.533713124314687,
+   "adx": 54.08336186021815,
+   "swing_low": 0.6367,
    "swing_high": 0.6992,
-   "score": -12,
+   "score": -15,
    "rating": "watch_buy",
-   "sl": 0.6508,
-   "tp1": 0.6508,
-   "tp2": 0.6508
+   "sl": 0.6413,
+   "tp1": 0.6413,
+   "tp2": 0.6413
   },
   {
    "symbol": "SUIUSDT",
    "tf": "4h",
-   "candle": 1795176000000,
-   "price": 0.6528,
+   "candle": 1795190400000,
+   "price": 0.6413,
    "parts": [
     {
      "name": "ADX/DI",
      "points": -7.5,
-     "note": "ADX 35: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+     "note": "ADX 38: xu hướng giảm mạnh — giảm trọng số vì quá bán"
     },
     {
      "name": "EMA 20/50/200",
@@ -679,7 +679,7 @@
     {
      "name": "RSI",
      "points": 15,
-     "note": "RSI 24: quá bán"
+     "note": "RSI 22: quá bán"
     },
     {
      "name": "Stoch RSI",
@@ -694,7 +694,7 @@
     {
      "name": "Khối lượng",
      "points": -2.5,
-     "note": "nến giảm với khối lượng gấp 3.0 lần TB20 — giảm trọng số vì quá bán"
+     "note": "nến giảm với khối lượng gấp 2.9 lần TB20 — giảm trọng số vì quá bán"
     },
     {
      "name": "Xác nhận đảo chiều",
@@ -711,16 +711,16 @@
    "zone": 1,
    "in_zone": true,
    "ema_trend": -1,
-   "atr": 0.0197617650475085,
-   "rsi": 23.89805336345067,
-   "adx": 35.35610633779931,
-   "swing_low": 0.6493,
+   "atr": 0.02012878182983707,
+   "rsi": 21.88819208404766,
+   "adx": 37.739763700299456,
+   "swing_low": 0.6367,
    "swing_high": 0.7342,
    "score": -15,
    "rating": "watch_buy",
-   "sl": 0.6528,
-   "tp1": 0.6528,
-   "tp2": 0.6528
+   "sl": 0.6413,
+   "tp1": 0.6413,
+   "tp2": 0.6413
   },
   {
    "symbol": "SUIUSDT",
@@ -787,7 +787,7 @@
  ],
  "overall": {
   "BTCUSDT": {
-   "score": 0,
+   "score": 2,
    "rating": "watch_buy"
   },
   "ETHUSDT": {
@@ -795,11 +795,11 @@
    "rating": "watch_buy"
   },
   "SOLUSDT": {
-   "score": -14,
+   "score": -11,
    "rating": "watch_buy"
   },
   "SUIUSDT": {
-   "score": -20,
+   "score": -21,
    "rating": "watch_buy"
   }
  }
