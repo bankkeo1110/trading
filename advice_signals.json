@@ -9692,6 +9692,79 @@
   "time": "2026-11-20 08:03",
   "sl": 74.3652018650586,
   "tp1": 71.7347981349414,
-  "tp2": 70.4195962698828
+  "tp2": 70.4195962698828,
+  "outcome": "win",
+  "bars": 2,
+  "pnl_pct": 1.8
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "1h",
+  "candle": 1795140000000,
+  "price": 62271.03,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": -5.0,
+    "note": "ADX 34: xu hướng giảm mạnh — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -10.0,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200) — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "MACD",
+    "points": -3.3,
+    "note": "MACD dưới đường tín hiệu, động lượng tăng dần — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "RSI",
+    "points": -1.5,
+    "note": "RSI 44: nghiêng bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 0,
+    "note": "K 39: trung tính"
+   },
+   {
+    "name": "Bollinger",
+    "points": 0,
+    "note": "giá trong dải (%B 0.31)"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 5,
+    "note": "nến tăng với khối lượng gấp 1.5 lần TB20"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": 50,
+    "note": "RSI quay lên trên 30; phân kỳ tăng (giá tạo đáy thấp hơn nhưng RSI cao hơn)"
+   },
+   {
+    "name": "Khung 1d",
+    "points": 0,
+    "note": "khung ngày chưa rõ xu hướng"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 1,
+  "in_zone": false,
+  "ema_trend": -1,
+  "atr": 670.0496806265794,
+  "rsi": 43.86262543222326,
+  "adx": 33.75736253758545,
+  "swing_low": 61290.58,
+  "swing_high": 63408.62,
+  "score": 35,
+  "rating": "buy",
+  "type": "advice",
+  "ts": 1795143818,
+  "time": "2026-11-20 10:03",
+  "sl": 60955.555159686715,
+  "tp1": 63276.104520939865,
+  "tp2": 64281.17904187974
  }
 ]
