@@ -2,11 +2,11 @@
  "BTCUSDT|1h|squeeze": false,
  "BTCUSDT|4h|lower": {
   "candle": 1795132800000,
-  "level": "near"
+  "level": "touch"
  },
  "BTCUSDT|4h|squeeze": false,
  "BTCUSDT|1d|lower": {
-  "candle": 1795046400000,
+  "candle": 1795132800000,
   "level": "near"
  },
  "BTCUSDT|1d|squeeze": false,
@@ -29,7 +29,7 @@
  "SUIUSDT|1d|squeeze": false,
  "ETHUSDT|4h|lower": {
   "candle": 1795132800000,
-  "level": "near"
+  "level": "touch"
  },
  "SUIUSDT|1d|lower": {
   "candle": 1795046400000,
@@ -100,24 +100,24 @@
   "level": "near"
  },
  "BTCUSDT|1h|lower": {
-  "candle": 1795129200000,
+  "candle": 1795136400000,
   "level": "near"
  },
  "SOLUSDT|1h|lower": {
-  "candle": 1795125600000,
+  "candle": 1795136400000,
   "level": "touch"
  },
  "SUIUSDT|1h|lower": {
-  "candle": 1795125600000,
-  "level": "touch"
+  "candle": 1795136400000,
+  "level": "near"
  },
  "ETHUSDT|1h|lower": {
-  "candle": 1795129200000,
-  "level": "near"
+  "candle": 1795136400000,
+  "level": "touch"
  },
  "SUIUSDT|4h|lower": {
   "candle": 1795132800000,
-  "level": "near"
+  "level": "touch"
  },
  "SOLUSDT|1h|upper": {
   "candle": 1795071600000,
