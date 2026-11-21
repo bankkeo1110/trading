@@ -20,7 +20,7 @@
  "SOLUSDT|1h|squeeze": false,
  "SOLUSDT|4h|squeeze": false,
  "SOLUSDT|1d|lower": {
-  "candle": 1795132800000,
+  "candle": 1795219200000,
   "level": "near"
  },
  "SOLUSDT|1d|squeeze": false,
@@ -33,7 +33,7 @@
  },
  "SUIUSDT|1d|lower": {
   "candle": 1795219200000,
-  "level": "near"
+  "level": "touch"
  },
  "advice|BTCUSDT|1h": {
   "rating": "strong_sell",
@@ -100,16 +100,16 @@
   "level": "touch"
  },
  "BTCUSDT|1h|lower": {
-  "candle": 1795208400000,
+  "candle": 1795230000000,
   "level": "near"
  },
  "SOLUSDT|1h|lower": {
-  "candle": 1795208400000,
+  "candle": 1795230000000,
   "level": "near"
  },
  "SUIUSDT|1h|lower": {
-  "candle": 1795208400000,
-  "level": "near"
+  "candle": 1795230000000,
+  "level": "touch"
  },
  "ETHUSDT|1h|lower": {
   "candle": 1795208400000,
