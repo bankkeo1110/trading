@@ -37,7 +37,7 @@
  },
  "advice|BTCUSDT|1h": {
   "rating": "neutral",
-  "candle": 1795359600000,
+  "candle": 1795363200000,
   "watch_candle": 1795244400000
  },
  "advice|BTCUSDT|4h": {
@@ -52,7 +52,7 @@
  },
  "advice|ETHUSDT|1h": {
   "rating": "neutral",
-  "candle": 1795359600000,
+  "candle": 1795363200000,
   "watch_candle": 1795244400000
  },
  "advice|ETHUSDT|4h": {
