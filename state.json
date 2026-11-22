@@ -24,7 +24,7 @@
   "level": "near"
  },
  "SOLUSDT|1d|squeeze": false,
- "SUIUSDT|1h|squeeze": true,
+ "SUIUSDT|1h|squeeze": false,
  "SUIUSDT|4h|squeeze": false,
  "SUIUSDT|1d|squeeze": false,
  "ETHUSDT|4h|lower": {
@@ -125,11 +125,11 @@
  },
  "SUIUSDT|1h|upper": {
   "candle": 1795338000000,
-  "level": "near"
+  "level": "touch"
  },
  "ETHUSDT|1h|upper": {
-  "candle": 1795273200000,
-  "level": "near"
+  "candle": 1795338000000,
+  "level": "touch"
  },
  "BTCUSDT|1h|upper": {
   "candle": 1795269600000,
