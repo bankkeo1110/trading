@@ -3,8 +3,8 @@
   {
    "symbol": "BTCUSDT",
    "tf": "1h",
-   "candle": 1795320000000,
-   "price": 59313.42,
+   "candle": 1795323600000,
+   "price": 58924.26,
    "parts": [
     {
      "name": "ADX/DI",
@@ -23,8 +23,8 @@
     },
     {
      "name": "RSI",
-     "points": -1.2,
-     "note": "RSI 45: nghiêng bán"
+     "points": -2.2,
+     "note": "RSI 41: nghiêng bán"
     },
     {
      "name": "Stoch RSI",
@@ -34,12 +34,12 @@
     {
      "name": "Bollinger",
      "points": 0,
-     "note": "giá trong dải (%B 0.38)"
+     "note": "giá trong dải (%B 0.22)"
     },
     {
      "name": "Khối lượng",
      "points": 0,
-     "note": "khối lượng bình thường (0.6 lần TB20)"
+     "note": "khối lượng bình thường (0.9 lần TB20)"
     },
     {
      "name": "Khung 1d",
@@ -51,16 +51,16 @@
    "zone": 0,
    "in_zone": false,
    "ema_trend": -1,
-   "atr": 600.2466969159035,
-   "rsi": 45.262548767545226,
-   "adx": 21.412806253558205,
-   "swing_low": 59129.99,
+   "atr": 597.2969328355503,
+   "rsi": 41.048558369912456,
+   "adx": 21.454470372089013,
+   "swing_low": 58768.51,
    "swing_high": 60568.01,
-   "score": -56,
+   "score": -57,
    "rating": "strong_sell",
-   "sl": 60213.790045373855,
-   "tp1": 58413.04995462614,
-   "tp2": 57512.679909252285
+   "sl": 59820.205399253326,
+   "tp1": 58028.31460074668,
+   "tp2": 57132.36920149335
   },
   {
    "symbol": "BTCUSDT",
@@ -194,8 +194,8 @@
   {
    "symbol": "ETHUSDT",
    "tf": "1h",
-   "candle": 1795320000000,
-   "price": 1664.29,
+   "candle": 1795323600000,
+   "price": 1657.18,
    "parts": [
     {
      "name": "ADX/DI",
@@ -214,8 +214,8 @@
     },
     {
      "name": "RSI",
-     "points": -0.8,
-     "note": "RSI 47: nghiêng bán"
+     "points": -1.5,
+     "note": "RSI 44: nghiêng bán"
     },
     {
      "name": "Stoch RSI",
@@ -224,13 +224,13 @@
     },
     {
      "name": "Bollinger",
-     "points": 0,
-     "note": "giá trong dải (%B 0.32)"
+     "points": 5,
+     "note": "giá gần BB dưới"
     },
     {
      "name": "Khối lượng",
      "points": 0,
-     "note": "khối lượng bình thường (0.4 lần TB20)"
+     "note": "khối lượng bình thường (0.9 lần TB20)"
     },
     {
      "name": "Khung 1d",
@@ -242,16 +242,16 @@
    "zone": 0,
    "in_zone": false,
    "ema_trend": -1,
-   "atr": 18.209306098366444,
-   "rsi": 46.795570083788874,
-   "adx": 20.418009382914278,
-   "swing_low": 1654.38,
-   "swing_high": 1691.11,
-   "score": -56,
+   "atr": 18.120069947903037,
+   "rsi": 43.95251120596131,
+   "adx": 20.453332865426724,
+   "swing_low": 1648.35,
+   "swing_high": 1690.01,
+   "score": -52,
    "rating": "strong_sell",
-   "sl": 1691.6039591475496,
-   "tp1": 1636.9760408524503,
-   "tp2": 1609.6620817049006
+   "sl": 1684.3601049218546,
+   "tp1": 1629.9998950781455,
+   "tp2": 1602.819790156291
   },
   {
    "symbol": "ETHUSDT",
@@ -380,28 +380,28 @@
   {
    "symbol": "SOLUSDT",
    "tf": "1h",
-   "candle": 1795320000000,
-   "price": 69.43,
+   "candle": 1795323600000,
+   "price": 68.97,
    "parts": [
     {
      "name": "ADX/DI",
-     "points": 0,
-     "note": "ADX 20: thị trường đi ngang, tín hiệu xu hướng kém tin cậy"
+     "points": -10,
+     "note": "ADX 20: xu hướng giảm vừa"
     },
     {
      "name": "EMA 20/50/200",
-     "points": -15.0,
+     "points": -30,
      "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200)"
     },
     {
      "name": "MACD",
-     "points": -5.0,
+     "points": -10,
      "note": "MACD dưới đường tín hiệu, động lượng giảm dần"
     },
     {
      "name": "RSI",
-     "points": -1.1,
-     "note": "RSI 46: nghiêng bán"
+     "points": -2.1,
+     "note": "RSI 42: nghiêng bán"
     },
     {
      "name": "Stoch RSI",
@@ -410,13 +410,13 @@
     },
     {
      "name": "Bollinger",
-     "points": 0,
-     "note": "giá trong dải (%B 0.33)"
+     "points": 5,
+     "note": "giá gần BB dưới"
     },
     {
      "name": "Khối lượng",
      "points": 0,
-     "note": "khối lượng bình thường (1.0 lần TB20)"
+     "note": "khối lượng bình thường (0.9 lần TB20)"
     },
     {
      "name": "Khung 1d",
@@ -428,16 +428,16 @@
    "zone": 0,
    "in_zone": false,
    "ema_trend": -1,
-   "atr": 0.7556224463146503,
-   "rsi": 45.644231491514994,
-   "adx": 19.648891194335448,
-   "swing_low": 69.2,
-   "swing_high": 70.99,
-   "score": -26,
-   "rating": "sell",
-   "sl": 70.56343366947198,
-   "tp1": 68.29656633052804,
-   "tp2": 67.16313266105605
+   "atr": 0.7530779858446625,
+   "rsi": 41.510149583835094,
+   "adx": 20.143415191522422,
+   "swing_low": 68.74,
+   "swing_high": 70.72,
+   "score": -52,
+   "rating": "strong_sell",
+   "sl": 70.09961697876699,
+   "tp1": 67.84038302123301,
+   "tp2": 66.710766042466
   },
   {
    "symbol": "SOLUSDT",
@@ -566,8 +566,8 @@
   {
    "symbol": "SUIUSDT",
    "tf": "1h",
-   "candle": 1795320000000,
-   "price": 0.6387,
+   "candle": 1795323600000,
+   "price": 0.6368,
    "parts": [
     {
      "name": "ADX/DI",
@@ -586,8 +586,8 @@
     },
     {
      "name": "RSI",
-     "points": -1.4,
-     "note": "RSI 45: nghiêng bán"
+     "points": -1.7,
+     "note": "RSI 43: nghiêng bán"
     },
     {
      "name": "Stoch RSI",
@@ -597,12 +597,12 @@
     {
      "name": "Bollinger",
      "points": 0,
-     "note": "giá trong dải (%B 0.40)"
+     "note": "giá trong dải (%B 0.29)"
     },
     {
      "name": "Khối lượng",
      "points": 0,
-     "note": "khối lượng bình thường (0.5 lần TB20)"
+     "note": "khối lượng bình thường (0.7 lần TB20)"
     },
     {
      "name": "Khung 1d",
@@ -614,16 +614,16 @@
    "zone": 0,
    "in_zone": false,
    "ema_trend": -1,
-   "atr": 0.008328209551326194,
-   "rsi": 44.56285307388787,
-   "adx": 18.192137800512103,
-   "swing_low": 0.6341,
+   "atr": 0.008147623154606091,
+   "rsi": 43.06326070314496,
+   "adx": 18.48059763024809,
+   "swing_low": 0.6337,
    "swing_high": 0.65,
-   "score": -21,
+   "score": -22,
    "rating": "sell",
-   "sl": 0.6511923143269893,
-   "tp1": 0.6262076856730108,
-   "tp2": 0.6137153713460215
+   "sl": 0.6490214347319092,
+   "tp1": 0.6245785652680909,
+   "tp2": 0.6123571305361818
   },
   {
    "symbol": "SUIUSDT",
@@ -765,11 +765,11 @@
    "rating": "watch_buy"
   },
   "SOLUSDT": {
-   "score": -4,
+   "score": -9,
    "rating": "watch_buy"
   },
   "SUIUSDT": {
-   "score": -22,
+   "score": -23,
    "rating": "watch_buy"
   }
  }
