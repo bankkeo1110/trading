@@ -1,27 +1,5 @@
 [
  {
-  "symbol": "ETHUSDT",
-  "tf": "4h",
-  "candle": 1794672000000,
-  "price": 1813.9,
-  "mid": 1969.0735,
-  "upper": 2121.3217767423002,
-  "lower": 1816.8252232577,
-  "pctb": -0.009606753259516836,
-  "rsi": 22.835910194962366,
-  "side": "lower",
-  "level": "touch",
-  "squeeze": false,
-  "ts": 1794674881,
-  "time": "2026-11-14 23:48",
-  "confluence": [
-   "1h",
-   "4h",
-   "1d"
-  ],
-  "type": "band"
- },
- {
   "symbol": "BTCUSDT",
   "tf": "1h",
   "candle": 1794675600000,
@@ -10212,6 +10190,24 @@
   "squeeze": false,
   "ts": 1795341039,
   "time": "2026-11-22 16:50",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "1h",
+  "candle": 1795338000000,
+  "price": 60912.26,
+  "mid": 59935.951,
+  "upper": 60968.4241541091,
+  "lower": 58903.4778458909,
+  "pctb": 0.9728011552234673,
+  "rsi": 63.37647870157105,
+  "side": "upper",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795341353,
+  "time": "2026-11-22 16:55",
   "confluence": [],
   "type": "band"
  }
