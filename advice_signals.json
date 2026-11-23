@@ -14341,5 +14341,70 @@
   "sl": 0.5597574897402358,
   "tp1": 0.7420275307792925,
   "tp2": 0.8273550615585852
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "1h",
+  "candle": 1795392000000,
+  "price": 61351.33,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": 15,
+    "note": "ADX 30: xu hướng tăng mạnh"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -10,
+    "note": "xu hướng lẫn lộn (giá dưới EMA200, EMA20 trên EMA50)"
+   },
+   {
+    "name": "MACD",
+    "points": 20,
+    "note": "MACD trên đường tín hiệu, động lượng tăng dần"
+   },
+   {
+    "name": "RSI",
+    "points": 3.3,
+    "note": "RSI 63: nghiêng mua"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 0,
+    "note": "K 78: trung tính"
+   },
+   {
+    "name": "Bollinger",
+    "points": 0,
+    "note": "giá trong dải (%B 0.75)"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 0,
+    "note": "khối lượng bình thường (1.0 lần TB20)"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 0,
+  "in_zone": false,
+  "ema_trend": 0,
+  "atr": 516.1028243724472,
+  "rsi": 63.33528449347094,
+  "adx": 30.224257066002348,
+  "swing_low": 60537.43,
+  "swing_high": 61464.35,
+  "score": 20,
+  "rating": "buy",
+  "type": "advice",
+  "ts": 1795395910,
+  "time": "2026-11-23 08:05",
+  "sl": 60577.17576344133,
+  "tp1": 62125.484236558674,
+  "tp2": 62899.638473117346
  }
 ]
