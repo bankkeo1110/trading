@@ -1,47 +1,5 @@
 [
  {
-  "symbol": "SOLUSDT",
-  "tf": "4h",
-  "candle": 1794700800000,
-  "price": 70.19,
-  "mid": 78.3765,
-  "upper": 86.75162095435044,
-  "lower": 70.00137904564954,
-  "pctb": 0.011260789866710873,
-  "rsi": 18.814628473396994,
-  "side": "lower",
-  "level": "near",
-  "squeeze": false,
-  "ts": 1794701111,
-  "time": "2026-11-15 07:05",
-  "confluence": [
-   "4h",
-   "1d"
-  ],
-  "type": "band"
- },
- {
-  "symbol": "SOLUSDT",
-  "tf": "1d",
-  "candle": 1794700800000,
-  "price": 70.19,
-  "mid": 88.79299999999999,
-  "upper": 106.24807387552399,
-  "lower": 71.337926124476,
-  "pctb": -0.03288230495791989,
-  "rsi": 14.65842306124226,
-  "side": "lower",
-  "level": "touch",
-  "squeeze": false,
-  "ts": 1794701111,
-  "time": "2026-11-15 07:05",
-  "confluence": [
-   "4h",
-   "1d"
-  ],
-  "type": "band"
- },
- {
   "symbol": "SUIUSDT",
   "tf": "4h",
   "candle": 1794700800000,
@@ -10028,6 +9986,42 @@
   "squeeze": false,
   "ts": 1795421460,
   "time": "2026-11-23 15:11",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "1h",
+  "candle": 1795424400000,
+  "price": 72.49,
+  "mid": 70.9645,
+  "upper": 72.5148609257202,
+  "lower": 69.4141390742798,
+  "pctb": 0.991982213525971,
+  "rsi": 71.42824973867711,
+  "side": "upper",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795424557,
+  "time": "2026-11-23 16:02",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "1h",
+  "candle": 1795424400000,
+  "price": 0.6688,
+  "mid": 0.658235,
+  "upper": 0.6707399230305509,
+  "lower": 0.6457300769694492,
+  "pctb": 0.9224336277076048,
+  "rsi": 63.547567473583854,
+  "side": "upper",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795424557,
+  "time": "2026-11-23 16:02",
   "confluence": [],
   "type": "band"
  }

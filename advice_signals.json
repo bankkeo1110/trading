@@ -14427,5 +14427,75 @@
   "outcome": "loss",
   "bars": 2,
   "pnl_pct": -1.26
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "1h",
+  "candle": 1795420800000,
+  "price": 72.45,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": 0,
+    "note": "ADX 17: thị trường đi ngang, tín hiệu xu hướng kém tin cậy"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -5.0,
+    "note": "xu hướng lẫn lộn (giá dưới EMA200, EMA20 trên EMA50)"
+   },
+   {
+    "name": "MACD",
+    "points": 5.0,
+    "note": "MACD trên đường tín hiệu, động lượng tăng dần — giảm trọng số vì quá mua"
+   },
+   {
+    "name": "RSI",
+    "points": -15,
+    "note": "RSI 71: quá mua"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": -3,
+    "note": "K 100: vùng quá mua"
+   },
+   {
+    "name": "Bollinger",
+    "points": -10,
+    "note": "giá ở BB trên"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 0,
+    "note": "khối lượng bình thường (1.2 lần TB20)"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": 0,
+    "note": "chưa có — chờ nến giảm đóng dưới đáy nến trước, hoặc RSI quay xuống"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": -1,
+  "in_zone": true,
+  "ema_trend": 0,
+  "atr": 0.646042744381076,
+  "rsi": 71.12777711124431,
+  "adx": 17.172532100218636,
+  "swing_low": 69.89,
+  "swing_high": 72.62,
+  "score": -36,
+  "rating": "sell",
+  "type": "advice",
+  "ts": 1795424560,
+  "time": "2026-11-23 16:02",
+  "sl": 72.94302137219054,
+  "tp1": 71.48093588342839,
+  "tp2": 70.51187176685677
  }
 ]
