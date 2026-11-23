@@ -128,12 +128,12 @@
   "level": "touch"
  },
  "ETHUSDT|1h|upper": {
-  "candle": 1795406400000,
-  "level": "touch"
+  "candle": 1795410000000,
+  "level": "near"
  },
  "BTCUSDT|1h|upper": {
-  "candle": 1795406400000,
-  "level": "touch"
+  "candle": 1795410000000,
+  "level": "near"
  },
  "SOLUSDT|4h|upper": {
   "candle": 1794988800000,
