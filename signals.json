@@ -3,24 +3,6 @@
   "symbol": "SUIUSDT",
   "tf": "1h",
   "candle": 1794884400000,
-  "price": 0.7282,
-  "mid": 0.72033,
-  "upper": 0.7287150104352946,
-  "lower": 0.7119449895647054,
-  "pctb": 0.9692898154827057,
-  "rsi": 54.97926362157255,
-  "side": "upper",
-  "level": "near",
-  "squeeze": true,
-  "ts": 1794886326,
-  "time": "2026-11-17 10:32",
-  "confluence": [],
-  "type": "band"
- },
- {
-  "symbol": "SUIUSDT",
-  "tf": "1h",
-  "candle": 1794884400000,
   "price": 0.7291,
   "mid": 0.720375,
   "upper": 0.7289362791100396,
@@ -9955,6 +9937,24 @@
    "1h",
    "4h"
   ],
+  "type": "band"
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "1h",
+  "candle": 1795579200000,
+  "price": 59186.01,
+  "mid": 59810.8325,
+  "upper": 60558.21508863516,
+  "lower": 59063.449911364834,
+  "pctb": 0.08199287118728678,
+  "rsi": 37.774809544919734,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795579584,
+  "time": "2026-11-25 11:06",
+  "confluence": [],
   "type": "band"
  }
 ]
