@@ -17268,7 +17268,10 @@
   "time": "2026-11-25 23:02",
   "sl": 69.08002834376998,
   "tp1": 66.37997165623003,
-  "tp2": 65.02994331246003
+  "tp2": 65.02994331246003,
+  "outcome": "loss",
+  "bars": 2,
+  "pnl_pct": -1.99
  },
  {
   "symbol": "ETHUSDT",
@@ -17333,7 +17336,10 @@
   "time": "2026-11-26 00:00",
   "sl": 1677.8360001678664,
   "tp1": 1613.0039998321338,
-  "tp2": 1580.5879996642677
+  "tp2": 1580.5879996642677,
+  "outcome": "loss",
+  "bars": 1,
+  "pnl_pct": -1.97
  },
  {
   "symbol": "SUIUSDT",
@@ -17403,6 +17409,79 @@
   "time": "2026-11-26 00:00",
   "sl": 0.6096520774794835,
   "tp1": 0.6459437675615497,
-  "tp2": 0.6592875351230993
+  "tp2": 0.6592875351230993,
+  "outcome": "win",
+  "bars": 1,
+  "pnl_pct": 2.11
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "1h",
+  "candle": 1795626000000,
+  "price": 0.6484,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": 10,
+    "note": "ADX 29: xu hướng tăng vừa"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -10.0,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200) — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "MACD",
+    "points": 10,
+    "note": "MACD trên đường tín hiệu (vừa cắt lên), động lượng tăng dần"
+   },
+   {
+    "name": "RSI",
+    "points": 1.3,
+    "note": "RSI 55: nghiêng mua"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": -3,
+    "note": "K 80: vùng quá mua"
+   },
+   {
+    "name": "Bollinger",
+    "points": 0,
+    "note": "giá trong dải (%B 0.79)"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 5,
+    "note": "nến tăng với khối lượng gấp 2.5 lần TB20"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": 50,
+    "note": "nến tăng đóng trên đỉnh nến trước; RSI quay lên trên 30"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 1,
+  "in_zone": false,
+  "ema_trend": -1,
+  "atr": 0.009774713252368294,
+  "rsi": 55.32524381113695,
+  "adx": 29.234833675499914,
+  "swing_low": 0.6141,
+  "swing_high": 0.6523,
+  "score": 55,
+  "rating": "strong_buy",
+  "type": "advice",
+  "ts": 1795629763,
+  "time": "2026-11-26 01:02",
+  "sl": 0.6092126433738159,
+  "tp1": 0.6630620698785524,
+  "tp2": 0.6777241397571049
  }
 ]
