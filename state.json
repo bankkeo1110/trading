@@ -133,7 +133,7 @@
  },
  "BTCUSDT|1h|upper": {
   "candle": 1795633200000,
-  "level": "near"
+  "level": "touch"
  },
  "SOLUSDT|4h|upper": {
   "candle": 1795449600000,
