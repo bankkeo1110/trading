@@ -15909,7 +15909,10 @@
   "time": "2026-11-25 00:04",
   "sl": 60398.508303483235,
   "tp1": 58435.991696516765,
-  "tp2": 57454.73339303353
+  "tp2": 57454.73339303353,
+  "outcome": "win",
+  "bars": 21,
+  "pnl_pct": 1.65
  },
  {
   "symbol": "SUIUSDT",
@@ -16373,7 +16376,10 @@
   "time": "2026-11-25 09:02",
   "sl": 1683.7801100191098,
   "tp1": 1632.91988998089,
-  "tp2": 1607.48977996178
+  "tp2": 1607.48977996178,
+  "outcome": "win",
+  "bars": 12,
+  "pnl_pct": 1.53
  },
  {
   "symbol": "SOLUSDT",
@@ -16639,7 +16645,10 @@
   "time": "2026-11-25 13:00",
   "sl": 1681.6937878047543,
   "tp1": 1632.9062121952456,
-  "tp2": 1608.5124243904913
+  "tp2": 1608.5124243904913,
+  "outcome": "win",
+  "bars": 8,
+  "pnl_pct": 1.47
  },
  {
   "symbol": "SOLUSDT",
@@ -16905,7 +16914,10 @@
   "time": "2026-11-25 17:04",
   "sl": 59918.64832516143,
   "tp1": 58253.35167483857,
-  "tp2": 57420.70334967714
+  "tp2": 57420.70334967714,
+  "outcome": "win",
+  "bars": 4,
+  "pnl_pct": 1.41
  },
  {
   "symbol": "ETHUSDT",
@@ -17101,5 +17113,75 @@
   "sl": 0.6408556289669258,
   "tp1": 0.6173443710330742,
   "tp2": 0.6055887420661483
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "1h",
+  "candle": 1795611600000,
+  "price": 0.6198,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": -5.0,
+    "note": "ADX 28: xu hướng giảm vừa — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -15.0,
+    "note": "xu hướng giảm rõ (giá < EMA200, EMA20 < EMA50 < EMA200) — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "MACD",
+    "points": -10.0,
+    "note": "MACD dưới đường tín hiệu, động lượng giảm dần — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "RSI",
+    "points": 15,
+    "note": "RSI 28: quá bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 10,
+    "note": "K 4 cắt lên D từ vùng quá bán"
+   },
+   {
+    "name": "Bollinger",
+    "points": 10,
+    "note": "giá ở BB dưới"
+   },
+   {
+    "name": "Khối lượng",
+    "points": -2.5,
+    "note": "nến giảm với khối lượng gấp 3.0 lần TB20 — giảm trọng số vì quá bán"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": 0,
+    "note": "chưa có — chờ nến tăng đóng trên đỉnh nến trước, hoặc RSI quay lên"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 1,
+  "in_zone": true,
+  "ema_trend": -1,
+  "atr": 0.008001364949513678,
+  "rsi": 27.823722911230888,
+  "adx": 28.24031825143277,
+  "swing_low": 0.6183,
+  "swing_high": 0.6476,
+  "score": -6,
+  "rating": "watch_buy",
+  "type": "advice",
+  "ts": 1795615393,
+  "time": "2026-11-25 21:03",
+  "sl": 0.6198,
+  "tp1": 0.6198,
+  "tp2": 0.6198
  }
 ]
