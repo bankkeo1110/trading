@@ -1,27 +1,6 @@
 [
  {
   "symbol": "SOLUSDT",
-  "tf": "4h",
-  "candle": 1794960000000,
-  "price": 75.04,
-  "mid": 72.1655,
-  "upper": 74.81731805559883,
-  "lower": 69.51368194440116,
-  "pctb": 1.0419866558965123,
-  "rsi": 53.00499352964754,
-  "side": "upper",
-  "level": "touch",
-  "squeeze": false,
-  "ts": 1794960211,
-  "time": "2026-11-18 07:03",
-  "confluence": [
-   "1h",
-   "4h"
-  ],
-  "type": "band"
- },
- {
-  "symbol": "SOLUSDT",
   "tf": "1h",
   "candle": 1794963600000,
   "price": 74.78,
@@ -9964,6 +9943,24 @@
   "squeeze": false,
   "ts": 1795622575,
   "time": "2026-11-25 23:02",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "4h",
+  "candle": 1795622400000,
+  "price": 1632.49,
+  "mid": 1695.4634999999998,
+  "upper": 1768.760132194119,
+  "lower": 1622.1668678058807,
+  "pctb": 0.07042023545351658,
+  "rsi": 36.038942594048244,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795624761,
+  "time": "2026-11-25 23:39",
   "confluence": [],
   "type": "band"
  }
