@@ -1,110 +1,5 @@
 [
  {
-  "symbol": "BTCUSDT",
-  "tf": "1h",
-  "candle": 1794906000000,
-  "price": 64225.18,
-  "mid": 64841.30649999999,
-  "upper": 65445.98073038442,
-  "lower": 64236.63226961556,
-  "pctb": -0.00946978475358615,
-  "rsi": 41.60516306652713,
-  "side": "lower",
-  "level": "touch",
-  "squeeze": true,
-  "ts": 1794907042,
-  "time": "2026-11-17 16:17",
-  "confluence": [
-   "1h",
-   "1d"
-  ],
-  "type": "band"
- },
- {
-  "symbol": "ETHUSDT",
-  "tf": "1h",
-  "candle": 1794906000000,
-  "price": 1812.13,
-  "mid": 1825.1615000000002,
-  "upper": 1841.363700190098,
-  "lower": 1808.9592998099024,
-  "pctb": 0.09784782785351372,
-  "rsi": 45.089276739338914,
-  "side": "lower",
-  "level": "near",
-  "squeeze": true,
-  "ts": 1794907042,
-  "time": "2026-11-17 16:17",
-  "confluence": [
-   "1h",
-   "1d"
-  ],
-  "type": "band"
- },
- {
-  "symbol": "ETHUSDT",
-  "tf": "1h",
-  "candle": 1794906000000,
-  "price": 1807.02,
-  "mid": 1824.9060000000002,
-  "upper": 1842.0556057097533,
-  "lower": 1807.756394290247,
-  "pctb": -0.021469714893452875,
-  "rsi": 43.15322512644474,
-  "side": "lower",
-  "level": "touch",
-  "squeeze": true,
-  "ts": 1794907359,
-  "time": "2026-11-17 16:22",
-  "confluence": [
-   "1h",
-   "1d"
-  ],
-  "type": "band"
- },
- {
-  "symbol": "ETHUSDT",
-  "tf": "1h",
-  "candle": 1794909600000,
-  "price": 1810.27,
-  "mid": 1823.3535,
-  "upper": 1837.5979996753133,
-  "lower": 1809.1090003246866,
-  "pctb": 0.04075256069981499,
-  "rsi": 44.30913463487621,
-  "side": "lower",
-  "level": "near",
-  "squeeze": true,
-  "ts": 1794909864,
-  "time": "2026-11-17 17:04",
-  "confluence": [
-   "1h",
-   "1d"
-  ],
-  "type": "band"
- },
- {
-  "symbol": "BTCUSDT",
-  "tf": "1h",
-  "candle": 1794909600000,
-  "price": 64310.0,
-  "mid": 64805.505000000005,
-  "upper": 65409.817004166725,
-  "lower": 64201.192995833284,
-  "pctb": 0.09002551944731668,
-  "rsi": 42.69587448712946,
-  "side": "lower",
-  "level": "near",
-  "squeeze": true,
-  "ts": 1794910183,
-  "time": "2026-11-17 17:09",
-  "confluence": [
-   "1h",
-   "1d"
-  ],
-  "type": "band"
- },
- {
   "symbol": "ETHUSDT",
   "tf": "1h",
   "candle": 1794909600000,
@@ -9969,6 +9864,108 @@
   "squeeze": true,
   "ts": 1795592319,
   "time": "2026-11-25 14:38",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "1h",
+  "candle": 1795593600000,
+  "price": 58842.0,
+  "mid": 59577.012,
+  "upper": 60429.994482366434,
+  "lower": 58724.02951763357,
+  "pctb": 0.06915176149874906,
+  "rsi": 35.42360970464409,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795593874,
+  "time": "2026-11-25 15:04",
+  "confluence": [
+   "1h",
+   "4h"
+  ],
+  "type": "band"
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "4h",
+  "candle": 1795593600000,
+  "price": 58842.0,
+  "mid": 60508.3745,
+  "upper": 62556.85160933244,
+  "lower": 58459.89739066755,
+  "pctb": 0.09326504250197998,
+  "rsi": 37.247094087291465,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795593874,
+  "time": "2026-11-25 15:04",
+  "confluence": [
+   "1h",
+   "4h"
+  ],
+  "type": "band"
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "1h",
+  "candle": 1795593600000,
+  "price": 1643.18,
+  "mid": 1670.2085,
+  "upper": 1698.9006726434231,
+  "lower": 1641.5163273565768,
+  "pctb": 0.02899175088793151,
+  "rsi": 33.45510991963742,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795593874,
+  "time": "2026-11-25 15:04",
+  "confluence": [
+   "1h",
+   "4h"
+  ],
+  "type": "band"
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "4h",
+  "candle": 1795593600000,
+  "price": 1643.18,
+  "mid": 1700.3669999999997,
+  "upper": 1764.8060593041205,
+  "lower": 1635.927940695879,
+  "pctb": 0.0562706794794669,
+  "rsi": 37.00342258099755,
+  "side": "lower",
+  "level": "near",
+  "squeeze": false,
+  "ts": 1795593874,
+  "time": "2026-11-25 15:04",
+  "confluence": [
+   "1h",
+   "4h"
+  ],
+  "type": "band"
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "1h",
+  "candle": 1795593600000,
+  "price": 67.96,
+  "mid": 69.1585,
+  "upper": 70.2922949550073,
+  "lower": 68.0247050449927,
+  "pctb": -0.02853472080950019,
+  "rsi": 33.35282618442247,
+  "side": "lower",
+  "level": "touch",
+  "squeeze": false,
+  "ts": 1795593874,
+  "time": "2026-11-25 15:04",
   "confluence": [],
   "type": "band"
  }
