@@ -125,7 +125,7 @@
  },
  "SUIUSDT|1h|upper": {
   "candle": 1795636800000,
-  "level": "near"
+  "level": "touch"
  },
  "ETHUSDT|1h|upper": {
   "candle": 1795636800000,
