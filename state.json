@@ -24,7 +24,7 @@
   "level": "near"
  },
  "SOLUSDT|1d|squeeze": false,
- "SUIUSDT|1h|squeeze": true,
+ "SUIUSDT|1h|squeeze": false,
  "SUIUSDT|4h|squeeze": false,
  "SUIUSDT|1d|squeeze": false,
  "ETHUSDT|4h|lower": {
