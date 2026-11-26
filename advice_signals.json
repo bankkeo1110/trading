@@ -15853,7 +15853,10 @@
   "time": "2026-11-24 23:02",
   "sl": 0.6728869294496461,
   "tp1": 0.606513070550354,
-  "tp2": 0.5733261411007078
+  "tp2": 0.5733261411007078,
+  "outcome": "loss",
+  "bars": 9,
+  "pnl_pct": -5.19
  },
  {
   "symbol": "BTCUSDT",
@@ -16589,7 +16592,10 @@
   "time": "2026-11-25 11:01",
   "sl": 1724.4489029197834,
   "tp1": 1604.4310970802167,
-  "tp2": 1544.422194160433
+  "tp2": 1544.422194160433,
+  "outcome": "loss",
+  "bars": 6,
+  "pnl_pct": -3.61
  },
  {
   "symbol": "ETHUSDT",
@@ -17687,5 +17693,75 @@
   "sl": 0.5590491818402855,
   "tp1": 0.7549524544791434,
   "tp2": 0.8424049089582868
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "1h",
+  "candle": 1795662000000,
+  "price": 0.6733,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": 7.5,
+    "note": "ADX 32: xu hướng tăng mạnh — giảm trọng số vì quá mua"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -10,
+    "note": "xu hướng lẫn lộn (giá dưới EMA200, EMA20 trên EMA50)"
+   },
+   {
+    "name": "MACD",
+    "points": 5.0,
+    "note": "MACD trên đường tín hiệu, động lượng giảm dần — giảm trọng số vì quá mua"
+   },
+   {
+    "name": "RSI",
+    "points": 4.2,
+    "note": "RSI 67: nghiêng mua"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": -3,
+    "note": "K 94: vùng quá mua"
+   },
+   {
+    "name": "Bollinger",
+    "points": -5,
+    "note": "giá gần BB trên"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 0,
+    "note": "khối lượng bình thường (0.5 lần TB20)"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": 0,
+    "note": "chưa có — chờ nến giảm đóng dưới đáy nến trước, hoặc RSI quay xuống"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": -1,
+  "in_zone": false,
+  "ema_trend": 0,
+  "atr": 0.00899403596539903,
+  "rsi": 66.83309073125184,
+  "adx": 32.21035695651018,
+  "swing_low": 0.6473,
+  "swing_high": 0.6848,
+  "score": -9,
+  "rating": "watch_sell",
+  "type": "advice",
+  "ts": 1795665842,
+  "time": "2026-11-26 11:04",
+  "sl": 0.6733,
+  "tp1": 0.6733,
+  "tp2": 0.6733
  }
 ]
