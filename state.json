@@ -37,7 +37,7 @@
  },
  "advice|BTCUSDT|1h": {
   "rating": "sell",
-  "candle": 1795705200000,
+  "candle": 1795708800000,
   "watch_candle": 1795438800000
  },
  "advice|BTCUSDT|4h": {
@@ -52,7 +52,7 @@
  },
  "advice|ETHUSDT|1h": {
   "rating": "sell",
-  "candle": 1795705200000,
+  "candle": 1795708800000,
   "watch_candle": 1795438800000
  },
  "advice|ETHUSDT|4h": {
@@ -67,7 +67,7 @@
  },
  "advice|SOLUSDT|1h": {
   "rating": "sell",
-  "candle": 1795705200000,
+  "candle": 1795708800000,
   "watch_candle": 1795438800000
  },
  "advice|SOLUSDT|4h": {
@@ -82,7 +82,7 @@
  },
  "advice|SUIUSDT|1h": {
   "rating": "sell",
-  "candle": 1795705200000,
+  "candle": 1795708800000,
   "watch_candle": 1795662000000
  },
  "advice|SUIUSDT|4h": {
