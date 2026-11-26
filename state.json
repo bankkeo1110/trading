@@ -17,7 +17,7 @@
   "level": "near"
  },
  "ETHUSDT|1d|squeeze": false,
- "SOLUSDT|1h|squeeze": false,
+ "SOLUSDT|1h|squeeze": true,
  "SOLUSDT|4h|squeeze": false,
  "SOLUSDT|1d|lower": {
   "candle": 1795219200000,
