@@ -10,7 +10,7 @@
   "level": "touch"
  },
  "BTCUSDT|1d|squeeze": false,
- "ETHUSDT|1h|squeeze": true,
+ "ETHUSDT|1h|squeeze": false,
  "ETHUSDT|4h|squeeze": false,
  "ETHUSDT|1d|lower": {
   "candle": 1795219200000,
@@ -128,7 +128,7 @@
   "level": "near"
  },
  "ETHUSDT|1h|upper": {
-  "candle": 1795654800000,
+  "candle": 1795694400000,
   "level": "near"
  },
  "BTCUSDT|1h|upper": {
