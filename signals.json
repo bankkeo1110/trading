@@ -1,23 +1,5 @@
 [
  {
-  "symbol": "SOLUSDT",
-  "tf": "1h",
-  "candle": 1795071600000,
-  "price": 75.06,
-  "mid": 73.798,
-  "upper": 75.23304146281562,
-  "lower": 72.36295853718438,
-  "pctb": 0.939708549439365,
-  "rsi": 60.759034183795855,
-  "side": "upper",
-  "level": "near",
-  "squeeze": false,
-  "ts": 1795071709,
-  "time": "2026-11-19 14:01",
-  "confluence": [],
-  "type": "band"
- },
- {
   "symbol": "SUIUSDT",
   "tf": "1h",
   "candle": 1795071600000,
@@ -9812,6 +9794,24 @@
   "squeeze": true,
   "ts": 1795719418,
   "time": "2026-11-27 01:56",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "SOLUSDT",
+  "tf": "1h",
+  "candle": 1795719600000,
+  "price": 71.34,
+  "mid": 71.0235,
+  "upper": 71.40023730900987,
+  "lower": 70.64676269099013,
+  "pctb": 0.9200539639036841,
+  "rsi": 61.99908583363869,
+  "side": "upper",
+  "level": "near",
+  "squeeze": true,
+  "ts": 1795719733,
+  "time": "2026-11-27 02:02",
   "confluence": [],
   "type": "band"
  }
