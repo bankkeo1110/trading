@@ -1,24 +1,6 @@
 [
  {
   "symbol": "SUIUSDT",
-  "tf": "1h",
-  "candle": 1795078800000,
-  "price": 0.7334,
-  "mid": 0.720715,
-  "upper": 0.7338538393703553,
-  "lower": 0.7075761606296447,
-  "pctb": 0.982729092061996,
-  "rsi": 59.86385973228255,
-  "side": "upper",
-  "level": "near",
-  "squeeze": false,
-  "ts": 1795079166,
-  "time": "2026-11-19 16:06",
-  "confluence": [],
-  "type": "band"
- },
- {
-  "symbol": "SUIUSDT",
   "tf": "4h",
   "candle": 1795075200000,
   "price": 0.7324,
@@ -9812,6 +9794,24 @@
   "squeeze": true,
   "ts": 1795721609,
   "time": "2026-11-27 02:33",
+  "confluence": [],
+  "type": "band"
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "1h",
+  "candle": 1795719600000,
+  "price": 1707.46,
+  "mid": 1698.3425,
+  "upper": 1709.091185268441,
+  "lower": 1687.593814731559,
+  "pctb": 0.924121637776936,
+  "rsi": 60.24326453116913,
+  "side": "upper",
+  "level": "near",
+  "squeeze": true,
+  "ts": 1795722564,
+  "time": "2026-11-27 02:49",
   "confluence": [],
   "type": "band"
  }
