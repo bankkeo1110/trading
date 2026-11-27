@@ -18818,7 +18818,10 @@
   "time": "2026-11-27 14:02",
   "sl": 73.83164342677533,
   "tp1": 72.07506971967405,
-  "tp2": 71.11013943934809
+  "tp2": 71.11013943934809,
+  "outcome": "loss",
+  "bars": 3,
+  "pnl_pct": -1.08
  },
  {
   "symbol": "SUIUSDT",
@@ -19029,5 +19032,75 @@
   "sl": 1762.504825605323,
   "tp1": 1709.145523184031,
   "tp2": 1687.291046368062
+ },
+ {
+  "symbol": "BTCUSDT",
+  "tf": "1h",
+  "candle": 1795770000000,
+  "price": 61630.0,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": 3.3,
+    "note": "ADX 26: xu hướng tăng vừa — giảm trọng số vì quá mua"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": 3.3,
+    "note": "xu hướng lẫn lộn (giá trên EMA200, EMA20 trên EMA50) — giảm trọng số vì quá mua"
+   },
+   {
+    "name": "MACD",
+    "points": 3.3,
+    "note": "MACD trên đường tín hiệu, động lượng giảm dần — giảm trọng số vì quá mua"
+   },
+   {
+    "name": "RSI",
+    "points": 4.1,
+    "note": "RSI 66: nghiêng mua"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": -3,
+    "note": "K 82: vùng quá mua"
+   },
+   {
+    "name": "Bollinger",
+    "points": -5,
+    "note": "giá gần BB trên"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 0,
+    "note": "khối lượng bình thường (0.8 lần TB20)"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": -50,
+    "note": "nến giảm đóng dưới đáy nến trước; RSI quay xuống dưới 70"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": -1,
+  "in_zone": false,
+  "ema_trend": 0,
+  "atr": 432.4130834696929,
+  "rsi": 66.46910749590916,
+  "adx": 25.544916286446476,
+  "swing_low": 60472.0,
+  "swing_high": 62248.91,
+  "score": -52,
+  "rating": "strong_sell",
+  "type": "advice",
+  "ts": 1795773908,
+  "time": "2026-11-27 17:05",
+  "sl": 62465.11654173485,
+  "tp1": 60981.38037479546,
+  "tp2": 60332.76074959092
  }
 ]
