@@ -145,7 +145,7 @@
  },
  "BTCUSDT|4h|upper": {
   "candle": 1795752000000,
-  "level": "near"
+  "level": "touch"
  },
  "ETHUSDT|4h|upper": {
   "candle": 1795752000000,
