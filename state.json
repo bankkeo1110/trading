@@ -108,12 +108,12 @@
   "level": "touch"
  },
  "SUIUSDT|1h|lower": {
-  "candle": 1795708800000,
+  "candle": 1795788000000,
   "level": "near"
  },
  "ETHUSDT|1h|lower": {
   "candle": 1795788000000,
-  "level": "near"
+  "level": "touch"
  },
  "SUIUSDT|4h|lower": {
   "candle": 1795608000000,
