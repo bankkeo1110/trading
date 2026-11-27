@@ -18392,7 +18392,10 @@
   "time": "2026-11-27 11:04",
   "sl": 73.53712770280684,
   "tp1": 71.76861689157947,
-  "tp2": 70.78723378315895
+  "tp2": 70.78723378315895,
+  "outcome": "loss",
+  "bars": 5,
+  "pnl_pct": -1.08
  },
  {
   "symbol": "BTCUSDT",
@@ -18742,7 +18745,10 @@
   "time": "2026-11-27 14:02",
   "sl": 62242.38020051426,
   "tp1": 61059.32939845723,
-  "tp2": 60407.18879691446
+  "tp2": 60407.18879691446,
+  "outcome": "loss",
+  "bars": 2,
+  "pnl_pct": -0.86
  },
  {
   "symbol": "SOLUSDT",
@@ -18953,5 +18959,75 @@
   "sl": 1735.44,
   "tp1": 1735.44,
   "tp2": 1735.44
+ },
+ {
+  "symbol": "ETHUSDT",
+  "tf": "1h",
+  "candle": 1795766400000,
+  "price": 1731.0,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": 3.3,
+    "note": "ADX 23: xu hướng tăng vừa — giảm trọng số vì quá mua"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": 3.3,
+    "note": "xu hướng lẫn lộn (giá trên EMA200, EMA20 trên EMA50) — giảm trọng số vì quá mua"
+   },
+   {
+    "name": "MACD",
+    "points": 3.3,
+    "note": "MACD trên đường tín hiệu, động lượng giảm dần — giảm trọng số vì quá mua"
+   },
+   {
+    "name": "RSI",
+    "points": 3.4,
+    "note": "RSI 64: nghiêng mua"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 0,
+    "note": "K 73: trung tính"
+   },
+   {
+    "name": "Bollinger",
+    "points": -5,
+    "note": "giá gần BB trên"
+   },
+   {
+    "name": "Khối lượng",
+    "points": -5,
+    "note": "nến giảm với khối lượng gấp 2.3 lần TB20"
+   },
+   {
+    "name": "Xác nhận đảo chiều",
+    "points": -25,
+    "note": "RSI quay xuống dưới 70"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": -1,
+  "in_zone": false,
+  "ema_trend": 0,
+  "atr": 14.569651210645977,
+  "rsi": 63.59854005939931,
+  "adx": 23.298407592123546,
+  "swing_low": 1683.88,
+  "swing_high": 1755.22,
+  "score": -30,
+  "rating": "sell",
+  "type": "advice",
+  "ts": 1795770149,
+  "time": "2026-11-27 16:02",
+  "sl": 1762.504825605323,
+  "tp1": 1709.145523184031,
+  "tp2": 1687.291046368062
  }
 ]
