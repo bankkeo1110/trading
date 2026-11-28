@@ -20037,5 +20037,70 @@
   "sl": 1692.9376774716961,
   "tp1": 1641.962322528304,
   "tp2": 1616.474645056608
+ },
+ {
+  "symbol": "SUIUSDT",
+  "tf": "1h",
+  "candle": 1795838400000,
+  "price": 0.669,
+  "parts": [
+   {
+    "name": "ADX/DI",
+    "points": -10,
+    "note": "ADX 28: xu hướng giảm vừa"
+   },
+   {
+    "name": "EMA 20/50/200",
+    "points": -10,
+    "note": "xu hướng lẫn lộn (giá dưới EMA200, EMA20 trên EMA50)"
+   },
+   {
+    "name": "MACD",
+    "points": -20,
+    "note": "MACD dưới đường tín hiệu, động lượng giảm dần"
+   },
+   {
+    "name": "RSI",
+    "points": -1.6,
+    "note": "RSI 43: nghiêng bán"
+   },
+   {
+    "name": "Stoch RSI",
+    "points": 0,
+    "note": "K 39: trung tính"
+   },
+   {
+    "name": "Bollinger",
+    "points": 0,
+    "note": "giá trong dải (%B 0.29)"
+   },
+   {
+    "name": "Khối lượng",
+    "points": 0,
+    "note": "khối lượng bình thường (0.4 lần TB20)"
+   },
+   {
+    "name": "Khung 1d",
+    "points": -8,
+    "note": "khung ngày đang giảm: mua chỉ là đánh hồi, nên đi khối lượng nhỏ"
+   }
+  ],
+  "params_id": "7817b218",
+  "zone": 0,
+  "in_zone": false,
+  "ema_trend": 0,
+  "atr": 0.006296410584063194,
+  "rsi": 43.47529163166691,
+  "adx": 28.14403031036349,
+  "swing_low": 0.6677,
+  "swing_high": 0.6776,
+  "score": -50,
+  "rating": "strong_sell",
+  "type": "advice",
+  "ts": 1795842085,
+  "time": "2026-11-28 12:01",
+  "sl": 0.6784446158760948,
+  "tp1": 0.6595553841239052,
+  "tp2": 0.6501107682478104
  }
 ]
